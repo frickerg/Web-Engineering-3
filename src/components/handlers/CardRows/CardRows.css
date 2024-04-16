@@ -1,0 +1,18 @@
+.no-data {
+  color: #99b4c5;
+  text-align: center;
+}
+
+.row-separator {
+  padding: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.row-separator,
+.no-data {
+  grid-column: 1 / span 3;
+}
+
+.row-separator:last-child {
+  border: none;
+}

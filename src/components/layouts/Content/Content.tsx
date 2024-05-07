@@ -26,17 +26,9 @@ function Content() {
     }
   }
 
-  const sortCards = (cards: Card[], type: InputType) => {
-    const directionMultiplier = sortDirection === 'asc' ? 1 : -1
-    return [...cards].sort(
-      (a, b) => a[type].localeCompare(b[type]) * directionMultiplier
-    )
-  }
-
   const handleDeleteById = (id: number) => {
     const updatedCards = cards.filter(card => card.id !== id)
     setCards(updatedCards)
-    setCardsToShow(updatedCards)
 
     if (filterChecked) {
       setCardsToShow(
@@ -46,6 +38,8 @@ function Content() {
             card.back.toLowerCase().includes(cardInput.back.toLowerCase())
         )
       )
+    } else {
+      setCardsToShow(updatedCards)
     }
   }
 
@@ -54,7 +48,7 @@ function Content() {
     setCardInput(updatedInput)
 
     const { front, back } = updatedInput
-    if (filterChecked && (front || back)) {
+    if (filterChecked) {
       const matchingCards = cards.filter(
         card =>
           (!front || card.front.toLowerCase().includes(front.toLowerCase())) &&
@@ -68,12 +62,12 @@ function Content() {
 
   const handleAddNewCard = () => {
     if (cardInput.front.length && cardInput.back.length) {
-      setCardInput({ front: '', back: '' })
       const newCard = {
         id: cards.length ? cards[cards.length - 1].id + 1 : 1,
         front: cardInput.front,
         back: cardInput.back,
       }
+      setCardInput({ front: '', back: '' })
       setCards([...cards, newCard])
       setCardsToShow([...cards, newCard])
     }
@@ -81,8 +75,6 @@ function Content() {
 
   const handleCheckboxChange = (value: boolean) => {
     setFilterChecked(value)
-    setCardsToShow(cards)
-
     if (value) {
       const matchingCards = cards.filter(
         card =>
@@ -90,8 +82,15 @@ function Content() {
           card.back.toLowerCase().includes(cardInput.back.toLowerCase())
       )
       setCardsToShow(matchingCards)
+    } else {
+      setCardsToShow(cards)
     }
   }
+
+  const directionMultiplier = sortDirection === 'asc' ? 1 : -1
+  const sortedCardsToShow = [...cardsToShow].sort(
+    (a, b) => a[sortType].localeCompare(b[sortType]) * directionMultiplier
+  )
 
   return (
     <div className="table">
@@ -108,10 +107,7 @@ function Content() {
         sortDirection={sortDirection}
         handleSortSelection={handleSortSelection}
       />
-      <CardRows
-        cards={sortCards(cardsToShow, sortType)}
-        handleDeleteById={handleDeleteById}
-      />
+      <CardRows cards={sortedCardsToShow} handleDeleteById={handleDeleteById} />
     </div>
   )
 }

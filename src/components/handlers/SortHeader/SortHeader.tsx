@@ -8,11 +8,10 @@ type SortHeaderProps = {
   handleSortSelection: (type: InputType) => void
 }
 
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 const sortableTypes: InputType[] = ['front', 'back']
 
 function SortHeader(props: SortHeaderProps) {
-  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
-
   return (
     <>
       {sortableTypes.map(type => (

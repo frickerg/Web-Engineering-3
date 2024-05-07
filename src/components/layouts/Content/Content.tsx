@@ -16,6 +16,9 @@ function Content() {
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
   const [cardInput, setCardInput] = useState({ front: '', back: '' })
   const [filterChecked, setFilterChecked] = useState(false)
+  const [nextId, setNextId] = useState(
+    cards.length ? cards[cards.length - 1].id + 1 : 1
+  )
 
   const handleSortSelection = (e: InputType) => {
     if (e === sortType) {
@@ -63,10 +66,11 @@ function Content() {
   const handleAddNewCard = () => {
     if (cardInput.front.length && cardInput.back.length) {
       const newCard = {
-        id: cards.length ? cards[cards.length - 1].id + 1 : 1,
+        id: nextId,
         front: cardInput.front,
         back: cardInput.back,
       }
+      setNextId(nextId + 1)
       setCardInput({ front: '', back: '' })
       setCards([...cards, newCard])
       setCardsToShow([...cards, newCard])

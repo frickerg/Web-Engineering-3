@@ -7,26 +7,31 @@ import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
 
 export type InputType = 'front' | 'back'
+export type SortDirection = 'asc' | 'desc'
 
 function Content() {
   const [cards, setCards] = useState<Card[]>(baseData)
   const [cardsToShow, setCardsToShow] = useState<Card[]>([...cards])
   const [sortType, setSortType] = useState<InputType>('front')
-  const [sortDirection, setSortDirection] = useState<number>(1)
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
   const [cardInput, setCardInput] = useState({ front: '', back: '' })
   const [filterChecked, setFilterChecked] = useState(false)
 
   const handleSortSelection = (e: InputType) => {
     if (e === sortType) {
-      setSortDirection(direction => -direction)
+      setSortDirection(direction => (direction === 'asc' ? 'desc' : 'asc'))
     } else {
       setSortType(e)
-      setSortDirection(1)
+      setSortDirection('asc')
     }
   }
 
-  const sortCards = (cards: Card[], type: InputType) =>
-    [...cards].sort((a, b) => a[type].localeCompare(b[type]) * sortDirection)
+  const sortCards = (cards: Card[], type: InputType) => {
+    const directionMultiplier = sortDirection === 'asc' ? 1 : -1
+    return [...cards].sort(
+      (a, b) => a[type].localeCompare(b[type]) * directionMultiplier
+    )
+  }
 
   const handleDeleteById = (id: number) => {
     const updatedCards = cards.filter(card => card.id !== id)

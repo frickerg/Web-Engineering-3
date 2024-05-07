@@ -1,10 +1,10 @@
 import './SortHeader.css'
 import Label from '../../elements/Label/Label'
-import { InputType } from '../../layouts/Content/Content'
+import { InputType, SortDirection } from '../../layouts/Content/Content'
 
 type SortHeaderProps = {
   sortType: InputType
-  sortDirection: number
+  sortDirection: SortDirection
   handleSortSelection: (type: InputType) => void
 }
 

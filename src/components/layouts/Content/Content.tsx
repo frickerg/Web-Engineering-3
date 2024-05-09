@@ -7,86 +7,67 @@ import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
 
 export type InputType = 'front' | 'back'
+export type SortDirection = 'asc' | 'desc'
 
 function Content() {
   const [cards, setCards] = useState<Card[]>(baseData)
-  const [cardsToShow, setCardsToShow] = useState<Card[]>([...cards])
   const [sortType, setSortType] = useState<InputType>('front')
-  const [sortDirection, setSortDirection] = useState<number>(1)
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
   const [cardInput, setCardInput] = useState({ front: '', back: '' })
   const [filterChecked, setFilterChecked] = useState(false)
+  const [nextId, setNextId] = useState(
+    cards.length ? cards[cards.length - 1].id + 1 : 1
+  )
 
   const handleSortSelection = (e: InputType) => {
     if (e === sortType) {
-      setSortDirection(direction => -direction)
+      setSortDirection(direction => (direction === 'asc' ? 'desc' : 'asc'))
     } else {
       setSortType(e)
-      setSortDirection(1)
+      setSortDirection('asc')
     }
   }
-
-  const sortCards = (cards: Card[], type: InputType) =>
-    [...cards].sort((a, b) => a[type].localeCompare(b[type]) * sortDirection)
 
   const handleDeleteById = (id: number) => {
     const updatedCards = cards.filter(card => card.id !== id)
     setCards(updatedCards)
-    setCardsToShow(updatedCards)
+  }
 
-    if (filterChecked) {
-      setCardsToShow(
-        updatedCards.filter(
-          card =>
-            card.front.toLowerCase().includes(cardInput.front.toLowerCase()) &&
-            card.back.toLowerCase().includes(cardInput.back.toLowerCase())
-        )
-      )
+  const handleAddNewCard = () => {
+    if (cardInput.front.length && cardInput.back.length) {
+      const newCard = {
+        id: nextId,
+        front: cardInput.front,
+        back: cardInput.back,
+      }
+      setNextId(nextId + 1)
+      setCardInput({ front: '', back: '' })
+      setCards([...cards, newCard])
     }
   }
 
   const handleInputChange = (inputType: InputType, value: string) => {
     const updatedInput = { ...cardInput, [inputType]: value }
     setCardInput(updatedInput)
-
-    const { front, back } = updatedInput
-    if (filterChecked && (front || back)) {
-      const matchingCards = cards.filter(
-        card =>
-          (!front || card.front.toLowerCase().includes(front.toLowerCase())) &&
-          (!back || card.back.toLowerCase().includes(back.toLowerCase()))
-      )
-      setCardsToShow(matchingCards)
-    } else {
-      setCardsToShow(cards)
-    }
-  }
-
-  const handleAddNewCard = () => {
-    if (cardInput.front.length && cardInput.back.length) {
-      setCardInput({ front: '', back: '' })
-      const newCard = {
-        id: cards.length ? cards[cards.length - 1].id + 1 : 1,
-        front: cardInput.front,
-        back: cardInput.back,
-      }
-      setCards([...cards, newCard])
-      setCardsToShow([...cards, newCard])
-    }
   }
 
   const handleCheckboxChange = (value: boolean) => {
     setFilterChecked(value)
-    setCardsToShow(cards)
+  }
 
-    if (value) {
-      const matchingCards = cards.filter(
+  const directionMultiplier = sortDirection === 'asc' ? 1 : -1
+
+  const filteredCards = filterChecked
+    ? cards.filter(
         card =>
           card.front.toLowerCase().includes(cardInput.front.toLowerCase()) &&
           card.back.toLowerCase().includes(cardInput.back.toLowerCase())
       )
-      setCardsToShow(matchingCards)
-    }
-  }
+    : cards
+
+  const sortedCardsToShow = [...filteredCards].sort(
+    (a, b) => a[sortType].localeCompare(b[sortType]) * directionMultiplier
+  )
 
   return (
     <div className="table">
@@ -103,10 +84,7 @@ function Content() {
         sortDirection={sortDirection}
         handleSortSelection={handleSortSelection}
       />
-      <CardRows
-        cards={sortCards(cardsToShow, sortType)}
-        handleDeleteById={handleDeleteById}
-      />
+      <CardRows cards={sortedCardsToShow} handleDeleteById={handleDeleteById} />
     </div>
   )
 }

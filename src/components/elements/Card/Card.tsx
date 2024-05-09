@@ -9,7 +9,7 @@ type Card = {
 
 function Card(props: Card) {
   return (
-    <Fragment key={props.id}>
+    <Fragment>
       <div>{props.front}</div>
       <div>{props.back}</div>
     </Fragment>

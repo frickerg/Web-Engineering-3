@@ -29,7 +29,7 @@ function InputFilter(props: InputFilterProps) {
         placeholder="Back"
         handleInputChange={value => props.handleInputChange('back', value)}
       />
-      <Button label="Save" onClick={() => props.handleAddNewCard()} />
+      <Button label="Save" onClick={props.handleAddNewCard} />
       <div />
       <div />
       <Checkbox

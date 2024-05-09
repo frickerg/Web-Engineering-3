@@ -5,11 +5,12 @@ type CheckboxProps = {
   label: string
   checked: boolean
   onChange: (checked: boolean) => void
+  className?: string
 }
 
 function Checkbox(props: CheckboxProps) {
   return (
-    <div className="checkbox">
+    <div className={`checkbox ${props.className}`}>
       <input
         type="checkbox"
         name={props.id}

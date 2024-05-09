@@ -1,18 +1,19 @@
-.no-data {
-  color: #99b4c5;
-  text-align: center;
-}
-
-.row-separator {
-  padding: 0;
+.card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 18%;
+  overflow: auto;
+  column-gap: 15px;
+  padding: 15px 25px;
+  align-items: center;
   border-bottom: 1px solid #ccc;
 }
 
-.row-separator,
-.no-data {
-  grid-column: 1 / span 3;
+.card-container:last-child {
+  border: none;
 }
 
-.row-separator:last-child {
-  border: none;
+.no-data {
+  color: #99b4c5;
+  text-align: center;
+  grid-column: 1 / span 3;
 }

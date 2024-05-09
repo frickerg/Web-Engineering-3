@@ -70,7 +70,7 @@ function Content() {
   )
 
   return (
-    <div className="table">
+    <div>
       <InputFilter
         front={cardInput.front}
         back={cardInput.back}

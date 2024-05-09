@@ -5,6 +5,7 @@ type InputProps = {
   value: string
   placeholder: string
   handleInputChange: (input: string) => void
+  className?: string
 }
 
 function Input(props: InputProps) {
@@ -14,6 +15,7 @@ function Input(props: InputProps) {
 
   return (
     <input
+      className={`${props.className}`}
       type="text"
       value={props.value}
       placeholder={props.placeholder}

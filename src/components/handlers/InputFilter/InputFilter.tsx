@@ -1,4 +1,3 @@
-import { Fragment } from 'react'
 import './InputFilter.css'
 import { InputType } from '../../layouts/Content/Content'
 import Input from '../../elements/Input/Input'
@@ -16,29 +15,34 @@ type InputFilterProps = {
 
 function InputFilter(props: InputFilterProps) {
   return (
-    <Fragment>
+    <div className="input-container">
       <Input
+        className="input-front"
         key="front"
         value={props.front}
         placeholder="Front"
         handleInputChange={value => props.handleInputChange('front', value)}
       />
       <Input
+        className="input-back"
         key="back"
         value={props.back}
         placeholder="Back"
         handleInputChange={value => props.handleInputChange('back', value)}
       />
-      <Button label="Save" onClick={props.handleAddNewCard} />
-      <div />
-      <div />
+      <Button
+        className="input-button"
+        label="Save"
+        onClick={() => props.handleAddNewCard()}
+      />
       <Checkbox
+        className="input-checkbox"
         id="filter"
         label="Filter Table"
         checked={props.filterChecked}
         onChange={props.handleCheckboxChange}
       />
-    </Fragment>
+    </div>
   )
 }
 

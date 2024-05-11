@@ -1,0 +1,21 @@
+{
+    "name": "Web2 develop environment",
+    // "context": "..",
+    "dockerComposeFile": "../docker-compose.yaml",
+    "service": "web2-dev",
+    "workspaceFolder": "/workdir",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode"
+            ],
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash"
+            }
+        }
+    },
+    "forwardPorts": [],
+    "postCreateCommand": "pnpm i /bin/bash /workdir/docker/entry.sh",
+    "shutdownAction": "stopCompose"
+}

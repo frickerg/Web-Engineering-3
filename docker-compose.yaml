@@ -1,0 +1,25 @@
+#version: "3.x" # Compose V2 ignores the version top-level element in the compose.yml file.
+
+services:
+  web2-dev:
+    image: ost.ch/mas/web2:1.0
+    build:
+      context: ./docker
+    volumes:
+      - .:/workdir
+      - /workdir/node_modules
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"
+    #cap_add:
+      #- SYS_PTRACE
+      #- SYS_ADMIN
+    #security_opt:
+      #- seccomp:unconfined
+      #- apparmor:unconfined
+    #privileged: true
+    #network_mode: host
+    command: /bin/bash
+    stdin_open: true
+    tty: true

@@ -16,6 +16,6 @@
         }
     },
     "forwardPorts": [],
-    "postCreateCommand": "pnpm i /bin/bash /workdir/docker/entry.sh",
+    "postCreateCommand": "/bin/bash ~/entry.sh",
     "shutdownAction": "stopCompose"
 }

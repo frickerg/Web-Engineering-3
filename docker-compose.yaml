@@ -4,10 +4,10 @@ services:
   web2-dev:
     image: ost.ch/mas/web2:1.0
     build:
-      context: ./docker
+      context: .
+      dockerfile: docker/Dockerfile
     volumes:
       - .:/workdir
-      - /workdir/node_modules
     environment:
       - NODE_ENV=development
     ports:

@@ -1,4 +1,3 @@
-# Verwende ein offizielles Node.js 16 Image als Basis
 FROM node:22
 
 # Set Time Zone
@@ -16,34 +15,34 @@ RUN <<EOT
     rm -rf /var/lib/apt/lists/*
 EOT
 
-# Installiere pnpm
+# Install pnpm
 RUN npm install -g pnpm
 
-# Arbeitsverzeichnis im Container festlegen
+# Set work directory
 WORKDIR /workdir
 
-# # Kopiere 'package.json' und 'package-lock.json' (falls vorhanden)
-# COPY ../package*.json ./
+###################################################################################################
+### Dieser Teil funktioniert nicht wie erwünscht. pnpm i im container manuel ausführeb!
+###################################################################################################
 
-# Kopiere das Projektverzeichnis in das Arbeitsverzeichnis im Container
-COPY . .
+# Copy 'package.json', 'package-lock.json' (if exists), and other neccessary files
+COPY ../package*.json ../pnpm-lock.yaml ./
 
-# COPY /home/ech70737/dotfiles.git/.bashrc .
-
-# Installiere Projekt-Abhängigkeiten, einschließlich Entwicklungsabhängigkeiten
+# Install projekt-dependencies
 # RUN pnpm i
-#
-# # Baue das React/Vite Projekt (optional, kann auch on-the-fly beim Entwickeln geschehen)
+# RUN pnpm i --store=/.pnpm-store
+
+# Copy project directory
+# COPY . .
+
+# Build React/Vite project (optional, could be also executed on-the-fly at development)
 # RUN pnpm run build
 
-# RUN pnpm i
-# RUN pnpm add @typescript-eslint/parser@latest @typescript-eslint/eslint-plugin@latest
-
+###################################################################################################
 
 # Der Port, auf dem der Container lauscht
 EXPOSE 3000
 
 # Führe den Vite Dev-Server aus
 CMD ["/bin/bash", "--", "/root/entry.sh" ]
-# CMD ["pnpm", "run", "dev", "/bin/bash", "--", "/root/entry.sh" ]
-COPY ./entry.sh /root/entry.sh
+COPY ./docker/entry.sh /root/entry.sh

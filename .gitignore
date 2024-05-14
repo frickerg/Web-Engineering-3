@@ -41,6 +41,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+.pnpm-store/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
@@ -130,3 +131,6 @@ dist
 .pnp.*
 
 package-lock.json
+
+# git worktree directory
+.worktree/

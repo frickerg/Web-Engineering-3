@@ -1,4 +1,3 @@
-import { Fragment } from 'react'
 import './CardRows.css'
 import Card from '../../elements/Card/Card'
 import Button from '../../elements/Button/Button'
@@ -11,14 +10,13 @@ type CardRowsProps = {
 function CardRows(props: CardRowsProps) {
   return props.cards.length ? (
     props.cards.map(card => (
-      <Fragment key={card.id}>
+      <div className="card-container" key={card.id}>
         <Card id={card.id} front={card.front} back={card.back} />
         <Button
           label="Delete"
           onClick={() => props.handleDeleteById(card.id)}
         />
-        <div className="row-separator" />
-      </Fragment>
+      </div>
     ))
   ) : (
     <div className="no-data">No Data</div>

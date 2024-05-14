@@ -1,9 +1,0 @@
-.table {
-  display: grid;
-  grid-template-columns: auto auto 18%;
-  overflow: auto;
-  column-gap: 15px;
-  row-gap: 15px;
-  padding: 15px 25px;
-  align-items: center;
-}

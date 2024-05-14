@@ -13,7 +13,7 @@ const sortableTypes: InputType[] = ['front', 'back']
 
 function SortHeader(props: SortHeaderProps) {
   return (
-    <>
+    <div className="header header-container">
       {sortableTypes.map(type => (
         <Label
           key={type}
@@ -23,8 +23,7 @@ function SortHeader(props: SortHeaderProps) {
           sortDirection={props.sortDirection}
         />
       ))}
-      <div />
-    </>
+    </div>
   )
 }
 export default SortHeader

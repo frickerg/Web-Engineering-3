@@ -1,7 +1,7 @@
 import Card from '../../client/components/elements/Card/Card'
 import { v4 as uuidv4 } from 'uuid'
 
-const baseData: Card[] = [
+const cards: Card[] = [
   {
     id: uuidv4(),
     front: 'Gegenwart',
@@ -34,4 +34,4 @@ const baseData: Card[] = [
   },
 ]
 
-export default baseData
+export default cards

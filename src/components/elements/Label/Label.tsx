@@ -3,14 +3,15 @@ import './Label.css'
 
 type LabelProps = {
   label: string
-  isSorted: boolean
-  sortDirection: SortDirection
-  onClick: () => void
+  isSorted?: boolean
+  sortDirection?: SortDirection
+  onClick?: () => void
+  className?: string
 }
 
-function Label(props: LabelProps) {
+function Label(props: Readonly<LabelProps>) {
   return (
-    <div className="label" onClick={props.onClick}>
+    <div className={`label ${props.className}`} onClick={props.onClick}>
       {props.label}{' '}
       {props.isSorted ? (props.sortDirection === 'asc' ? '▲' : '▼') : ''}
     </div>

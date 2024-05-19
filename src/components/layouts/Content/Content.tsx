@@ -1,23 +1,41 @@
-import { useState } from 'react'
 import './Content.css'
-import baseData from '../../../data/baseData'
+import { useEffect, useState } from 'react'
 import Card from '../../elements/Card/Card'
 import InputFilter from '../../handlers/InputFilter/InputFilter'
 import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
+import { v4 as uuidv4 } from 'uuid'
 
 export type InputType = 'front' | 'back'
 export type SortDirection = 'asc' | 'desc'
 
+const fetchCards = async (): Promise<Card[]> => {
+  const response = await fetch(`/api/cards`)
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+  const data = await response.json()
+  return data
+}
+
 function Content() {
-  const [cards, setCards] = useState<Card[]>(baseData)
+  const [cards, setCards] = useState<Card[]>([])
   const [sortType, setSortType] = useState<InputType>('front')
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
   const [cardInput, setCardInput] = useState({ front: '', back: '' })
   const [filterChecked, setFilterChecked] = useState(false)
-  const [nextId, setNextId] = useState(
-    cards.length ? cards[cards.length - 1].id + 1 : 1
-  )
+
+  useEffect(() => {
+    const getCard = async () => {
+      try {
+        const fetchedCards = await fetchCards()
+        setCards(fetchedCards)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getCard()
+  }, [])
 
   const handleSortSelection = (e: InputType) => {
     if (e === sortType) {
@@ -28,7 +46,7 @@ function Content() {
     }
   }
 
-  const handleDeleteById = (id: number) => {
+  const handleDeleteById = (id: string) => {
     const updatedCards = cards.filter(card => card.id !== id)
     setCards(updatedCards)
   }
@@ -36,11 +54,10 @@ function Content() {
   const handleAddNewCard = () => {
     if (cardInput.front.length && cardInput.back.length) {
       const newCard = {
-        id: nextId,
+        id: uuidv4(),
         front: cardInput.front,
         back: cardInput.back,
       }
-      setNextId(nextId + 1)
       setCardInput({ front: '', back: '' })
       setCards([...cards, newCard])
     }

@@ -1,6 +1,6 @@
 .card-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 18%;
+  grid-template-columns: 1fr 1fr 1fr auto auto;
   overflow: auto;
   column-gap: 15px;
   padding: 15px 25px;

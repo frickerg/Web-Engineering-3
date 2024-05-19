@@ -1,4 +1,4 @@
-import Card from '../../components/elements/Card/Card'
+import Card from '../../client/components/elements/Card/Card'
 import { v4 as uuidv4 } from 'uuid'
 
 const baseData: Card[] = [

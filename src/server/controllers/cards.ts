@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto'
 import { Request, Response } from 'express'
-import Card from '../../components/elements/Card/Card'
+import Card from '../../client/components/elements/Card/Card'
 import Cards from '../data/baseData'
 
 export const getCards = (_req: Request, res: Response) => {

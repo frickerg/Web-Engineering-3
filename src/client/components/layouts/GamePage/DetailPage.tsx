@@ -1,5 +1,4 @@
 import '../GamePage/DetailPage.css'
-
 import Button from '../../elements/Button/Button'
 import Input from '../../elements/Input/Input'
 import Label from '../../elements/Label/Label'
@@ -7,7 +6,7 @@ import { CardProps } from '../../elements/Card/Card'
 import { InputType } from '../Content/Content'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { fetchCardById, saveCard } from '../../../../api/card'
+import { fetchCardById, updateCard } from '../../../../api/card'
 
 export default function DetailPage() {
   const [card, setCard] = useState<CardProps>({ id: '', front: '', back: '' })
@@ -19,17 +18,16 @@ export default function DetailPage() {
       try {
         const fetchedCard = await fetchCardById(cardId as string)
         setCard(fetchedCard)
-      } catch (err) {
-        console.log(err)
+      } catch (error) {
+        console.error(error)
       }
     }
     if (cardId) {
       getCard()
     }
-  }, [cardId /* TODO cardId or fetchCard ? */])
+  }, [cardId])
 
   const handleInputChange = (inputType: InputType, value: string) => {
-    // console.log('handleInputChange' + inputType + ' ' + value)
     setCard(
       prevCard =>
         ({
@@ -39,10 +37,14 @@ export default function DetailPage() {
     )
   }
 
-  const handleSave = async () => {
+  const handleUpdate = async () => {
     if (card) {
-      await saveCard(card)
-      navigate('/')
+      try {
+        await updateCard(card)
+        navigate('/')
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 
@@ -67,7 +69,7 @@ export default function DetailPage() {
       <Button
         className="detail-button"
         label="Update"
-        onClick={() => handleSave()}
+        onClick={() => handleUpdate()}
       />
     </div>
   )

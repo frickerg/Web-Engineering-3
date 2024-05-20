@@ -1,17 +1,17 @@
 import './Content.css'
-import { useEffect, useState } from 'react'
-import { CardProps } from '../../elements/Card/Card'
+import { useContext, useEffect, useState } from 'react'
 import InputFilter from '../../handlers/InputFilter/InputFilter'
 import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
-import { v4 as uuidv4 } from 'uuid'
-import { fetchCards } from '../../../../api/card'
+import { addCard, deleteCard, fetchCards } from '../../../../api/card'
+import { CardContext } from '../../../../api/CardContext'
 
 export type InputType = 'front' | 'back'
 export type SortDirection = 'asc' | 'desc'
 
 function Content() {
-  const [cards, setCards] = useState<CardProps[]>([])
+  const { state, dispatch } = useContext(CardContext)
+  const { cards } = state
   const [sortType, setSortType] = useState<InputType>('front')
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
   const [cardInput, setCardInput] = useState({ front: '', back: '' })
@@ -21,13 +21,13 @@ function Content() {
     const getCard = async () => {
       try {
         const fetchedCards = await fetchCards()
-        setCards(fetchedCards)
-      } catch (err) {
-        console.log(err)
+        dispatch({ type: 'SET_CARDS', payload: fetchedCards })
+      } catch (error) {
+        console.error(error)
       }
     }
     getCard()
-  }, [])
+  }, [dispatch])
 
   const handleSortSelection = (e: InputType) => {
     if (e === sortType) {
@@ -38,20 +38,23 @@ function Content() {
     }
   }
 
-  const handleDeleteById = (id: string) => {
-    const updatedCards = cards.filter(card => card.id !== id)
-    setCards(updatedCards)
+  const handleAddNewCard = async (front: string, back: string) => {
+    if (front && back) {
+      try {
+        const newCard = await addCard({ front, back })
+        dispatch({ type: 'ADD_CARD', payload: newCard })
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 
-  const handleAddNewCard = () => {
-    if (cardInput.front.length && cardInput.back.length) {
-      const newCard = {
-        id: uuidv4(),
-        front: cardInput.front,
-        back: cardInput.back,
-      }
-      setCardInput({ front: '', back: '' })
-      setCards([...cards, newCard])
+  const handleDeleteById = async (id: string) => {
+    try {
+      await deleteCard(id)
+      dispatch({ type: 'DELETE_CARD', payload: id })
+    } catch (error) {
+      console.error(error)
     }
   }
 

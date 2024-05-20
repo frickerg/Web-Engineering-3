@@ -1,8 +1,10 @@
 import { randomUUID } from 'crypto'
 import { Request, Response } from 'express'
 import { CardProps } from '../../model/Card'
+import InitialCards from '../data/cards'
 
-import Cards from '../data/cards'
+// Mutable data structure for cards
+let Cards = [...InitialCards] // FIXME thats not clean
 
 export const getCards = (_req: Request, res: Response) => {
   res.send(Cards)
@@ -23,10 +25,8 @@ export const addCard = (req: Request, res: Response) => {
     return res.status(400).send('Front and Back are required')
   }
 
-  const id = randomUUID()
-  const newCard: CardProps = { id, front, back }
+  const newCard: CardProps = { id: randomUUID(), front, back }
   Cards.push(newCard)
-
   res.status(201).send(newCard)
 }
 
@@ -38,4 +38,9 @@ export const updateCard = (req: Request, res: Response) => {
   card.front = req.body.front
   card.back = req.body.back
   res.send(card)
+}
+
+export const deleteCard = (req: Request, res: Response) => {
+  Cards = Cards.filter(c => c.id !== req.params.id)
+  res.status(204).send()
 }

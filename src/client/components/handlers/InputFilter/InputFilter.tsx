@@ -13,7 +13,7 @@ type InputFilterProps = {
   handleCheckboxChange: (checked: boolean) => void
 }
 
-function InputFilter(props: InputFilterProps) {
+function InputFilter(props: Readonly<InputFilterProps>) {
   return (
     <div className="input-container">
       <Input

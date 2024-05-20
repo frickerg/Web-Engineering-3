@@ -11,7 +11,7 @@ type SortHeaderProps = {
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 const sortableTypes: InputType[] = ['front', 'back']
 
-function SortHeader(props: SortHeaderProps) {
+function SortHeader(props: Readonly<SortHeaderProps>) {
   return (
     <div className="header header-container">
       {sortableTypes.map(type => (

@@ -3,11 +3,11 @@ import './Button.css'
 
 type Button = {
   label: string
-  onClick: MouseEventHandler<HTMLButtonElement>
+  onClick?: MouseEventHandler<HTMLButtonElement>
   className?: string
 }
 
-function Button(props: Button) {
+function Button(props: Readonly<Button>) {
   return (
     <button className={`${props.className}`} onClick={props.onClick}>
       {props.label}

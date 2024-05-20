@@ -13,7 +13,9 @@ function CardRows(props: CardRowsProps) {
     props.cards.map(card => (
       <div className="card-container" key={card.id}>
         <Card id={card.id} front={card.front} back={card.back} />
-        <Link to={`details/${card.id}`}>edit</Link>
+        <Link to={`details/${card.id}`}>
+          <Button label="Edit"></Button>
+        </Link>
         <Button
           label="Delete"
           onClick={() => props.handleDeleteById(card.id)}

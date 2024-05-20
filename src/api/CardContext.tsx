@@ -1,8 +1,15 @@
 import React, { createContext, useReducer, ReactNode, useMemo } from 'react'
 import { CardProps } from '../client/components/elements/Card/Card'
 
+export type InputType = 'front' | 'back'
+type SortDirection = 'asc' | 'desc'
+
 type State = {
   cards: CardProps[]
+  sortType: InputType
+  sortDirection: SortDirection
+  cardInput: { front: string; back: string }
+  filterChecked: boolean
 }
 
 type SetCardsAction = {
@@ -20,7 +27,34 @@ type DeleteCardAction = {
   payload: string
 }
 
-type Action = SetCardsAction | AddCardAction | DeleteCardAction
+type SetSortTypeAction = {
+  type: 'SET_SORT_TYPE'
+  payload: InputType
+}
+
+type SetSortDirectionAction = {
+  type: 'SET_SORT_DIRECTION'
+  payload: SortDirection
+}
+
+type SetCardInputAction = {
+  type: 'SET_CARD_INPUT'
+  payload: { front: string; back: string }
+}
+
+type SetFilterCheckedAction = {
+  type: 'SET_FILTER_CHECKED'
+  payload: boolean
+}
+
+type Action =
+  | SetCardsAction
+  | AddCardAction
+  | DeleteCardAction
+  | SetSortTypeAction
+  | SetSortDirectionAction
+  | SetCardInputAction
+  | SetFilterCheckedAction
 
 type CardContextProps = {
   state: State
@@ -29,6 +63,10 @@ type CardContextProps = {
 
 const initialState: State = {
   cards: [],
+  sortType: 'front',
+  sortDirection: 'asc',
+  cardInput: { front: '', back: '' },
+  filterChecked: false,
 }
 
 const cardReducer = (state: State, action: Action): State => {
@@ -42,6 +80,14 @@ const cardReducer = (state: State, action: Action): State => {
         ...state,
         cards: state.cards.filter(card => card.id !== action.payload),
       }
+    case 'SET_SORT_TYPE':
+      return { ...state, sortType: action.payload }
+    case 'SET_SORT_DIRECTION':
+      return { ...state, sortDirection: action.payload }
+    case 'SET_CARD_INPUT':
+      return { ...state, cardInput: action.payload }
+    case 'SET_FILTER_CHECKED':
+      return { ...state, filterChecked: action.payload }
     default:
       return state
   }
@@ -54,6 +100,7 @@ export const CardContext = createContext<CardContextProps>({
 
 export const CardProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(cardReducer, initialState)
+  // TODO eventuell müsste man hier was anderes als useMemo verwenden
   const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch])
 
   return (

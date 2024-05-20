@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto'
 import { Request, Response } from 'express'
-import Card from '../../client/components/elements/Card/Card'
+import { CardProps } from '../../model/Card'
+
 import Cards from '../data/cards'
 
 export const getCards = (_req: Request, res: Response) => {
@@ -23,7 +24,7 @@ export const addCard = (req: Request, res: Response) => {
   }
 
   const id = randomUUID()
-  const newCard: Card = { id, front, back }
+  const newCard: CardProps = { id, front, back }
   Cards.push(newCard)
 
   res.status(201).send(newCard)

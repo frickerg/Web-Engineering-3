@@ -1,7 +1,7 @@
-import Card from '../../client/components/elements/Card/Card'
+import type { CardProps } from '../../model/Card'
 import { v4 as uuidv4 } from 'uuid'
 
-const cards: Card[] = [
+const cards: CardProps[] = [
   {
     id: uuidv4(),
     front: 'Gegenwart',

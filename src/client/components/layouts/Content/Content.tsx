@@ -1,25 +1,17 @@
 import './Content.css'
 import { useEffect, useState } from 'react'
-import Card from '../../elements/Card/Card'
+import { CardProps } from '../../elements/Card/Card'
 import InputFilter from '../../handlers/InputFilter/InputFilter'
 import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
 import { v4 as uuidv4 } from 'uuid'
+import { fetchCards } from '../../../../api/card'
 
 export type InputType = 'front' | 'back'
 export type SortDirection = 'asc' | 'desc'
 
-const fetchCards = async (): Promise<Card[]> => {
-  const response = await fetch(`/api/cards`)
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
-  }
-  const data = await response.json()
-  return data
-}
-
 function Content() {
-  const [cards, setCards] = useState<Card[]>([])
+  const [cards, setCards] = useState<CardProps[]>([])
   const [sortType, setSortType] = useState<InputType>('front')
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
   const [cardInput, setCardInput] = useState({ front: '', back: '' })

@@ -1,20 +1,14 @@
-import { Fragment } from 'react'
 import './Card.css'
+import { Fragment } from 'react'
+import type { CardProps } from '../../../../model/Card'
 
-type Card = {
-  id: string
-  front: string
-  back: string
-}
-
-function Card(props: Readonly<Card>) {
+function Card(props: Readonly<CardProps>) {
   return (
     <Fragment>
-      <div>{props.id}</div>
       <div>{props.front}</div>
       <div>{props.back}</div>
     </Fragment>
   )
 }
 
-export default Card
+export { Card as default, type CardProps }

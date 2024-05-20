@@ -1,10 +1,10 @@
 import './CardRows.css'
-import Card from '../../elements/Card/Card'
+import Card, { CardProps } from '../../elements/Card/Card'
 import Button from '../../elements/Button/Button'
 import { Link } from 'react-router-dom'
 
 type CardRowsProps = {
-  cards: Card[]
+  cards: CardProps[]
   handleDeleteById: (id: string) => void
 }
 

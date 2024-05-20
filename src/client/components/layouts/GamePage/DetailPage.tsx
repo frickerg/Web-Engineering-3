@@ -2,41 +2,22 @@ import '../GamePage/DetailPage.css'
 
 import Button from '../../elements/Button/Button'
 import Input from '../../elements/Input/Input'
-import { InputType } from '../Content/Content'
 import Label from '../../elements/Label/Label'
+import { CardProps } from '../../elements/Card/Card'
+import { InputType } from '../Content/Content'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import Card from '../../elements/Card/Card'
-
-const fetchCard = async (id: string | undefined): Promise<Card> => {
-  console.log(`fetchcard: ${id}`)
-  const response = await fetch(`/api/cards/${id}`)
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
-  }
-  const data = await response.json()
-  return data
-}
-
-const saveCard = async (card: Card) => {
-  await fetch(`/api/cards/${card.id}`, {
-    method: 'PUT',
-    headers: {
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify(card),
-  })
-}
+import { fetchCardById, saveCard } from '../../../../api/card'
 
 export default function DetailPage() {
+  const [card, setCard] = useState<CardProps>({ id: '', front: '', back: '' })
   const { cardId } = useParams<{ cardId: string }>()
   const navigate = useNavigate()
-  const [card, setCard] = useState<Card>({ id: '', front: '', back: '' })
 
   useEffect(() => {
     const getCard = async () => {
       try {
-        const fetchedCard = await fetchCard(cardId as string)
+        const fetchedCard = await fetchCardById(cardId as string)
         setCard(fetchedCard)
       } catch (err) {
         console.log(err)
@@ -48,13 +29,13 @@ export default function DetailPage() {
   }, [cardId /* TODO cardId or fetchCard ? */])
 
   const handleInputChange = (inputType: InputType, value: string) => {
-    console.log('handleInputChange' + inputType + ' ' + value)
+    // console.log('handleInputChange' + inputType + ' ' + value)
     setCard(
       prevCard =>
         ({
           ...prevCard,
           [inputType]: value,
-        } as Card)
+        } as CardProps)
     )
   }
 

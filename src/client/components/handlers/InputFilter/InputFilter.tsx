@@ -1,8 +1,8 @@
 import './InputFilter.css'
-import { InputType } from '../../layouts/Content/Content'
 import Input from '../../elements/Input/Input'
 import Button from '../../elements/Button/Button'
 import Checkbox from '../../elements/Checkbox/Checkbox'
+import { InputType } from '../../../../api/CardContext'
 
 type InputFilterProps = {
   front: string
@@ -32,10 +32,10 @@ function InputFilter(props: Readonly<InputFilterProps>) {
       />
       <Button
         className="input-button"
-        label="Save"
+        label="Add"
         onClick={() => props.handleAddNewCard(props.front, props.back)}
       />
-      <Checkbox
+      <Checkbox // TODO fjv: delete or keep
         className="input-checkbox"
         id="filter"
         label="Filter Table"

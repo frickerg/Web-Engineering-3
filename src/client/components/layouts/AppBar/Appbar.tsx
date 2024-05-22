@@ -18,7 +18,7 @@ function Appbar() {
       <Link to="end">
         <Button label="End" onClick={() => {}} />
       </Link>
-      <a href="#link">Manage Cards</a>
+      <Link to="/">Manage Cards</Link>
     </div>
   )
 }

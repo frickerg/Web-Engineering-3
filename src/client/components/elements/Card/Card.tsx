@@ -11,4 +11,5 @@ function Card(props: Readonly<CardProps>) {
   )
 }
 
-export { Card as default, type CardProps }
+export default Card
+export type { CardProps }

@@ -1,67 +1,68 @@
 import './Content.css'
-import { useEffect, useState } from 'react'
-import { CardProps } from '../../elements/Card/Card'
+import { useContext, useEffect } from 'react'
 import InputFilter from '../../handlers/InputFilter/InputFilter'
 import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
-import { v4 as uuidv4 } from 'uuid'
-import { fetchCards } from '../../../../api/card'
-
-export type InputType = 'front' | 'back'
-export type SortDirection = 'asc' | 'desc'
+import { addCard, deleteCard, fetchCards } from '../../../../api/card'
+import { CardContext, InputType } from '../../../../api/CardContext'
 
 function Content() {
-  const [cards, setCards] = useState<CardProps[]>([])
-  const [sortType, setSortType] = useState<InputType>('front')
-  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
-  const [cardInput, setCardInput] = useState({ front: '', back: '' })
-  const [filterChecked, setFilterChecked] = useState(false)
+  const { state, dispatch } = useContext(CardContext)
+  const { cards, sortType, sortDirection, cardInput, filterChecked } = state
 
   useEffect(() => {
     const getCard = async () => {
       try {
         const fetchedCards = await fetchCards()
-        setCards(fetchedCards)
-      } catch (err) {
-        console.log(err)
+        dispatch({ type: 'SET_CARDS', payload: fetchedCards })
+      } catch (error) {
+        console.error(error)
       }
     }
     getCard()
-  }, [])
+  }, [dispatch])
 
   const handleSortSelection = (e: InputType) => {
     if (e === sortType) {
-      setSortDirection(direction => (direction === 'asc' ? 'desc' : 'asc'))
+      dispatch({
+        type: 'SET_SORT_DIRECTION',
+        payload: sortDirection === 'asc' ? 'desc' : 'asc',
+      })
     } else {
-      setSortType(e)
-      setSortDirection('asc')
+      dispatch({ type: 'SET_SORT_TYPE', payload: e })
+      dispatch({ type: 'SET_SORT_DIRECTION', payload: 'asc' })
     }
   }
 
-  const handleDeleteById = (id: string) => {
-    const updatedCards = cards.filter(card => card.id !== id)
-    setCards(updatedCards)
+  const handleAddNewCard = async (front: string, back: string) => {
+    if (front && back) {
+      try {
+        const newCard = await addCard({ front, back })
+        dispatch({ type: 'ADD_CARD', payload: newCard })
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 
-  const handleAddNewCard = () => {
-    if (cardInput.front.length && cardInput.back.length) {
-      const newCard = {
-        id: uuidv4(),
-        front: cardInput.front,
-        back: cardInput.back,
-      }
-      setCardInput({ front: '', back: '' })
-      setCards([...cards, newCard])
+  const handleDeleteById = async (id: string) => {
+    try {
+      await deleteCard(id)
+      dispatch({ type: 'DELETE_CARD', payload: id })
+    } catch (error) {
+      console.error(error)
     }
   }
 
   const handleInputChange = (inputType: InputType, value: string) => {
-    const updatedInput = { ...cardInput, [inputType]: value }
-    setCardInput(updatedInput)
+    dispatch({
+      type: 'SET_CARD_INPUT',
+      payload: { ...cardInput, [inputType]: value },
+    })
   }
 
   const handleCheckboxChange = (value: boolean) => {
-    setFilterChecked(value)
+    dispatch({ type: 'SET_FILTER_CHECKED', payload: value })
   }
 
   const directionMultiplier = sortDirection === 'asc' ? 1 : -1

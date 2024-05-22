@@ -9,7 +9,7 @@ type InputFilterProps = {
   back: string
   filterChecked: boolean
   handleInputChange: (inputType: InputType, value: string) => void
-  handleAddNewCard: () => void
+  handleAddNewCard: (front: string, back: string) => void
   handleCheckboxChange: (checked: boolean) => void
 }
 
@@ -33,7 +33,7 @@ function InputFilter(props: Readonly<InputFilterProps>) {
       <Button
         className="input-button"
         label="Save"
-        onClick={() => props.handleAddNewCard()}
+        onClick={() => props.handleAddNewCard(props.front, props.back)}
       />
       <Checkbox
         className="input-checkbox"

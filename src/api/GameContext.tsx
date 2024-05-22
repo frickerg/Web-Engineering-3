@@ -1,21 +1,27 @@
+/**
+ * TODO Eventuelle Verbesserung
+ * Man könnte auch nur die ID und answer übergeben. Über ID würde man die Karte fetchen
+ * und die Antwort würde man dynamisch Vergleichen. Setzt voraus, dass man weiss, welche Seite abgefragt wurde :)
+ */
+
 import React, { createContext, useReducer, ReactNode, useMemo } from 'react'
 import { CardProps } from '../client/components/elements/Card/Card'
 
+interface GameResultItem extends CardProps {
+  answer: string
+  accepted: boolean
+}
+
 type State = {
-  cards: CardProps[]
+  cards: GameResultItem[]
 }
 
-type XxxAction1 = {
-  type: 'XXX1'
-  payload: CardProps[]
+type SetCardsAction = {
+  type: 'SET_CARDS'
+  payload: GameResultItem[]
 }
 
-type XxxAction2 = {
-  type: 'XXX2'
-  payload: CardProps[]
-}
-
-type Action = XxxAction1 | XxxAction2
+type Action = SetCardsAction
 
 type Props = {
   state: State
@@ -23,14 +29,34 @@ type Props = {
 }
 
 const initialState: State = {
-  cards: [],
+  cards: [
+    {
+      id: '1',
+      front: 'Gegenwart',
+      back: 'Present',
+      answer: 'Present',
+      accepted: true,
+    },
+    {
+      id: '2',
+      front: 'Minute',
+      back: 'Minute',
+      answer: 'Present',
+      accepted: false,
+    },
+    {
+      id: '3',
+      front: 'Sekunde',
+      back: 'Second',
+      answer: 'Past',
+      accepted: false,
+    },
+  ],
 }
 
 const gameReducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'XXX1':
-      return { ...state, cards: action.payload }
-    case 'XXX2':
+    case 'SET_CARDS':
       return { ...state, cards: action.payload }
     default:
       return state

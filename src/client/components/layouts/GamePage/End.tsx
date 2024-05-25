@@ -4,17 +4,24 @@ import './GamePage.css'
 import { Fragment, useContext } from 'react'
 import { GameContext } from '../../../../api/GameContext'
 import Button from '../../elements/Button/Button'
+import { useNavigate } from 'react-router-dom'
 
 export default function End() {
-  const { state } = useContext(GameContext)
+  const { state, dispatch } = useContext(GameContext)
   const { cards } = state
+  const navigate = useNavigate()
+
+  const startNewGame = async () => {
+    dispatch({ type: 'DELETE_GAME' })
+    navigate('/new')
+  }
 
   return (
     <div className="game-page-results">
       <Button
         label="Start New Game"
         className="game-page-button"
-        onClick={() => window.location.reload()}
+        onClick={() => startNewGame()}
       />
       <h2>Game Results</h2>
       <p>

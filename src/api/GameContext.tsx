@@ -21,13 +21,18 @@ type SetCardsAction = {
   payload: GameResultItem[]
 }
 
-type Action = SetCardsAction
+type DelteGameAction = {
+  type: 'DELETE_GAME'
+}
+
+type Action = SetCardsAction | DelteGameAction
 
 type Props = {
   state: State
   dispatch: React.Dispatch<Action>
 }
 
+// TODO delete dummy-cards
 const initialState: State = {
   cards: [
     {
@@ -58,6 +63,8 @@ const gameReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'SET_CARDS':
       return { ...state, cards: action.payload }
+    case 'DELETE_GAME':
+      return { cards: [] }
     default:
       return state
   }

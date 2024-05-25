@@ -4,7 +4,7 @@ import { Layout } from './Layout'
 import Content from '../components/layouts/Content/Content'
 import New from '../components/layouts/GamePage/New'
 import Ongoing from '../components/layouts/GamePage/Ongoing'
-import End from '../components/layouts/GamePage/End'
+import EndPage from '../components/layouts/GamePage/EndPage'
 import DetailPage from '../components/layouts/GamePage/DetailPage'
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         <Route path="new" element={<New />} />
         <Route path="ongoing" element={<Ongoing />} />
         <Route path="details/:cardId" element={<DetailPage />} />
-        <Route path="end" element={<End />} />
+        <Route path="end" element={<EndPage />} />
       </Route>
     </Routes>
   )

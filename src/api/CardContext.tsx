@@ -2,7 +2,7 @@ import React, { createContext, useReducer, ReactNode, useMemo } from 'react'
 import { CardProps } from '../client/components/elements/Card/Card'
 
 export type InputType = 'front' | 'back'
-type SortDirection = 'asc' | 'desc'
+export type SortDirection = 'asc' | 'desc'
 
 type State = {
   cards: CardProps[]

@@ -1,41 +1,6 @@
-.game-page-results {
-  padding: 20px;
+.hello {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  margin-top: 30vh;
   align-items: center;
-}
-
-.game-page-results h2 {
-  margin: 10px;
-}
-
-.game-page-results p {
-  margin: 10px;
-}
-
-.game-page-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
-  width: 95%;
-}
-
-.game-page-header {
-  font-weight: bold;
-  background-color: #f0f0f0;
-  padding: 10px;
-  text-align: center;
-}
-
-.game-page-item {
-  padding: 8px;
-  border: 1px solid #ccc;
-  text-align: center;
-}
-
-.game-page-button {
-  width: auto;
-  padding: 10px 20px;
-  margin: 20px;
 }

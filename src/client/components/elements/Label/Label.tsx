@@ -1,4 +1,4 @@
-import { SortDirection } from '../../layouts/Content/Content'
+import { SortDirection } from '../../../../api/CardContext'
 import './Label.css'
 
 type LabelProps = {

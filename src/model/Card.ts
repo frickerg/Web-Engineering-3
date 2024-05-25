@@ -3,3 +3,7 @@ export type CardProps = {
   front: string
   back: string
 }
+
+export type FlashcardProps = Omit<CardProps, 'back'> & {
+  isCorrect?: boolean
+}

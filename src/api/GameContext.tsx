@@ -32,31 +32,8 @@ type Props = {
   dispatch: React.Dispatch<Action>
 }
 
-// TODO delete dummy-cards
 const initialState: State = {
-  cards: [
-    {
-      id: '1',
-      front: 'Gegenwart',
-      back: 'Present',
-      answer: 'Present',
-      accepted: true,
-    },
-    {
-      id: '2',
-      front: 'Minute',
-      back: 'Minute',
-      answer: 'Present',
-      accepted: false,
-    },
-    {
-      id: '3',
-      front: 'Sekunde',
-      back: 'Second',
-      answer: 'Past',
-      accepted: false,
-    },
-  ],
+  cards: [],
 }
 
 const gameReducer = (state: State, action: Action): State => {

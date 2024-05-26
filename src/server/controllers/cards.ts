@@ -45,11 +45,10 @@ export const deleteCard = (req: Request, res: Response) => {
   res.status(204).send()
 }
 
-export const getGameCards = (req: Request, res: Response) => {
-  const numberOfEntries = Number(req.params.numberOfEntries) ?? 0
-  if (numberOfEntries === 0) {
-    return res.status(400).send('request at least 1 card')
-  }
+export const getGameCards = (_req: Request, res: Response) => {
+  const maxIndex = Cards.length > 10 ? 10 : Cards.length
+  const numberOfEntries = randomNumberBetween(3, maxIndex)
+
   const randomGameCards = getRandomEntries(Cards, numberOfEntries)
   if (randomGameCards.length < numberOfEntries) {
     return res.status(400).send('more elements taken than available')
@@ -57,10 +56,14 @@ export const getGameCards = (req: Request, res: Response) => {
   res.send(mapCardToFlashcard(randomGameCards))
 }
 
+function randomNumberBetween(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 function mapCardToFlashcard(cards: CardProps[]): FlashcardProps[] {
   return cards.map(card => ({
     id: card.id,
-    front: card.front,
+    query: card.front,
   }))
 }
 

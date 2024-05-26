@@ -73,5 +73,7 @@ export const isAnswerCorrect = async (
   if (!response.ok) {
     throw new Error(`HTTP status: ${response.status} - Failed to fetch card `)
   }
-  return response.json().then(e => e.back.trim().toLowerCase() === userAnswer)
+  return response
+    .json()
+    .then(e => e.back.trim().toLowerCase() === userAnswer.trim().toLowerCase())
 }

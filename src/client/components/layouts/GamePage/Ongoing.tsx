@@ -17,8 +17,6 @@ function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
 }
 
 export default function Ongoing() {
-  const maxIndex = 3 // FIXME Anzahl muss dynamisch sein see specs
-
   const { state, dispatch } = useContext(GameContext)
   const { cards } = state
   const [index, setIndex] = useState(0)
@@ -31,7 +29,7 @@ export default function Ongoing() {
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const fetchedCards = await getGameCards(maxIndex)
+        const fetchedCards = await getGameCards()
         dispatch({
           type: 'SET_CARDS',
           payload: mapCardToGameResultItem(fetchedCards),

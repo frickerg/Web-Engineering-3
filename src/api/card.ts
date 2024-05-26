@@ -55,10 +55,9 @@ export const deleteCard = async (id: string) => {
   }
 }
 
-export const getGameCards = async (
-  numberOfEntries: number
-): Promise<FlashcardProps[]> => {
-  const response = await fetch(`/api/cards/getGameCards/${numberOfEntries}`)
+export const getGameCards = async (): Promise<FlashcardProps[]> => {
+  const response = await fetch(`/api/cards/getGameCards`)
+  console.log('leresponse', response)
   if (!response.ok) {
     throw new Error(`HTTP status: ${response.status} - Failed to fetch cards`)
   }

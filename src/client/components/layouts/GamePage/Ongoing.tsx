@@ -9,7 +9,7 @@ import { FlashcardProps } from '../../elements/Flashcard/Flashcard'
 function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
   return cards.map(card => ({
     id: card.id,
-    front: card.front,
+    front: card.query,
     back: '',
     answer: '',
     accepted: false,

@@ -1,7 +1,7 @@
 import './Ongoing.css'
 import { useState, useEffect, useContext } from 'react'
 import Button from '../../elements/Button/Button'
-import { getGameCards, isAnswerCorrect } from '../../../../api/card'
+import { getGameCards, validateAnswer } from '../../../../api/card'
 import { GameContext, GameResultItem } from '../../../../api/GameContext'
 import { useNavigate } from 'react-router-dom'
 import { FlashcardProps } from '../../elements/Flashcard/Flashcard'
@@ -55,13 +55,14 @@ export default function Ongoing() {
 
   const validateCard = async () => {
     const currentCard = cards[index]
-    const isCorrect = await isAnswerCorrect(currentCard.id, answer)
+    const result = await validateAnswer(currentCard.id, answer)
     const updatedCards = cards.map((card, i) =>
       i === index
         ? {
             ...card,
+            back: result.expectedAnswer,
+            accepted: result.isAnswerCorrect,
             answer: answer,
-            accepted: isCorrect,
           }
         : card
     )

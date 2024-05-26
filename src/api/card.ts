@@ -1,4 +1,8 @@
-import type { CardProps, FlashcardProps } from '../model/Card'
+import type {
+  CardProps,
+  FlashcardAnswerValidation,
+  FlashcardProps,
+} from '../model/Card'
 
 export const fetchCards = async (): Promise<CardProps[]> => {
   const response = await fetch('/api/cards')
@@ -64,15 +68,20 @@ export const getGameCards = async (): Promise<FlashcardProps[]> => {
   return response.json()
 }
 
-export const isAnswerCorrect = async (
+export const validateAnswer = async (
   id: string,
   userAnswer: string
-): Promise<boolean> => {
+): Promise<FlashcardAnswerValidation> => {
   const response = await fetch(`/api/cards/${id}`)
   if (!response.ok) {
     throw new Error(`HTTP status: ${response.status} - Failed to fetch card `)
   }
-  return response
-    .json()
-    .then(e => e.back.trim().toLowerCase() === userAnswer.trim().toLowerCase())
+  return response.json().then(e => {
+    const isAnswerCorrect =
+      e.back.trim().toLowerCase() === userAnswer.trim().toLowerCase()
+    return {
+      expectedAnswer: e.back,
+      isAnswerCorrect,
+    }
+  })
 }

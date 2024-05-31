@@ -1,10 +1,10 @@
 import './Ongoing.css'
 import { useState, useEffect, useContext } from 'react'
 import Button from '../../elements/Button/Button'
-import { getGameCards, validateAnswer } from '../../../../api/card'
+import { fetchFlashcards, validateAnswer } from '../../../../api/card'
 import { GameContext, GameResultItem } from '../../../../api/GameContext'
 import { useNavigate } from 'react-router-dom'
-import { FlashcardProps } from '../../elements/Flashcard/Flashcard'
+import { FlashcardProps } from '../../../../model/Card'
 
 function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
   return cards.map(card => ({
@@ -12,7 +12,7 @@ function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
     front: card.query,
     back: '',
     answer: '',
-    accepted: false,
+    isAccepted: false,
   }))
 }
 
@@ -29,7 +29,7 @@ export default function Ongoing() {
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const fetchedCards = await getGameCards()
+        const fetchedCards = await fetchFlashcards()
         dispatch({
           type: 'SET_CARDS',
           payload: mapCardToGameResultItem(fetchedCards),
@@ -61,7 +61,7 @@ export default function Ongoing() {
         ? {
             ...card,
             back: result.expectedAnswer,
-            accepted: result.isAnswerCorrect,
+            isAccepted: result.isAnswerCorrect,
             answer: answer,
           }
         : card

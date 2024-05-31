@@ -9,7 +9,7 @@ import { CardProps } from '../client/components/elements/Card/Card'
 
 export interface GameResultItem extends CardProps {
   answer: string
-  accepted: boolean
+  isAccepted: boolean
 }
 
 type State = {

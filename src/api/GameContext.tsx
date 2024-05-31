@@ -14,6 +14,7 @@ export interface GameResultItem extends CardProps {
 
 type State = {
   cards: GameResultItem[]
+  isGameOngoing: boolean
 }
 
 type SetCardsAction = {
@@ -34,14 +35,15 @@ type Props = {
 
 const initialState: State = {
   cards: [],
+  isGameOngoing: false,
 }
 
 const gameReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'SET_CARDS':
-      return { ...state, cards: action.payload }
+      return { ...state, cards: action.payload, isGameOngoing: true }
     case 'DELETE_GAME':
-      return { cards: [] }
+      return { ...state, cards: [], isGameOngoing: false }
     default:
       return state
   }

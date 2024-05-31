@@ -1,0 +1,12 @@
+.new-page-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.new-page-button {
+  width: auto;
+  padding: 10px 20px;
+  margin: 20px;
+}

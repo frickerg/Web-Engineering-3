@@ -25,7 +25,7 @@ export default function EndPage() {
       />
       <h2>Game Results</h2>
       <p>
-        Solved {cards.filter(card => card.accepted).length} out of{' '}
+        Solved {cards.filter(card => card.isAccepted).length} out of{' '}
         {cards.length} correctly.
       </p>
       <div className="end-page-container">
@@ -38,7 +38,7 @@ export default function EndPage() {
             <div className="end-page-item">{card.front}</div>
             <div className="end-page-item">{card.back}</div>
             <div className="end-page-item">{card.answer}</div>
-            <div className="end-page-item">{card.accepted ? '✓' : '✗'}</div>
+            <div className="end-page-item">{card.isAccepted ? '✓' : '✗'}</div>
           </Fragment>
         ))}
       </div>

@@ -40,7 +40,7 @@ export const deleteCard = (req: Request, res: Response) => {
   res.status(204).send()
 }
 
-export const getGameCards = (_req: Request, res: Response) => {
+export const fetchFlashcards = (_req: Request, res: Response) => {
   const cards = cardStore.getCards()
   const maxIndex = cards.length > 10 ? 10 : cards.length
   const numberOfEntries = randomNumberBetween(3, maxIndex)

@@ -7,9 +7,9 @@
 import React, { createContext, useReducer, ReactNode, useMemo } from 'react'
 import { CardProps } from '../client/components/elements/Card/Card'
 
-interface GameResultItem extends CardProps {
+export interface GameResultItem extends CardProps {
   answer: string
-  accepted: boolean
+  isAccepted: boolean
 }
 
 type State = {
@@ -21,11 +21,11 @@ type SetCardsAction = {
   payload: GameResultItem[]
 }
 
-type DelteGameAction = {
+type DeleteGameAction = {
   type: 'DELETE_GAME'
 }
 
-type Action = SetCardsAction | DelteGameAction
+type Action = SetCardsAction | DeleteGameAction
 
 type Props = {
   state: State

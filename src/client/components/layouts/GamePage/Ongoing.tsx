@@ -57,21 +57,24 @@ export default function Ongoing() {
 
   const validateCard = async () => {
     const currentCard = cards[index]
-    const result = await validateAnswer(currentCard.id, answer)
-    const updatedCards = cards.map((card, i) =>
-      i === index
-        ? {
-            ...card,
-            back: result.expectedAnswer,
-            isAccepted: result.isAnswerCorrect,
-            answer: answer,
-          }
-        : card
-    )
-    dispatch({
-      type: 'SET_CARDS',
-      payload: updatedCards,
-    })
+    try {
+      const result = await validateAnswer(currentCard.id, answer)
+      const updatedCards = [...cards]
+
+      updatedCards[index] = {
+        ...currentCard,
+        back: result.expectedAnswer,
+        isAccepted: result.isAnswerCorrect,
+        answer: answer,
+      }
+
+      dispatch({
+        type: 'SET_CARDS',
+        payload: updatedCards,
+      })
+    } catch (error) {
+      console.error(error)
+    }
 
     incrementIndex()
     setAnswer('')

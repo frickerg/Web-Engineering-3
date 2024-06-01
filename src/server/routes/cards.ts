@@ -3,11 +3,11 @@ import * as cardsController from '../controllers/cards'
 
 const router = express.Router()
 
-router.get('/', cardsController.getCards)
+router.get('/getCards', cardsController.getCards)
 router.get('/fetchFlashcards', cardsController.fetchFlashcards)
-router.get('/:id', cardsController.getCardById)
-router.post('/', cardsController.addCard)
-router.put('/:id', cardsController.updateCard)
-router.delete('/:id', cardsController.deleteCard)
+router.get('/getCardById/:id', cardsController.getCardById)
+router.post('/addCard', cardsController.addCard)
+router.put('/updateCard/:id', cardsController.updateCard)
+router.delete('/deleteCard/:id', cardsController.deleteCard)
 
 export default router

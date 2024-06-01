@@ -5,7 +5,7 @@ import type {
 } from '../model/Card'
 
 export const fetchCards = async (): Promise<CardProps[]> => {
-  const response = await fetch('/api/cards')
+  const response = await fetch('/api/cards/getCards')
   if (!response.ok) {
     throw new Error(`HTTP status: ${response.status} - Failed to fetch cards `)
   }
@@ -13,7 +13,7 @@ export const fetchCards = async (): Promise<CardProps[]> => {
 }
 
 export const fetchCardById = async (id: string): Promise<CardProps> => {
-  const response = await fetch(`/api/cards/${id}`)
+  const response = await fetch(`/api/cards/getCardById/${id}`)
   if (!response.ok) {
     throw new Error(`HTTP status: ${response.status} - Failed to fetch card `)
   }
@@ -21,7 +21,7 @@ export const fetchCardById = async (id: string): Promise<CardProps> => {
 }
 
 export const updateCard = async (card: CardProps) => {
-  const response = await fetch(`/api/cards/${card.id}`, {
+  const response = await fetch(`/api/cards/updateCard/${card.id}`, {
     method: 'PUT',
     headers: {
       'content-type': 'application/json',
@@ -37,7 +37,7 @@ export const addCard = async (card: {
   front: string
   back: string
 }): Promise<CardProps> => {
-  const response = await fetch('/api/cards', {
+  const response = await fetch('/api/cards/addCard', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export const addCard = async (card: {
 }
 
 export const deleteCard = async (id: string) => {
-  const response = await fetch(`/api/cards/${id}`, {
+  const response = await fetch(`/api/cards/deleteCard/${id}`, {
     method: 'DELETE',
   })
   if (!response.ok) {
@@ -71,7 +71,7 @@ export const validateAnswer = async (
   id: string,
   userAnswer: string
 ): Promise<FlashcardAnswerValidation> => {
-  const response = await fetch(`/api/cards/${id}`)
+  const response = await fetch(`/api/cards/getCardById/${id}`)
   if (!response.ok) {
     throw new Error(`HTTP status: ${response.status} - Failed to fetch card `)
   }

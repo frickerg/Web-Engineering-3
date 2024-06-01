@@ -13,7 +13,7 @@ export default function EndPage() {
 
   const startNewGame = async () => {
     dispatch({ type: 'DELETE_GAME' })
-    navigate('/new')
+    navigate('/')
   }
 
   return (

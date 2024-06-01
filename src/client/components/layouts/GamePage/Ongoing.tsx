@@ -66,6 +66,7 @@ export default function Ongoing() {
           }
         : card
     )
+
     dispatch({
       type: 'SET_CARDS',
       payload: updatedCards,
@@ -75,6 +76,10 @@ export default function Ongoing() {
     setAnswer('')
 
     if (index >= cards.length - 1) {
+      dispatch({
+        type: 'FINISH_GAME',
+      })
+
       navigate('/end')
     }
   }

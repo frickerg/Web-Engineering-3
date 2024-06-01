@@ -1,12 +1,12 @@
 import './NewPage.css'
 import Button from '../../elements/Button/Button'
 import { useNavigate } from 'react-router-dom'
-import { GameContext } from '../../../../api/GameContext'
+import { GameContext, GameState } from '../../../../api/GameContext'
 import { useContext } from 'react'
 
-export default function New() {
+export default function NewPage() {
   const { state, dispatch } = useContext(GameContext)
-  const { isGameOngoing } = state
+  const { gameState } = state
 
   const navigate = useNavigate()
 
@@ -23,7 +23,9 @@ export default function New() {
         onClick={() => startNewGame()}
       />
       <p className="new-page-label">
-        {isGameOngoing ? 'Continue Running Game' : 'No Running Game'}
+        {gameState === GameState.ONGOING
+          ? 'Continue Running Game'
+          : 'No game running'}
       </p>
     </div>
   )

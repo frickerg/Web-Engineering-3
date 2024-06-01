@@ -21,12 +21,11 @@ function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
 
 export default function Ongoing() {
   const { state, dispatch } = useContext(GameContext)
-  const { cards, gameState } = state
-  const [index, setIndex] = useState(0)
+  const { cards, gameState, currentCardIndex } = state
   const [answer, setAnswer] = useState('')
 
   const progress =
-    cards.length > 0 ? Math.round((index / cards.length) * 100) : 0
+    cards.length > 0 ? Math.round((currentCardIndex / cards.length) * 100) : 0
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -47,9 +46,14 @@ export default function Ongoing() {
   }, [dispatch, gameState])
 
   const incrementIndex = () => {
-    setIndex(prevIndex =>
-      prevIndex < cards.length - 1 ? prevIndex + 1 : prevIndex
-    )
+    const newIndex =
+      currentCardIndex < cards.length - 1
+        ? currentCardIndex + 1
+        : currentCardIndex
+    dispatch({
+      type: 'SET_CARD_INDEX',
+      payload: newIndex,
+    })
   }
 
   const handleDeleteGame = () => {
@@ -61,10 +65,10 @@ export default function Ongoing() {
       return
     }
 
-    const currentCard = cards[index]
+    const currentCard = cards[currentCardIndex]
     const result = await validateAnswer(currentCard.id, answer)
     const updatedCards = cards.map((card, i) =>
-      i === index
+      i === currentCardIndex
         ? {
             ...card,
             back: result.expectedAnswer,
@@ -82,7 +86,7 @@ export default function Ongoing() {
     incrementIndex()
     setAnswer('')
 
-    if (index >= cards.length - 1) {
+    if (currentCardIndex >= cards.length - 1) {
       dispatch({
         type: 'FINISH_GAME',
       })
@@ -101,7 +105,7 @@ export default function Ongoing() {
       </div>
       <div className="ongoing-card">
         <div className="ongoing-card-content">
-          {cards.length > 0 && cards[index].front}
+          {cards.length > 0 && cards[currentCardIndex].front}
         </div>
       </div>
       <div className="ongoing-answer-section">

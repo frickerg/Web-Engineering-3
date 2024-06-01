@@ -39,6 +39,8 @@ function Content() {
       try {
         const newCard = await addCard({ front, back })
         dispatch({ type: 'ADD_CARD', payload: newCard })
+        cardInput.front = ''
+        cardInput.back = ''
       } catch (error) {
         console.error(error)
       }

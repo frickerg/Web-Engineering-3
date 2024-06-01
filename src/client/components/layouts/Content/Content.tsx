@@ -1,21 +1,14 @@
 import './Content.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import InputFilter from '../../handlers/InputFilter/InputFilter'
 import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
 import { addCard, deleteCard, fetchCards } from '../../../../api/card'
-import { CardContext } from '../../../../api/CardContext'
-
-export type InputType = 'front' | 'back'
-export type SortDirection = 'asc' | 'desc'
+import { CardContext, InputType } from '../../../../api/CardContext'
 
 function Content() {
   const { state, dispatch } = useContext(CardContext)
-  const { cards } = state
-  const [sortType, setSortType] = useState<InputType>('front')
-  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
-  const [cardInput, setCardInput] = useState({ front: '', back: '' })
-  const [filterChecked, setFilterChecked] = useState(false)
+  const { cards, sortType, sortDirection, cardInput, filterChecked } = state
 
   useEffect(() => {
     const getCard = async () => {
@@ -31,10 +24,13 @@ function Content() {
 
   const handleSortSelection = (e: InputType) => {
     if (e === sortType) {
-      setSortDirection(direction => (direction === 'asc' ? 'desc' : 'asc'))
+      dispatch({
+        type: 'SET_SORT_DIRECTION',
+        payload: sortDirection === 'asc' ? 'desc' : 'asc',
+      })
     } else {
-      setSortType(e)
-      setSortDirection('asc')
+      dispatch({ type: 'SET_SORT_TYPE', payload: e })
+      dispatch({ type: 'SET_SORT_DIRECTION', payload: 'asc' })
     }
   }
 
@@ -60,12 +56,14 @@ function Content() {
   }
 
   const handleInputChange = (inputType: InputType, value: string) => {
-    const updatedInput = { ...cardInput, [inputType]: value }
-    setCardInput(updatedInput)
+    dispatch({
+      type: 'SET_CARD_INPUT',
+      payload: { ...cardInput, [inputType]: value },
+    })
   }
 
   const handleCheckboxChange = (value: boolean) => {
-    setFilterChecked(value)
+    dispatch({ type: 'SET_FILTER_CHECKED', payload: value })
   }
 
   const directionMultiplier = sortDirection === 'asc' ? 1 : -1

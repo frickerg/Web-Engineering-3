@@ -1,34 +1,34 @@
 import type { CardProps } from '../../model/Card'
-import { v4 as uuidv4 } from 'uuid'
+import { randomUUID } from 'crypto'
 
 const cards: CardProps[] = [
   {
-    id: uuidv4(),
+    id: randomUUID(),
     front: 'Gegenwart',
     back: 'Present',
   },
   {
-    id: uuidv4(),
+    id: randomUUID(),
     front: 'Stunde',
     back: 'Hour',
   },
   {
-    id: uuidv4(),
+    id: randomUUID(),
     front: 'Minute',
     back: 'Minute',
   },
   {
-    id: uuidv4(),
+    id: randomUUID(),
     front: 'Sekunde',
     back: 'Second',
   },
   {
-    id: uuidv4(),
+    id: randomUUID(),
     front: 'Vergangenheit',
     back: 'Past',
   },
   {
-    id: uuidv4(),
+    id: randomUUID(),
     front: 'Zukunft',
     back: 'Future',
   },

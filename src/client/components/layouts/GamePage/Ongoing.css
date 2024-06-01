@@ -1,0 +1,58 @@
+.ongoing-page {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ongoing-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ongoing-progress {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.ongoing-delete-button {
+  width: auto;
+  padding: 10px 20px;
+}
+
+.ongoing-card {
+  width: 500px;
+  height: 350px;
+  margin: 20px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #f9f9f9;
+  box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ongoing-card-content {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.ongoing-answer-section {
+  display: flex;
+  flex-direction: row;
+  width: 500px;
+  align-items: baseline;
+}
+
+.ongoing-answer-input {
+  margin-right: 20px;
+}
+
+.ongoing-submit-button {
+  width: auto;
+  padding: 10px 20px;
+}

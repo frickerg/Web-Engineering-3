@@ -21,6 +21,7 @@ export interface GameResultItem extends CardProps {
 
 export enum GameState {
   NOT_STARTED = 'NOT_STARTED',
+  START = 'START',
   ONGOING = 'ONGOING',
   FINISHED = 'FINISHED',
 }
@@ -29,6 +30,10 @@ type State = {
   cards: GameResultItem[]
   gameState: GameState
   buttonLabel: string
+}
+
+type StartGameAction = {
+  type: 'START_GAME'
 }
 
 type SetCardsAction = {
@@ -54,6 +59,7 @@ type NavigateAction = {
 }
 
 type Action =
+  | StartGameAction
   | SetCardsAction
   | DeleteGameAction
   | FinishGameAction
@@ -74,6 +80,8 @@ const initialState: State = {
 
 const gameReducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case 'START_GAME':
+      return { ...state, gameState: GameState.START }
     case 'SET_CARDS':
       return { ...state, cards: action.payload, gameState: GameState.ONGOING }
     case 'DELETE_GAME':
@@ -92,13 +100,7 @@ const gameReducer = (state: State, action: Action): State => {
       return { ...state, buttonLabel: label }
     }
     case 'NAVIGATE':
-      if (state.gameState === GameState.ONGOING && state.cards.length > 0) {
-        action.payload.navigate('/ongoing')
-      } else if (state.gameState === GameState.FINISHED) {
-        action.payload.navigate('/end')
-      } else {
-        action.payload.navigate('/')
-      }
+      action.payload.navigate('/')
       return state
     default:
       return state

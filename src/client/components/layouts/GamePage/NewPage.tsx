@@ -1,6 +1,5 @@
 import './NewPage.css'
 import Button from '../../elements/Button/Button'
-import { useNavigate } from 'react-router-dom'
 import { GameContext, GameState } from '../../../../api/GameContext'
 import { useContext } from 'react'
 
@@ -8,11 +7,8 @@ export default function NewPage() {
   const { state, dispatch } = useContext(GameContext)
   const { gameState } = state
 
-  const navigate = useNavigate()
-
   const startNewGame = async () => {
-    dispatch({ type: 'DELETE_GAME' })
-    navigate('/ongoing')
+    dispatch({ type: 'START_GAME' })
   }
 
   return (

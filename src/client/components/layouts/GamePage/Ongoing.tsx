@@ -2,8 +2,11 @@ import './Ongoing.css'
 import { useState, useEffect, useContext } from 'react'
 import Button from '../../elements/Button/Button'
 import { fetchFlashcards, validateAnswer } from '../../../../api/card'
-import { GameContext, GameResultItem } from '../../../../api/GameContext'
-import { useNavigate } from 'react-router-dom'
+import {
+  GameContext,
+  GameResultItem,
+  GameState,
+} from '../../../../api/GameContext'
 import { FlashcardProps } from '../../../../model/Card'
 
 function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
@@ -18,10 +21,9 @@ function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
 
 export default function Ongoing() {
   const { state, dispatch } = useContext(GameContext)
-  const { cards } = state
+  const { cards, gameState } = state
   const [index, setIndex] = useState(0)
   const [answer, setAnswer] = useState('')
-  const navigate = useNavigate()
 
   const progress =
     cards.length > 0 ? Math.round((index / cards.length) * 100) : 0
@@ -39,8 +41,10 @@ export default function Ongoing() {
       }
     }
 
-    fetchCards()
-  }, [dispatch])
+    if (gameState === GameState.START) {
+      fetchCards()
+    }
+  }, [dispatch, gameState])
 
   const incrementIndex = () => {
     setIndex(prevIndex =>
@@ -50,10 +54,13 @@ export default function Ongoing() {
 
   const handleDeleteGame = () => {
     dispatch({ type: 'DELETE_GAME' })
-    navigate('/')
   }
 
   const validateCard = async () => {
+    if (!answer) {
+      return
+    }
+
     const currentCard = cards[index]
     const result = await validateAnswer(currentCard.id, answer)
     const updatedCards = cards.map((card, i) =>
@@ -79,8 +86,6 @@ export default function Ongoing() {
       dispatch({
         type: 'FINISH_GAME',
       })
-
-      navigate('/end')
     }
   }
 

@@ -1,29 +1,17 @@
-/**
- * TODO Eventuelle Verbesserung
- * Man könnte auch nur die ID und answer übergeben. Über ID würde man die Karte fetchen
- * und die Antwort würde man dynamisch Vergleichen. Setzt voraus, dass man weiss, welche Seite abgefragt wurde :)
- */
-
 import React, {
   createContext,
   useReducer,
   ReactNode,
-  useMemo,
   useEffect,
+  useCallback,
 } from 'react'
 import { CardProps } from '../client/components/elements/Card/Card'
 import { useNavigate } from 'react-router-dom'
+import { GameState } from './GameState'
 
 export interface GameResultItem extends CardProps {
   answer: string
   isAccepted: boolean
-}
-
-export enum GameState {
-  NOT_STARTED = 'NOT_STARTED',
-  START = 'START',
-  ONGOING = 'ONGOING',
-  FINISHED = 'FINISHED',
 }
 
 type State = {
@@ -59,11 +47,6 @@ type UpdateButtonAction = {
   type: 'UPDATE_BUTTON'
 }
 
-type NavigateAction = {
-  type: 'NAVIGATE'
-  payload: { navigate: (path: string) => void }
-}
-
 type Action =
   | StartGameAction
   | SetCardIndexAction
@@ -71,7 +54,6 @@ type Action =
   | DeleteGameAction
   | FinishGameAction
   | UpdateButtonAction
-  | NavigateAction
 
 type Props = {
   state: State
@@ -119,9 +101,6 @@ const gameReducer = (state: State, action: Action): State => {
       }
       return { ...state, buttonLabel: label }
     }
-    case 'NAVIGATE':
-      action.payload.navigate('/')
-      return state
     default:
       return state
   }
@@ -141,20 +120,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: 'UPDATE_BUTTON' })
   }, [state.gameState, state.currentCardIndex])
 
-  const handleButtonClick = () => {
-    dispatch({ type: 'NAVIGATE', payload: { navigate } })
-  }
+  const handleButtonClick = useCallback(() => {
+    dispatch({ type: 'SET_CARD_INDEX', payload: state.currentCardIndex })
+    navigate('/')
+  }, [navigate, state.currentCardIndex])
 
-  /* TODO You might have to use something other than useMemo here
-   * sonarlint(typescript:S6481)
-   * The object passed as the value prop to the Context provider changes every render.
-   * To fix this consider wrapping it in a useMemo hook.
-   * (property) dispatch: React.Dispatch<Action>
-   */
-  const contextValue = useMemo(
-    () => ({ state, dispatch, handleButtonClick }),
-    [state, dispatch]
-  )
+  const contextValue = { state, dispatch, handleButtonClick }
 
   return (
     <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>

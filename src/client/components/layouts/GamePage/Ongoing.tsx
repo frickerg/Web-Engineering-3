@@ -2,11 +2,8 @@ import './Ongoing.css'
 import { useState, useEffect, useContext } from 'react'
 import Button from '../../elements/Button/Button'
 import { fetchFlashcards, validateAnswer } from '../../../../api/card'
-import {
-  GameContext,
-  GameResultItem,
-  GameState,
-} from '../../../../api/GameContext'
+import { GameContext, GameResultItem } from '../../../../api/GameContext'
+import { GameState } from '../../../../api/GameState'
 import { FlashcardProps } from '../../../../model/Card'
 
 function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {

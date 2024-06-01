@@ -1,6 +1,7 @@
 import './NewPage.css'
 import Button from '../../elements/Button/Button'
-import { GameContext, GameState } from '../../../../api/GameContext'
+import { GameContext } from '../../../../api/GameContext'
+import { GameState } from '../../../../api/GameState'
 import { useContext } from 'react'
 
 export default function NewPage() {

@@ -7,7 +7,8 @@ import Ongoing from '../components/layouts/GamePage/Ongoing'
 import EndPage from '../components/layouts/GamePage/EndPage'
 import DetailPage from '../components/layouts/GamePage/DetailPage'
 import { useContext } from 'react'
-import { GameContext, GameState } from '../../api/GameContext'
+import { GameContext } from '../../api/GameContext'
+import { GameState } from '../../api/GameState'
 
 function App() {
   const { state } = useContext(GameContext)

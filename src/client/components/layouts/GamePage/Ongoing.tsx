@@ -5,6 +5,8 @@ import { fetchFlashcards, validateAnswer } from '../../../../api/card'
 import { GameContext, GameResultItem } from '../../../../api/GameContext'
 import { useNavigate } from 'react-router-dom'
 import { FlashcardProps } from '../../../../model/Card'
+import Input from '../../elements/Input/Input'
+import Flashcard from '../../elements/Flashcard/Flashcard'
 
 function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
   return cards.map(card => ({
@@ -89,23 +91,18 @@ export default function Ongoing() {
           className="ongoing-delete-button"
         />
       </div>
-      <div className="ongoing-card">
-        <div className="ongoing-card-content">
-          {cards.length > 0 && cards[index].front}
-        </div>
-      </div>
-      <div className="ongoing-answer-section">
-        <input
-          type="text"
+      <Flashcard text={cards[index]?.front} />
+      <div className="answer-section">
+        <Input
+          className="answer-input"
           value={answer}
-          onChange={e => setAnswer(e.target.value)}
-          className="ongoing-answer-input"
           placeholder="Answer"
+          handleInputChange={value => setAnswer(value)}
         />
         <Button
           label="Submit"
           onClick={validateCard}
-          className="ongoing-submit-button"
+          className="submit-button"
         />
       </div>
     </div>

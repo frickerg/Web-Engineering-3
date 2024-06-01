@@ -64,7 +64,7 @@ type Props = {
 const initialState: State = {
   cards: [],
   gameState: GameState.NOT_STARTED,
-  buttonLabel: 'Start New Game',
+  buttonLabel: 'New Game',
   currentCardIndex: 1,
 }
 
@@ -97,7 +97,7 @@ const gameReducer = (state: State, action: Action): State => {
       } else if (state.gameState === GameState.FINISHED) {
         label = 'Finished'
       } else {
-        label = 'Start New Game'
+        label = 'New Game'
       }
       return { ...state, buttonLabel: label }
     }

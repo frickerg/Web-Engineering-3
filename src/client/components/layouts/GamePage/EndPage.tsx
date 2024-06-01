@@ -10,7 +10,7 @@ export default function EndPage() {
   const { cards } = state
 
   const startNewGame = async () => {
-    dispatch({ type: 'DELETE_GAME' })
+    dispatch({ type: 'START_GAME' })
   }
 
   return (

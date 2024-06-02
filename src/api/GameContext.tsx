@@ -65,7 +65,7 @@ const initialState: State = {
   cards: [],
   gameState: GameState.NOT_STARTED,
   buttonLabel: 'New Game',
-  currentCardIndex: 1,
+  currentCardIndex: 0,
 }
 
 const gameReducer = (state: State, action: Action): State => {

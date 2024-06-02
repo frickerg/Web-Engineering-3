@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, ReactNode, useMemo } from 'react'
+import React, { createContext, useReducer, ReactNode } from 'react'
 import { CardProps } from '../client/components/elements/Card/Card'
 
 export type InputType = 'front' | 'back'
@@ -100,8 +100,7 @@ export const CardContext = createContext<CardContextProps>({
 
 export const CardProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(cardReducer, initialState)
-  // TODO eventuell müsste man hier was anderes als useMemo verwenden
-  const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch])
+  const contextValue = { state, dispatch }
 
   return (
     <CardContext.Provider value={contextValue}>{children}</CardContext.Provider>

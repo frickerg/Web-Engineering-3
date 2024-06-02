@@ -2,15 +2,30 @@
 
 import './EndPage.css'
 import { Fragment, useContext } from 'react'
-import { GameContext } from '../../../../api/GameContext'
+import { GameContext, GameResultItem } from '../../../../api/GameContext'
 import Button from '../../elements/Button/Button'
+import { CardContext } from '../../../../api/CardContext'
+import { CardProps } from '../../elements/Card/Card'
+
+// TODO util lib
+function mapCardToGameResultItem(cards: CardProps[]): GameResultItem[] {
+  return cards.map(card => ({
+    ...card,
+    answer: '',
+    isAccepted: false,
+  }))
+}
 
 export default function EndPage() {
-  const { state, dispatch } = useContext(GameContext)
-  const { cards } = state
+  const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
+  const { state: cardState } = useContext(CardContext)
+  const { cards: gameCards } = gameState
 
   const startNewGame = async () => {
-    dispatch({ type: 'START_GAME' })
+    gameDispatch({
+      type: 'START_GAME',
+      payload: mapCardToGameResultItem(cardState.cards),
+    })
   }
 
   return (
@@ -22,15 +37,15 @@ export default function EndPage() {
       />
       <h2>Game Results</h2>
       <p>
-        Solved {cards.filter(card => card.isAccepted).length} out of{' '}
-        {cards.length} correctly.
+        Solved {gameCards.filter(card => card.isAccepted).length} out of{' '}
+        {gameCards.length} correctly.
       </p>
       <div className="end-page-container">
         <div className="end-page-header">Front</div>
         <div className="end-page-header">Back</div>
         <div className="end-page-header">Your Answer</div>
         <div className="end-page-header">Accepted</div>
-        {cards.map(card => (
+        {gameCards.map(card => (
           <Fragment key={card.id}>
             <div className="end-page-item">{card.front}</div>
             <div className="end-page-item">{card.back}</div>

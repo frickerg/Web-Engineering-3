@@ -1,21 +1,9 @@
-import type {
-  CardProps,
-  FlashcardAnswerValidation,
-  FlashcardProps,
-} from '../model/Card'
+import type { CardProps } from '../model/Card'
 
 export const fetchCards = async (): Promise<CardProps[]> => {
   const response = await fetch('/api/cards/getCards')
   if (!response.ok) {
     throw new Error(`HTTP status: ${response.status} - Failed to fetch cards.`)
-  }
-  return response.json()
-}
-
-export const fetchCardById = async (id: string): Promise<CardProps> => {
-  const response = await fetch(`/api/cards/getCardById/${id}`)
-  if (!response.ok) {
-    throw new Error(`HTTP status: ${response.status} - Failed to fetch card.`)
   }
   return response.json()
 }

@@ -23,6 +23,7 @@ type State = {
 
 type StartGameAction = {
   type: 'START_GAME'
+  payload: GameResultItem[]
 }
 
 type SetCardIndexAction = {
@@ -68,19 +69,49 @@ const initialState: State = {
   currentCardIndex: 0,
 }
 
+function randomNumberBetween(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+function getRandomEntries<T>(array: T[], numberOfEntries: number): T[] {
+  if (numberOfEntries > array.length) {
+    return []
+  }
+
+  const result = new Set<T>()
+  while (result.size < numberOfEntries) {
+    const randomIndex = Math.floor(Math.random() * array.length)
+    result.add(array[randomIndex])
+  }
+
+  return Array.from(result)
+}
+
 const gameReducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'START_GAME':
-      return { ...state, gameState: GameState.START, currentCardIndex: 0 }
+    case 'START_GAME': {
+      const cards = action.payload
+      const maxIndex = cards.length > 10 ? 10 : cards.length
+      const numberOfEntries = randomNumberBetween(3, maxIndex)
+      const randomGameCards = getRandomEntries(cards, numberOfEntries)
+
+      return {
+        ...state,
+        cards: randomGameCards,
+        gameState: GameState.START,
+        currentCardIndex: 0,
+      }
+    }
     case 'SET_CARD_INDEX':
       return { ...state, currentCardIndex: action.payload }
-    case 'SET_CARDS':
+    case 'SET_CARDS': {
       return {
         ...state,
         cards: action.payload,
         gameState: GameState.ONGOING,
         currentCardIndex: 0,
       }
+    }
     case 'DELETE_GAME':
       return {
         ...state,

@@ -26,7 +26,7 @@ function App() {
       }
     }
     fetchData()
-  }, [])
+  }, [cardDispatch])
 
   const renderContent = () => {
     switch (gameState.gameState) {

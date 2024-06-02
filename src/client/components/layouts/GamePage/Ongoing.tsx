@@ -1,11 +1,12 @@
-import './Ongoing.css'
-import { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Button from '../../elements/Button/Button'
 import { GameContext, GameResultItem } from '../../../../api/GameContext'
 import { GameState } from '../../../../api/GameState'
 import { CardContext } from '../../../../api/CardContext'
 import { CardProps } from '../../elements/Card/Card'
+import './Ongoing.css'
 
+// TODO util lib
 function mapCardToGameResultItem(cards: CardProps[]): GameResultItem[] {
   return cards.map(card => ({
     id: card.id,
@@ -36,6 +37,10 @@ export default function Ongoing() {
       })
     }
   }, [gameDispatch, gameState.gameState, gameCards.length, contextCards])
+
+  useEffect(() => {
+    setAnswer('')
+  }, [currentCardIndex])
 
   const incrementIndex = () => {
     const newIndex =

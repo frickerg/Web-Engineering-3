@@ -4,37 +4,32 @@ import Input from '../../elements/Input/Input'
 import Label from '../../elements/Label/Label'
 import { CardProps } from '../../elements/Card/Card'
 import { InputType } from '../../../../api/CardContext'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { fetchCardById, updateCard } from '../../../../api/card'
+import { updateCard } from '../../../../api/card'
+import { CardContext } from '../../../../api/CardContext'
 
 export default function DetailPage() {
   const [card, setCard] = useState<CardProps>({ id: '', front: '', back: '' })
   const { cardId } = useParams<{ cardId: string }>()
   const navigate = useNavigate()
+  const { state } = useContext(CardContext)
+  const { cards } = state
 
   useEffect(() => {
-    const getCard = async () => {
-      try {
-        const fetchedCard = await fetchCardById(cardId as string)
+    if (cardId) {
+      const fetchedCard = cards.find(card => card.id === cardId)
+      if (fetchedCard) {
         setCard(fetchedCard)
-      } catch (error) {
-        console.error(error)
       }
     }
-    if (cardId) {
-      getCard()
-    }
-  }, [cardId])
+  }, [cardId, cards])
 
   const handleInputChange = (inputType: InputType, value: string) => {
-    setCard(
-      prevCard =>
-        ({
-          ...prevCard,
-          [inputType]: value,
-        } as CardProps)
-    )
+    setCard(prevCard => ({
+      ...prevCard,
+      [inputType]: value,
+    }))
   }
 
   const handleUpdate = async () => {

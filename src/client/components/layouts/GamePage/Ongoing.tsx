@@ -1,15 +1,16 @@
 import './Ongoing.css'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Button from '../../elements/Button/Button'
-import { fetchFlashcards, validateAnswer } from '../../../../api/card'
+import { validateAnswer } from '../../../../api/card'
 import { GameContext, GameResultItem } from '../../../../api/GameContext'
 import { GameState } from '../../../../api/GameState'
-import { FlashcardProps } from '../../../../model/Card'
+import { CardContext } from '../../../../api/CardContext'
+import { CardProps } from '../../elements/Card/Card'
 
-function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
+function mapCardToGameResultItem(cards: CardProps[]): GameResultItem[] {
   return cards.map(card => ({
     id: card.id,
-    front: card.query,
+    front: card.front,
     back: '',
     answer: '',
     isAccepted: false,
@@ -17,44 +18,39 @@ function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
 }
 
 export default function Ongoing() {
-  const { state, dispatch } = useContext(GameContext)
-  const { cards, gameState, currentCardIndex } = state
+  const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
+  const { state: cardState } = useContext(CardContext)
+  const { cards: gameCards, currentCardIndex } = gameState
+  const { cards: contextCards } = cardState
   const [answer, setAnswer] = useState('')
 
   const progress =
-    cards.length > 0 ? Math.round((currentCardIndex / cards.length) * 100) : 0
+    gameCards.length > 0
+      ? Math.round((currentCardIndex / gameCards.length) * 100)
+      : 0
 
   useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const fetchedCards = await fetchFlashcards()
-        dispatch({
-          type: 'SET_CARDS',
-          payload: mapCardToGameResultItem(fetchedCards),
-        })
-      } catch (error) {
-        console.error(error)
-      }
+    if (gameState.gameState === GameState.START && gameCards.length === 0) {
+      gameDispatch({
+        type: 'SET_CARDS',
+        payload: mapCardToGameResultItem(contextCards),
+      })
     }
-
-    if (gameState === GameState.START) {
-      fetchCards()
-    }
-  }, [dispatch, gameState])
+  }, [gameDispatch, gameState.gameState, gameCards.length, contextCards])
 
   const incrementIndex = () => {
     const newIndex =
-      currentCardIndex < cards.length - 1
+      currentCardIndex < gameCards.length - 1
         ? currentCardIndex + 1
         : currentCardIndex
-    dispatch({
+    gameDispatch({
       type: 'SET_CARD_INDEX',
       payload: newIndex,
     })
   }
 
   const handleDeleteGame = () => {
-    dispatch({ type: 'DELETE_GAME' })
+    gameDispatch({ type: 'DELETE_GAME' })
   }
 
   const validateCard = async () => {
@@ -62,10 +58,10 @@ export default function Ongoing() {
       return
     }
 
-    const currentCard = cards[currentCardIndex]
+    const currentCard = gameCards[currentCardIndex]
     try {
       const result = await validateAnswer(currentCard.id, answer)
-      const updatedCards = [...cards]
+      const updatedCards = [...gameCards]
 
       updatedCards[currentCardIndex] = {
         ...currentCard,
@@ -74,7 +70,7 @@ export default function Ongoing() {
         answer: answer,
       }
 
-      dispatch({
+      gameDispatch({
         type: 'SET_CARDS',
         payload: updatedCards,
       })
@@ -85,8 +81,8 @@ export default function Ongoing() {
     incrementIndex()
     setAnswer('')
 
-    if (currentCardIndex >= cards.length - 1) {
-      dispatch({
+    if (currentCardIndex >= gameCards.length - 1) {
+      gameDispatch({
         type: 'FINISH_GAME',
       })
     }
@@ -104,7 +100,7 @@ export default function Ongoing() {
       </div>
       <div className="ongoing-card">
         <div className="ongoing-card-content">
-          {cards.length > 0 && cards[currentCardIndex].front}
+          {gameCards.length > 0 && gameCards[currentCardIndex].front}
         </div>
       </div>
       <div className="ongoing-answer-section">

@@ -1,5 +1,6 @@
-import React, { createContext, useReducer, ReactNode } from 'react'
+import React, { createContext, useReducer, ReactNode, useEffect } from 'react'
 import { CardProps } from '../client/components/elements/Card/Card'
+import { fetchCards } from './card'
 
 export type InputType = 'front' | 'back'
 export type SortDirection = 'asc' | 'desc'
@@ -100,6 +101,19 @@ export const CardContext = createContext<CardContextProps>({
 
 export const CardProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(cardReducer, initialState)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedCards = await fetchCards()
+        dispatch({ type: 'SET_CARDS', payload: fetchedCards })
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [])
+
   const contextValue = { state, dispatch }
 
   return (

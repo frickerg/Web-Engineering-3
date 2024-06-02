@@ -9,7 +9,7 @@ import React, {
 import { CardProps } from '../client/components/elements/Card/Card'
 import { useNavigate } from 'react-router-dom'
 import { GameState } from './GameState'
-import { fetchGameSize, fetchCards } from './card'
+import { fetchGameSize } from './card'
 import { mapCardToGameResultItem } from './cardUtils'
 import { CardContext } from './CardContext'
 

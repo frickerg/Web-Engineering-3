@@ -4,12 +4,9 @@ import './EndPage.css'
 import { Fragment, useContext } from 'react'
 import { GameContext } from '../../../../api/GameContext'
 import Button from '../../elements/Button/Button'
-import { CardContext } from '../../../../api/CardContext'
-import { mapCardToGameResultItem } from '../../../../api/cardUtils'
 
 export default function EndPage() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
-  const { state: cardState } = useContext(CardContext)
   const { cards: gameCards } = gameState
 
   const startNewGame = async () => {

@@ -3,12 +3,9 @@ import Button from '../../elements/Button/Button'
 import { GameContext } from '../../../../api/GameContext'
 import { GameState } from '../../../../api/GameState'
 import { useContext } from 'react'
-import { CardContext } from '../../../../api/CardContext'
-import { mapCardToGameResultItem } from '../../../../api/cardUtils'
 
 export default function NewPage() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
-  const { state: cardState } = useContext(CardContext)
 
   const startNewGame = async () => {
     gameDispatch({

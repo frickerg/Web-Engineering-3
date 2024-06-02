@@ -4,10 +4,14 @@ import React, {
   ReactNode,
   useEffect,
   useCallback,
+  useContext,
 } from 'react'
 import { CardProps } from '../client/components/elements/Card/Card'
 import { useNavigate } from 'react-router-dom'
 import { GameState } from './GameState'
+import { fetchGameSize, fetchCards } from './card'
+import { mapCardToGameResultItem } from './cardUtils'
+import { CardContext } from './CardContext'
 
 export interface GameResultItem extends CardProps {
   answer: string
@@ -23,7 +27,6 @@ type State = {
 
 type StartGameAction = {
   type: 'START_GAME'
-  payload: GameResultItem[]
 }
 
 type SetCardIndexAction = {
@@ -69,10 +72,6 @@ const initialState: State = {
   currentCardIndex: 0,
 }
 
-function randomNumberBetween(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
-}
-
 function getRandomEntries<T>(array: T[], numberOfEntries: number): T[] {
   if (numberOfEntries > array.length) {
     return []
@@ -90,14 +89,8 @@ function getRandomEntries<T>(array: T[], numberOfEntries: number): T[] {
 const gameReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'START_GAME': {
-      const cards = action.payload
-      const maxIndex = cards.length > 10 ? 10 : cards.length
-      const numberOfEntries = randomNumberBetween(3, maxIndex)
-      const randomGameCards = getRandomEntries(cards, numberOfEntries)
-
       return {
         ...state,
-        cards: randomGameCards,
         gameState: GameState.START,
         currentCardIndex: 0,
       }
@@ -145,6 +138,7 @@ export const GameContext = createContext<Props>({
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState)
+  const { state: cardState } = useContext(CardContext)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -155,6 +149,26 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: 'SET_CARD_INDEX', payload: state.currentCardIndex })
     navigate('/')
   }, [navigate, state.currentCardIndex])
+
+  useEffect(() => {
+    const initializeGame = async () => {
+      try {
+        const numberOfEntries = await fetchGameSize()
+        const cards = cardState.cards
+        const randomGameCards = getRandomEntries(cards, numberOfEntries)
+        dispatch({
+          type: 'SET_CARDS',
+          payload: mapCardToGameResultItem(randomGameCards),
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    if (state.gameState === GameState.START) {
+      initializeGame()
+    }
+  }, [state.gameState])
 
   const contextValue = { state, dispatch, handleButtonClick }
 

@@ -15,7 +15,6 @@ export default function EndPage() {
   const startNewGame = async () => {
     gameDispatch({
       type: 'START_GAME',
-      payload: mapCardToGameResultItem(cardState.cards),
     })
   }
 

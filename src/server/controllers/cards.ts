@@ -31,3 +31,19 @@ export const deleteCard = (req: Request, res: Response) => {
   cardStore.deleteCard(req.params.id)
   res.status(204).send()
 }
+
+function randomNumberBetween(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+export const fetchGameSize = (_req: Request, res: Response) => {
+  const cards = cardStore.getCards()
+  const maxIndex = cards.length > 10 ? 10 : cards.length
+  const randomGameSize = randomNumberBetween(3, maxIndex)
+
+  if (cards.length < randomGameSize) {
+    return res.status(400).send('more elements taken than available')
+  }
+
+  res.send(randomGameSize)
+}

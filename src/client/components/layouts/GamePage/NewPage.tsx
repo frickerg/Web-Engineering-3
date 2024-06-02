@@ -13,7 +13,6 @@ export default function NewPage() {
   const startNewGame = async () => {
     gameDispatch({
       type: 'START_GAME',
-      payload: mapCardToGameResultItem(cardState.cards),
     })
   }
 

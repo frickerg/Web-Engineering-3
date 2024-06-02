@@ -46,3 +46,16 @@ export const deleteCard = async (id: string) => {
     throw new Error(`HTTP status: ${response.status} - Failed to delete card.`)
   }
 }
+
+export const fetchGameSize = async (): Promise<number> => {
+  const response = await fetch(`/api/cards/fetchGameSize`)
+  if (!response.ok) {
+    throw new Error(
+      `HTTP status: ${response.status} - Failed to fetch game size.`
+    )
+  }
+  const data = await response.json()
+  // console.log(`n: ${data.gameSize}`)
+  return data.gameSize
+  // return response.json()
+}

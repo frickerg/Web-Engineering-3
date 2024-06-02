@@ -5,6 +5,9 @@ import { fetchFlashcards, validateAnswer } from '../../../../api/card'
 import { GameContext, GameResultItem } from '../../../../api/GameContext'
 import { useNavigate } from 'react-router-dom'
 import { FlashcardProps } from '../../../../model/Card'
+import Input from '../../elements/Input/Input'
+import Flashcard from '../../elements/Flashcard/Flashcard'
+import Label from '../../elements/Label/Label'
 
 function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
   return cards.map(card => ({
@@ -23,8 +26,12 @@ export default function Ongoing() {
   const [answer, setAnswer] = useState('')
   const navigate = useNavigate()
 
-  const progress =
-    cards.length > 0 ? Math.round((index / cards.length) * 100) : 0
+  const progressLabel = () => {
+    const progress =
+      cards.length > 0 ? Math.round((index / cards.length) * 100) : 0
+
+    return `Progress: ${progress}%`
+  }
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -83,32 +90,27 @@ export default function Ongoing() {
   }
 
   return (
-    <div className="ongoing-page">
+    <div className="ongoing-container">
       <div className="ongoing-header">
-        <div className="ongoing-progress">Progress: {progress}%</div>
+        <Label label={progressLabel()} className="progress-label" />
         <Button
           label="Delete Game"
           onClick={handleDeleteGame}
-          className="ongoing-delete-button"
+          className="delete-button"
         />
       </div>
-      <div className="ongoing-card">
-        <div className="ongoing-card-content">
-          {cards.length > 0 && cards[index].front}
-        </div>
-      </div>
-      <div className="ongoing-answer-section">
-        <input
-          type="text"
+      <Flashcard text={cards[index]?.front} />
+      <div className="answer-section">
+        <Input
+          className="answer-input"
           value={answer}
-          onChange={e => setAnswer(e.target.value)}
-          className="ongoing-answer-input"
           placeholder="Answer"
+          handleInputChange={value => setAnswer(value)}
         />
         <Button
           label="Submit"
           onClick={validateCard}
-          className="ongoing-submit-button"
+          className="submit-button"
         />
       </div>
     </div>

@@ -58,29 +58,3 @@ export const deleteCard = async (id: string) => {
     throw new Error(`HTTP status: ${response.status} - Failed to delete card.`)
   }
 }
-
-export const fetchFlashcards = async (): Promise<FlashcardProps[]> => {
-  const response = await fetch(`/api/cards/fetchFlashcards`)
-  if (!response.ok) {
-    throw new Error(`HTTP status: ${response.status} - Failed to fetch cards.`)
-  }
-  return response.json()
-}
-
-export const validateAnswer = async (
-  id: string,
-  userAnswer: string
-): Promise<FlashcardAnswerValidation> => {
-  const response = await fetch(`/api/cards/getCardById/${id}`)
-  if (!response.ok) {
-    throw new Error(`HTTP status: ${response.status} - Failed to fetch card.`)
-  }
-  return response.json().then(e => {
-    const isAnswerCorrect =
-      e.back.trim().toLowerCase() === userAnswer.trim().toLowerCase()
-    return {
-      expectedAnswer: e.back,
-      isAnswerCorrect,
-    }
-  })
-}

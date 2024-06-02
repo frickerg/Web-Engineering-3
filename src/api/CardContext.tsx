@@ -102,17 +102,17 @@ export const CardContext = createContext<CardContextProps>({
 export const CardProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(cardReducer, initialState)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedCards = await fetchCards()
-        dispatch({ type: 'SET_CARDS', payload: fetchedCards })
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [])
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const fetchedCards = await fetchCards()
+  //       dispatch({ type: 'SET_CARDS', payload: fetchedCards })
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  //   fetchData()
+  // }, [])
 
   const contextValue = { state, dispatch }
 

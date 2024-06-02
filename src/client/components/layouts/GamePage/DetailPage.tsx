@@ -3,11 +3,10 @@ import Button from '../../elements/Button/Button'
 import Input from '../../elements/Input/Input'
 import Label from '../../elements/Label/Label'
 import { CardProps } from '../../elements/Card/Card'
-import { InputType } from '../../../../api/CardContext'
+import { InputType, CardContext } from '../../../../api/CardContext'
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { updateCard } from '../../../../api/card'
-import { CardContext } from '../../../../api/CardContext'
 
 export default function DetailPage() {
   const [card, setCard] = useState<CardProps>({ id: '', front: '', back: '' })

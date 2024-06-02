@@ -1,7 +1,6 @@
 import './Ongoing.css'
 import { useState, useContext, useEffect } from 'react'
 import Button from '../../elements/Button/Button'
-import { validateAnswer } from '../../../../api/card'
 import { GameContext, GameResultItem } from '../../../../api/GameContext'
 import { GameState } from '../../../../api/GameState'
 import { CardContext } from '../../../../api/CardContext'
@@ -11,7 +10,7 @@ function mapCardToGameResultItem(cards: CardProps[]): GameResultItem[] {
   return cards.map(card => ({
     id: card.id,
     front: card.front,
-    back: '',
+    back: card.back,
     answer: '',
     isAccepted: false,
   }))
@@ -60,13 +59,14 @@ export default function Ongoing() {
 
     const currentCard = gameCards[currentCardIndex]
     try {
-      const result = await validateAnswer(currentCard.id, answer)
+      const isAnswerCorrect =
+        currentCard.back.trim().toLowerCase() === answer.trim().toLowerCase()
       const updatedCards = [...gameCards]
 
       updatedCards[currentCardIndex] = {
         ...currentCard,
-        back: result.expectedAnswer,
-        isAccepted: result.isAnswerCorrect,
+        back: currentCard.back,
+        isAccepted: isAnswerCorrect,
         answer: answer,
       }
 

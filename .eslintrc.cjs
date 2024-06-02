@@ -10,6 +10,14 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh'],
   rules: {
+    'no-magic-numbers': [
+      'error',
+      {
+        ignore: [
+          0, 1, -1, 100, 101, 200, 201, 204, 301, 302, 400, 401, 403, 404, 500,
+        ],
+      },
+    ],
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },

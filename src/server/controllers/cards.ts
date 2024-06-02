@@ -41,9 +41,11 @@ export const deleteCard = (req: Request, res: Response) => {
 }
 
 export const fetchFlashcards = (_req: Request, res: Response) => {
+  const minCards = 3
+  const maxCards = 10
   const cards = cardStore.getCards()
-  const maxIndex = cards.length > 10 ? 10 : cards.length
-  const numberOfEntries = randomNumberBetween(3, maxIndex)
+  const limitCards = cards.length > maxCards ? maxCards : cards.length
+  const numberOfEntries = randomNumberBetween(minCards, limitCards)
 
   const randomGameCards = getRandomEntries(cards, numberOfEntries)
   if (randomGameCards.length < numberOfEntries) {

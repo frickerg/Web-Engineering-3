@@ -168,7 +168,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     if (state.gameState === GameState.START) {
       initializeGame()
     }
-  }, [state.gameState])
+  }, [state.gameState, cardState.cards])
 
   const contextValue = { state, dispatch, handleButtonClick }
 

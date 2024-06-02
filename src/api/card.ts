@@ -55,7 +55,5 @@ export const fetchGameSize = async (): Promise<number> => {
     )
   }
   const data = await response.json()
-  // console.log(`n: ${data.gameSize}`)
   return data.gameSize
-  // return response.json()
 }

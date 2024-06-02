@@ -6,13 +6,13 @@ import { CardProps } from '../../elements/Card/Card'
 import { InputType, CardContext } from '../../../../api/CardContext'
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { updateCard } from '../../../../api/card'
+import { fetchCards, updateCard } from '../../../../api/card'
 
 export default function DetailPage() {
   const [card, setCard] = useState<CardProps>({ id: '', front: '', back: '' })
   const { cardId } = useParams<{ cardId: string }>()
   const navigate = useNavigate()
-  const { state } = useContext(CardContext)
+  const { state, dispatch } = useContext(CardContext)
   const { cards } = state
 
   useEffect(() => {
@@ -35,6 +35,8 @@ export default function DetailPage() {
     if (card) {
       try {
         await updateCard(card)
+        const fetchedCards = await fetchCards()
+        dispatch({ type: 'SET_CARDS', payload: fetchedCards })
         navigate('/cards')
       } catch (error) {
         console.error(error)

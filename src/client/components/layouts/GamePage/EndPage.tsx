@@ -2,19 +2,10 @@
 
 import './EndPage.css'
 import { Fragment, useContext } from 'react'
-import { GameContext, GameResultItem } from '../../../../api/GameContext'
+import { GameContext } from '../../../../api/GameContext'
 import Button from '../../elements/Button/Button'
 import { CardContext } from '../../../../api/CardContext'
-import { CardProps } from '../../elements/Card/Card'
-
-// TODO util lib
-function mapCardToGameResultItem(cards: CardProps[]): GameResultItem[] {
-  return cards.map(card => ({
-    ...card,
-    answer: '',
-    isAccepted: false,
-  }))
-}
+import { mapCardToGameResultItem } from '../../../../api/cardUtils'
 
 export default function EndPage() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)

@@ -1,19 +1,10 @@
 import './NewPage.css'
 import Button from '../../elements/Button/Button'
-import { GameContext, GameResultItem } from '../../../../api/GameContext'
+import { GameContext } from '../../../../api/GameContext'
 import { GameState } from '../../../../api/GameState'
 import { useContext } from 'react'
 import { CardContext } from '../../../../api/CardContext'
-import { CardProps } from '../../elements/Card/Card'
-
-// TODO util lib
-function mapCardToGameResultItem(cards: CardProps[]): GameResultItem[] {
-  return cards.map(card => ({
-    ...card,
-    answer: '',
-    isAccepted: false,
-  }))
-}
+import { mapCardToGameResultItem } from '../../../../api/cardUtils'
 
 export default function NewPage() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)

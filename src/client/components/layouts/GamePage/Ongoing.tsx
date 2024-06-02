@@ -1,21 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Button from '../../elements/Button/Button'
-import { GameContext, GameResultItem } from '../../../../api/GameContext'
+import { GameContext } from '../../../../api/GameContext'
 import { GameState } from '../../../../api/GameState'
 import { CardContext } from '../../../../api/CardContext'
-import { CardProps } from '../../elements/Card/Card'
 import './Ongoing.css'
-
-// TODO util lib
-function mapCardToGameResultItem(cards: CardProps[]): GameResultItem[] {
-  return cards.map(card => ({
-    id: card.id,
-    front: card.front,
-    back: card.back,
-    answer: '',
-    isAccepted: false,
-  }))
-}
+import { mapCardToGameResultItem } from '../../../../api/cardUtils'
 
 export default function Ongoing() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)

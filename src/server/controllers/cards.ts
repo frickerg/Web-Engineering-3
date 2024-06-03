@@ -39,7 +39,8 @@ function randomNumberBetween(min: number, max: number) {
 export const fetchGameSize = (_req: Request, res: Response) => {
   const cards = cardStore.getCards()
   const maxIndex = cards.length > 10 ? 10 : cards.length
-  const randomGameSize = randomNumberBetween(3, maxIndex)
+  const minIndex = cards.length >= 3 ? 3 : cards.length
+  const randomGameSize = randomNumberBetween(minIndex, maxIndex)
 
   if (cards.length < randomGameSize) {
     return res.status(400).send('more elements taken than available')

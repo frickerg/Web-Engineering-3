@@ -1,5 +1,5 @@
 import { CardProps } from '../model/Card'
-import { GameResultItem } from './GameContext'
+import { GameResultItem, InitGameAction } from './GameContext'
 import { fetchGameSize } from './card'
 
 export function mapCardToGameResultItem(cards: CardProps[]): GameResultItem[] {
@@ -28,7 +28,7 @@ function getRandomEntries<T>(array: T[], numberOfEntries: number): T[] {
 
 export async function startNewGame(
   cardStateCards: CardProps[],
-  dispatch: React.Dispatch<any>
+  dispatch: React.Dispatch<InitGameAction>
 ) {
   try {
     const numberOfEntries = await fetchGameSize()

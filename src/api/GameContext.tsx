@@ -15,7 +15,7 @@ type State = {
   currentCardIndex: number
 }
 
-type InitGameAction = {
+export type InitGameAction = {
   type: 'INIT_GAME'
   payload: GameResultItem[]
 }

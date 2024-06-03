@@ -47,17 +47,12 @@ type FinishGameAction = {
   type: 'FINISH_GAME'
 }
 
-type UpdateButtonAction = {
-  type: 'UPDATE_BUTTON'
-}
-
 type Action =
   | StartGameAction
   | SetCardIndexAction
   | SetCardsAction
   | DeleteGameAction
   | FinishGameAction
-  | UpdateButtonAction
 
 type Props = {
   state: State
@@ -93,16 +88,29 @@ const gameReducer = (state: State, action: Action): State => {
         ...state,
         gameState: GameState.START,
         currentCardIndex: 0,
+        buttonLabel: 'Solve #1',
       }
     }
-    case 'SET_CARD_INDEX':
-      return { ...state, currentCardIndex: action.payload }
+    case 'SET_CARD_INDEX': {
+      const newLabel =
+        state.gameState === GameState.ONGOING && state.cards.length > 0
+          ? 'Solve #' + (action.payload + 1)
+          : state.gameState === GameState.FINISHED
+          ? 'Finished'
+          : 'New Game'
+      return {
+        ...state,
+        currentCardIndex: action.payload,
+        buttonLabel: newLabel,
+      }
+    }
     case 'SET_CARDS': {
       return {
         ...state,
         cards: action.payload,
         gameState: GameState.ONGOING,
         currentCardIndex: 0,
+        buttonLabel: 'Solve #1',
       }
     }
     case 'DELETE_GAME':
@@ -111,20 +119,14 @@ const gameReducer = (state: State, action: Action): State => {
         cards: [],
         gameState: GameState.NOT_STARTED,
         currentCardIndex: 0,
+        buttonLabel: 'New Game',
       }
     case 'FINISH_GAME':
-      return { ...state, gameState: GameState.FINISHED }
-    case 'UPDATE_BUTTON': {
-      let label
-      if (state.gameState === GameState.ONGOING && state.cards.length > 0) {
-        label = 'Solve #' + (state.currentCardIndex + 1)
-      } else if (state.gameState === GameState.FINISHED) {
-        label = 'Finished'
-      } else {
-        label = 'New Game'
+      return {
+        ...state,
+        gameState: GameState.FINISHED,
+        buttonLabel: 'Finished',
       }
-      return { ...state, buttonLabel: label }
-    }
     default:
       return state
   }
@@ -140,10 +142,6 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState)
   const { state: cardState } = useContext(CardContext)
   const navigate = useNavigate()
-
-  useEffect(() => {
-    dispatch({ type: 'UPDATE_BUTTON' })
-  }, [state.gameState, state.currentCardIndex])
 
   const handleButtonClick = useCallback(() => {
     dispatch({ type: 'SET_CARD_INDEX', payload: state.currentCardIndex })

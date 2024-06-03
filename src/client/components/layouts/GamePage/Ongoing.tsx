@@ -19,9 +19,12 @@ export default function Ongoing() {
       : 0
 
   useEffect(() => {
-    if (gameState.gameState === GameState.START && gameCards.length === 0) {
+    if (
+      gameState.gameState === GameState.NOT_STARTED &&
+      gameCards.length === 0
+    ) {
       gameDispatch({
-        type: 'SET_CARDS',
+        type: 'INIT_GAME',
         payload: mapCardToGameResultItem(contextCards),
       })
     }
@@ -65,7 +68,7 @@ export default function Ongoing() {
       }
 
       gameDispatch({
-        type: 'SET_CARDS',
+        type: 'INIT_GAME',
         payload: updatedCards,
       })
     } catch (error) {

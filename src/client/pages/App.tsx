@@ -32,7 +32,6 @@ function App() {
     switch (gameState.gameState) {
       case GameState.NOT_STARTED:
         return <NewPage />
-      case GameState.START:
       case GameState.ONGOING:
         return <Ongoing />
       case GameState.FINISHED:

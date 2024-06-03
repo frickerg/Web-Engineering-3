@@ -4,23 +4,20 @@ import './EndPage.css'
 import { Fragment, useContext } from 'react'
 import { GameContext } from '../../../../api/GameContext'
 import Button from '../../elements/Button/Button'
+import { startNewGame } from '../../../../api/cardUtils'
+import { CardContext } from '../../../../api/CardContext'
 
 export default function EndPage() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
+  const { state: cardState } = useContext(CardContext)
   const { cards: gameCards } = gameState
-
-  const startNewGame = async () => {
-    gameDispatch({
-      type: 'START_GAME',
-    })
-  }
 
   return (
     <div className="end-page-results">
       <Button
         label="Start New Game"
         className="end-page-button"
-        onClick={() => startNewGame()}
+        onClick={() => startNewGame(cardState.cards, gameDispatch)}
       />
       <h2>Game Results</h2>
       <p>

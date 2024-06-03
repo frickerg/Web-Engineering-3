@@ -1,17 +1,7 @@
-import React, {
-  createContext,
-  useReducer,
-  ReactNode,
-  useEffect,
-  useCallback,
-  useContext,
-} from 'react'
+import React, { createContext, useReducer, ReactNode, useCallback } from 'react'
 import { CardProps } from '../client/components/elements/Card/Card'
 import { useNavigate } from 'react-router-dom'
 import { GameState } from './GameState'
-import { fetchGameSize } from './card'
-import { mapCardToGameResultItem } from './cardUtils'
-import { CardContext } from './CardContext'
 
 export interface GameResultItem extends CardProps {
   answer: string
@@ -25,18 +15,14 @@ type State = {
   currentCardIndex: number
 }
 
-type StartGameAction = {
-  type: 'START_GAME'
+type InitGameAction = {
+  type: 'INIT_GAME'
+  payload: GameResultItem[]
 }
 
 type SetCardIndexAction = {
   type: 'SET_CARD_INDEX'
   payload: number
-}
-
-type SetCardsAction = {
-  type: 'SET_CARDS'
-  payload: GameResultItem[]
 }
 
 type DeleteGameAction = {
@@ -48,9 +34,8 @@ type FinishGameAction = {
 }
 
 type Action =
-  | StartGameAction
+  | InitGameAction
   | SetCardIndexAction
-  | SetCardsAction
   | DeleteGameAction
   | FinishGameAction
 
@@ -67,26 +52,13 @@ const initialState: State = {
   currentCardIndex: 0,
 }
 
-function getRandomEntries<T>(array: T[], numberOfEntries: number): T[] {
-  if (numberOfEntries > array.length) {
-    return []
-  }
-
-  const result = new Set<T>()
-  while (result.size < numberOfEntries) {
-    const randomIndex = Math.floor(Math.random() * array.length)
-    result.add(array[randomIndex])
-  }
-
-  return Array.from(result)
-}
-
 const gameReducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'START_GAME': {
+    case 'INIT_GAME': {
       return {
         ...state,
-        gameState: GameState.START,
+        cards: action.payload,
+        gameState: GameState.ONGOING,
         currentCardIndex: 0,
         buttonLabel: 'Solve #1',
       }
@@ -102,15 +74,6 @@ const gameReducer = (state: State, action: Action): State => {
         ...state,
         currentCardIndex: action.payload,
         buttonLabel: newLabel,
-      }
-    }
-    case 'SET_CARDS': {
-      return {
-        ...state,
-        cards: action.payload,
-        gameState: GameState.ONGOING,
-        currentCardIndex: 0,
-        buttonLabel: 'Solve #1',
       }
     }
     case 'DELETE_GAME':
@@ -140,33 +103,12 @@ export const GameContext = createContext<Props>({
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState)
-  const { state: cardState } = useContext(CardContext)
   const navigate = useNavigate()
 
   const handleButtonClick = useCallback(() => {
     dispatch({ type: 'SET_CARD_INDEX', payload: state.currentCardIndex })
     navigate('/')
   }, [navigate, state.currentCardIndex])
-
-  useEffect(() => {
-    const initializeGame = async () => {
-      try {
-        const numberOfEntries = await fetchGameSize()
-        const cards = cardState.cards
-        const randomGameCards = getRandomEntries(cards, numberOfEntries)
-        dispatch({
-          type: 'SET_CARDS',
-          payload: mapCardToGameResultItem(randomGameCards),
-        })
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    if (state.gameState === GameState.START) {
-      initializeGame()
-    }
-  }, [state.gameState, cardState.cards])
 
   const contextValue = { state, dispatch, handleButtonClick }
 

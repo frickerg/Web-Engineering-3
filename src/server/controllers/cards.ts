@@ -45,5 +45,5 @@ export const fetchGameSize = (_req: Request, res: Response) => {
     return res.status(400).send('more elements taken than available')
   }
 
-  res.send(randomGameSize)
+  res.status(200).send({ gameSize: randomGameSize })
 }

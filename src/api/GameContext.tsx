@@ -64,12 +64,15 @@ const gameReducer = (state: State, action: Action): State => {
       }
     }
     case 'SET_CARD_INDEX': {
-      const newLabel =
-        state.gameState === GameState.ONGOING && state.cards.length > 0
-          ? 'Solve #' + (action.payload + 1)
-          : state.gameState === GameState.FINISHED
-          ? 'Finished'
-          : 'New Game'
+      let newLabel
+      if (state.gameState === GameState.ONGOING) {
+        newLabel = 'Solve #' + (action.payload + 1)
+      } else if (state.gameState === GameState.FINISHED) {
+        newLabel = 'Finished'
+      } else {
+        newLabel = 'New Game'
+      }
+
       return {
         ...state,
         currentCardIndex: action.payload,

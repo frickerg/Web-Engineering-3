@@ -12,4 +12,3 @@ function Card(props: Readonly<CardProps>) {
 }
 
 export default Card
-export type { CardProps }

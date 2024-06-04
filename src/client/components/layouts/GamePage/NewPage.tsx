@@ -1,26 +1,24 @@
 import './NewPage.css'
-import Button from '../../elements/Button/Button'
-import { GameContext } from '../../../../api/GameContext'
-import { GameState } from '../../../../api/GameState'
 import { useContext } from 'react'
-import { startNewGame } from '../../../../api/cardUtils'
-import { CardContext } from '../../../../api/CardContext'
+import Button from '../../elements/Button/Button'
+import { GameContext } from '../../../session/Context'
+import { GameState } from '../../../../model/Game'
+import { startNewGame } from '../../../session/startNewGame'
 
 export default function NewPage() {
-  const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
-  const { state: cardState } = useContext(CardContext)
+  const { state, dispatch } = useContext(GameContext)
+  const { storeCards: cards } = state
+  const isGameRunning = state.gameState === GameState.ONGOING
 
   return (
     <div className="new-page-container">
       <Button
         label="Start New Game"
         className="new-page-button"
-        onClick={() => startNewGame(cardState.cards, gameDispatch)}
+        onClick={() => startNewGame(cards, dispatch)}
       />
       <p className="new-page-label">
-        {gameState.gameState === GameState.ONGOING
-          ? 'Continue Running Game'
-          : 'No game running'}
+        {isGameRunning ? 'Continue Running Game' : 'No game running'}
       </p>
     </div>
   )

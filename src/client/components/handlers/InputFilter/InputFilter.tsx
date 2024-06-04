@@ -2,7 +2,7 @@ import './InputFilter.css'
 import Input from '../../elements/Input/Input'
 import Button from '../../elements/Button/Button'
 import Checkbox from '../../elements/Checkbox/Checkbox'
-import { InputType } from '../../../../api/CardContext'
+import { InputType } from '../../../../model/Card'
 
 type InputFilterProps = {
   front: string

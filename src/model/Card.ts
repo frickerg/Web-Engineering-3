@@ -3,3 +3,6 @@ export type CardProps = {
   front: string
   back: string
 }
+
+export type InputType = 'front' | 'back'
+export type SortDirection = 'asc' | 'desc'

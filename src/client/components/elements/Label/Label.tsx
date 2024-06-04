@@ -1,5 +1,5 @@
-import { SortDirection } from '../../../../api/CardContext'
 import './Label.css'
+import { SortDirection } from '../../../../model/Card'
 
 type LabelProps = {
   label: string

@@ -1,19 +1,19 @@
-import '../GamePage/DetailPage.css'
+import './DetailPage.css'
 import Button from '../../elements/Button/Button'
 import Input from '../../elements/Input/Input'
 import Label from '../../elements/Label/Label'
-import { CardProps } from '../../elements/Card/Card'
-import { InputType, CardContext } from '../../../../api/CardContext'
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { fetchCards, updateCard } from '../../../../api/card'
+import { fetchCards, updateCard } from '../../../api'
+import { GameContext } from '../../../session/Context'
+import { CardProps, InputType } from '../../../../model/Card'
 
 export default function DetailPage() {
   const [card, setCard] = useState<CardProps>({ id: '', front: '', back: '' })
   const { cardId } = useParams<{ cardId: string }>()
   const navigate = useNavigate()
-  const { state, dispatch } = useContext(CardContext)
-  const { cards } = state
+  const { state, dispatch } = useContext(GameContext)
+  const { storeCards: cards } = state
 
   useEffect(() => {
     if (!cardId) {

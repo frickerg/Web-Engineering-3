@@ -7,29 +7,27 @@ import Ongoing from '../components/layouts/GamePage/Ongoing'
 import EndPage from '../components/layouts/GamePage/EndPage'
 import DetailPage from '../components/layouts/GamePage/DetailPage'
 import { useContext, useEffect } from 'react'
-import { GameContext } from '../../api/GameContext'
-import { GameState } from '../../api/GameState'
-import { fetchCards } from '../../api/card'
-import { CardContext } from '../../api/CardContext'
+import { GameContext } from '../session/Context'
+import { GameState } from '../../model/Game'
+import { fetchCards } from '../api'
 
 function App() {
-  const { state: gameState } = useContext(GameContext)
-  const { dispatch: cardDispatch } = useContext(CardContext)
+  const { state, dispatch } = useContext(GameContext)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const fetchedCards = await fetchCards()
-        cardDispatch({ type: 'SET_CARDS', payload: fetchedCards })
+        dispatch({ type: 'SET_CARDS', payload: fetchedCards })
       } catch (error) {
         console.error(error)
       }
     }
     fetchData()
-  }, [cardDispatch])
+  }, [dispatch])
 
   const renderContent = () => {
-    switch (gameState.gameState) {
+    switch (state.gameState) {
       case GameState.ONGOING:
         return <Ongoing />
       case GameState.FINISHED:

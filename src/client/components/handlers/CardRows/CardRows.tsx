@@ -1,7 +1,8 @@
 import './CardRows.css'
-import Card, { CardProps } from '../../elements/Card/Card'
+import Card from '../../elements/Card/Card'
 import Button from '../../elements/Button/Button'
 import { Link } from 'react-router-dom'
+import { CardProps } from '../../../../model/Card'
 
 type CardRowsProps = {
   cards: CardProps[]

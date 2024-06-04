@@ -30,12 +30,11 @@ function App() {
 
   const renderContent = () => {
     switch (gameState.gameState) {
-      case GameState.NOT_STARTED:
-        return <NewPage />
       case GameState.ONGOING:
         return <Ongoing />
       case GameState.FINISHED:
         return <EndPage />
+      case GameState.NOT_STARTED:
       default:
         return <NewPage />
     }

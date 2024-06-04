@@ -1,6 +1,7 @@
-import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import { Layout } from './Layout'
+import { ThemeProvider } from "styled-components";
+import DefaultTheme from '../themes/DefaultTheme'
 import Content from '../components/layouts/Content/Content'
 import NewPage from '../components/layouts/GamePage/NewPage'
 import Ongoing from '../components/layouts/GamePage/Ongoing'
@@ -39,8 +40,10 @@ function App() {
         return <NewPage />
     }
   }
-
+  
   return (
+    <ThemeProvider theme={DefaultTheme}>
+    <DefaultTheme />
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={renderContent()} />
@@ -48,6 +51,7 @@ function App() {
         <Route path="cards/details/:cardId" element={<DetailPage />} />
       </Route>
     </Routes>
+    </ThemeProvider>
   )
 }
 

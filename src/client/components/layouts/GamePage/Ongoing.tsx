@@ -1,6 +1,7 @@
-import './Ongoing.css'
 import { useState, useContext, useEffect } from 'react'
 import Button from '../../elements/Button/Button'
+import Container from '../../elements/Container/Container'
+import ProgressHeader from '../../typography/headings/ProgressHeader'
 import { GameContext } from '../../../../api/GameContext'
 import { GameState } from '../../../../api/GameState'
 import Input from '../../elements/Input/Input'
@@ -8,6 +9,35 @@ import Flashcard from '../../elements/Flashcard/Flashcard'
 import Label from '../../elements/Label/Label'
 import { CardContext } from '../../../../api/CardContext'
 import { mapCardToGameResultItem } from '../../../../api/cardUtils'
+import styled from 'styled-components'
+
+const OngoingButton = styled(Button)`
+  width: auto;
+  padding: 10px 20px;
+`
+
+const OngoingContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+`
+
+const OngoingAnswerSection = styled(Container)`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  width: 500px;
+`
+
+const OngoingProgressLabel = styled(Label)`
+  font-size: 24px;
+  font-weight: bold;
+`
+
+const OngoingAnswerInput = styled(Input)`
+  margin-right: 20px;
+`
 
 export default function Ongoing() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
@@ -89,29 +119,29 @@ export default function Ongoing() {
   }
 
   return (
-    <div className="ongoing-container">
-      <div className="ongoing-header">
-        <Label label={progressLabel()} className="progress-label" />
-        <Button
+    <OngoingContainer className="ongoing-container">
+      <ProgressHeader>
+        <OngoingProgressLabel label={progressLabel()} className="progress-label" />
+        <OngoingButton
           label="Delete Game"
           onClick={handleDeleteGame}
           className="delete-button"
         />
-      </div>
+      </ProgressHeader>
       <Flashcard text={gameCards[currentCardIndex]?.front} />
-      <div className="answer-section">
-        <Input
+      <OngoingAnswerSection className="answer-section">
+        <OngoingAnswerInput
           className="answer-input"
           value={answer}
           placeholder="Answer"
           handleInputChange={value => setAnswer(value)}
         />
-        <Button
+        <OngoingButton
           label="Submit"
           onClick={validateCard}
           className="submit-button"
         />
-      </div>
-    </div>
+      </OngoingAnswerSection>
+    </OngoingContainer>
   )
 }

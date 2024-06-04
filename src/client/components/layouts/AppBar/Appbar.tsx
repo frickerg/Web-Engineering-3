@@ -1,16 +1,17 @@
-import { Link } from 'react-router-dom'
-import './Appbar.css'
-import CenterButton from './CenterButton'
+import CenterButton from '../../elements/Button/CenterButton'
+import Header1 from '../../typography/headings/Header1'
+import TopBannerContainer from '../../elements/Container/TopBannerContainer'
+import TopBannerRouterLink from '../../typography/links/TopBannerRouterLink'
 
 function Appbar() {
   return (
-    <div className="top-banner">
-      <h1>Mimir</h1>
+    <TopBannerContainer>
+      <Header1>Mimir</Header1>
       <CenterButton />
-      <Link className="manage-cards" to="/cards">
+      <TopBannerRouterLink to="/cards">
         Manage Cards
-      </Link>
-    </div>
+      </TopBannerRouterLink>
+    </TopBannerContainer>
   )
 }
 

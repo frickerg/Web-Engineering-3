@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom'
 import Appbar from '../components/layouts/AppBar/Appbar'
+import LayoutContainer from '../components/elements/Container/LayoutContainer'
 
 export function Layout() {
   return (
-    <div className="container">
+    <LayoutContainer className="container">
       <Appbar />
       <Outlet />
-    </div>
+    </LayoutContainer>
   )
 }

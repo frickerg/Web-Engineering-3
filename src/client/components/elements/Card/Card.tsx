@@ -1,4 +1,3 @@
-import './Card.css'
 import { Fragment } from 'react'
 import type { CardProps } from '../../../../model/Card'
 

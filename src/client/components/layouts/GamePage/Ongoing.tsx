@@ -1,11 +1,13 @@
+import './Ongoing.css'
 import { useState, useContext, useEffect } from 'react'
 import Button from '../../elements/Button/Button'
 import { GameContext } from '../../../../api/GameContext'
 import { GameState } from '../../../../api/GameState'
-import { FlashcardProps } from '../../../../model/Card'
 import Input from '../../elements/Input/Input'
 import Flashcard from '../../elements/Flashcard/Flashcard'
 import Label from '../../elements/Label/Label'
+import { CardContext } from '../../../../api/CardContext'
+import { mapCardToGameResultItem } from '../../../../api/cardUtils'
 
 export default function Ongoing() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
@@ -16,7 +18,9 @@ export default function Ongoing() {
 
   const progressLabel = () => {
     const progress =
-      cards.length > 0 ? Math.round((index / cards.length) * 100) : 0
+      gameCards.length > 0
+        ? Math.round((currentCardIndex / gameCards.length) * 100)
+        : 0
 
     return `Progress: ${progress}%`
   }
@@ -53,30 +57,26 @@ export default function Ongoing() {
   }
 
   const validateCard = async () => {
-    if (!answer) {
+    const currentCard = gameCards[currentCardIndex]
+    if (!answer || !currentCard) {
       return
     }
 
-    const currentCard = gameCards[currentCardIndex]
-    try {
-      const isAnswerCorrect =
-        currentCard.back.trim().toLowerCase() === answer.trim().toLowerCase()
-      const updatedCards = [...gameCards]
+    const isAnswerCorrect =
+      currentCard.back.trim().toLowerCase() === answer.trim().toLowerCase()
+    const updatedCards = [...gameCards]
 
-      updatedCards[currentCardIndex] = {
-        ...currentCard,
-        back: currentCard.back,
-        isAccepted: isAnswerCorrect,
-        answer: answer,
-      }
-
-      gameDispatch({
-        type: 'INIT_GAME',
-        payload: updatedCards,
-      })
-    } catch (error) {
-      console.error(error)
+    updatedCards[currentCardIndex] = {
+      ...currentCard,
+      back: currentCard.back,
+      isAccepted: isAnswerCorrect,
+      answer: answer,
     }
+
+    gameDispatch({
+      type: 'INIT_GAME',
+      payload: updatedCards,
+    })
 
     incrementIndex()
     setAnswer('')
@@ -98,7 +98,7 @@ export default function Ongoing() {
           className="delete-button"
         />
       </div>
-      <Flashcard text={cards[index]?.front} />
+      <Flashcard text={gameCards[currentCardIndex]?.front} />
       <div className="answer-section">
         <Input
           className="answer-input"

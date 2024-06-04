@@ -100,7 +100,6 @@ export const CardContext = createContext<CardContextProps>({
 
 export const CardProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(cardReducer, initialState)
-
   const contextValue = { state, dispatch }
 
   return (

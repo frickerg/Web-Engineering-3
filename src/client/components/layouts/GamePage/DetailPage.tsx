@@ -16,11 +16,12 @@ export default function DetailPage() {
   const { cards } = state
 
   useEffect(() => {
-    if (cardId) {
-      const fetchedCard = cards.find(card => card.id === cardId)
-      if (fetchedCard) {
-        setCard(fetchedCard)
-      }
+    if (!cardId) {
+      return
+    }
+    const fetchedCard = cards.find(({ id }) => id === cardId)
+    if (fetchedCard) {
+      setCard(fetchedCard)
     }
   }, [cardId, cards])
 
@@ -35,8 +36,7 @@ export default function DetailPage() {
     if (card) {
       try {
         await updateCard(card)
-        const fetchedCards = await fetchCards()
-        dispatch({ type: 'SET_CARDS', payload: fetchedCards })
+        dispatch({ type: 'SET_CARDS', payload: await fetchCards() })
         navigate('/cards')
       } catch (error) {
         console.error(error)

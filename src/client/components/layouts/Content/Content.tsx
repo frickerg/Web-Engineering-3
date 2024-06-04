@@ -1,26 +1,14 @@
 import './Content.css'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import InputFilter from '../../handlers/InputFilter/InputFilter'
 import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
-import { addCard, deleteCard, fetchCards } from '../../../../api/card'
+import { addCard, deleteCard } from '../../../../api/card'
 import { CardContext, InputType } from '../../../../api/CardContext'
 
 function Content() {
   const { state, dispatch } = useContext(CardContext)
   const { cards, sortType, sortDirection, cardInput, filterChecked } = state
-
-  useEffect(() => {
-    const getCard = async () => {
-      try {
-        const fetchedCards = await fetchCards()
-        dispatch({ type: 'SET_CARDS', payload: fetchedCards })
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getCard()
-  }, [dispatch])
 
   const handleSortSelection = (e: InputType) => {
     if (e === sortType) {

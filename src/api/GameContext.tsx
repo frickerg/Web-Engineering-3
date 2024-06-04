@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useReducer,
-  ReactNode,
-  useEffect,
-  useCallback,
-} from 'react'
+import React, { createContext, useReducer, ReactNode, useCallback } from 'react'
 import { CardProps } from '../client/components/elements/Card/Card'
 import { useNavigate } from 'react-router-dom'
 import { GameState } from './GameState'
@@ -21,18 +15,14 @@ type State = {
   currentCardIndex: number
 }
 
-type StartGameAction = {
-  type: 'START_GAME'
+export type InitGameAction = {
+  type: 'INIT_GAME'
+  payload: GameResultItem[]
 }
 
 type SetCardIndexAction = {
   type: 'SET_CARD_INDEX'
   payload: number
-}
-
-type SetCardsAction = {
-  type: 'SET_CARDS'
-  payload: GameResultItem[]
 }
 
 type DeleteGameAction = {
@@ -43,17 +33,11 @@ type FinishGameAction = {
   type: 'FINISH_GAME'
 }
 
-type UpdateButtonAction = {
-  type: 'UPDATE_BUTTON'
-}
-
 type Action =
-  | StartGameAction
+  | InitGameAction
   | SetCardIndexAction
-  | SetCardsAction
   | DeleteGameAction
   | FinishGameAction
-  | UpdateButtonAction
 
 type Props = {
   state: State
@@ -70,37 +54,45 @@ const initialState: State = {
 
 const gameReducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'START_GAME':
-      return { ...state, gameState: GameState.START, currentCardIndex: 0 }
-    case 'SET_CARD_INDEX':
-      return { ...state, currentCardIndex: action.payload }
-    case 'SET_CARDS':
+    case 'INIT_GAME': {
       return {
         ...state,
         cards: action.payload,
         gameState: GameState.ONGOING,
         currentCardIndex: 0,
+        buttonLabel: 'Solve #1',
       }
+    }
+    case 'SET_CARD_INDEX': {
+      let newLabel
+      if (state.gameState === GameState.ONGOING) {
+        newLabel = 'Solve #' + (action.payload + 1)
+      } else if (state.gameState === GameState.FINISHED) {
+        newLabel = 'Finished'
+      } else {
+        newLabel = 'New Game'
+      }
+
+      return {
+        ...state,
+        currentCardIndex: action.payload,
+        buttonLabel: newLabel,
+      }
+    }
     case 'DELETE_GAME':
       return {
         ...state,
         cards: [],
         gameState: GameState.NOT_STARTED,
         currentCardIndex: 0,
+        buttonLabel: 'New Game',
       }
     case 'FINISH_GAME':
-      return { ...state, gameState: GameState.FINISHED }
-    case 'UPDATE_BUTTON': {
-      let label
-      if (state.gameState === GameState.ONGOING && state.cards.length > 0) {
-        label = 'Solve #' + (state.currentCardIndex + 1)
-      } else if (state.gameState === GameState.FINISHED) {
-        label = 'Finished'
-      } else {
-        label = 'New Game'
+      return {
+        ...state,
+        gameState: GameState.FINISHED,
+        buttonLabel: 'Finished',
       }
-      return { ...state, buttonLabel: label }
-    }
     default:
       return state
   }
@@ -115,10 +107,6 @@ export const GameContext = createContext<Props>({
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState)
   const navigate = useNavigate()
-
-  useEffect(() => {
-    dispatch({ type: 'UPDATE_BUTTON' })
-  }, [state.gameState, state.currentCardIndex])
 
   const handleButtonClick = useCallback(() => {
     dispatch({ type: 'SET_CARD_INDEX', payload: state.currentCardIndex })

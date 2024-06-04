@@ -7,7 +7,6 @@ function Appbar() {
     <div className="top-banner">
       <h1>Mimir</h1>
       <CenterButton />
-      {/* <h2>Manage Cards</h2> */}
       <Link className="manage-cards" to="/cards">
         Manage Cards
       </Link>

@@ -1,91 +1,90 @@
 import './Ongoing.css'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Button from '../../elements/Button/Button'
-import { fetchFlashcards, validateAnswer } from '../../../../api/card'
-import { GameContext, GameResultItem } from '../../../../api/GameContext'
-import { useNavigate } from 'react-router-dom'
-import { FlashcardProps } from '../../../../model/Card'
+import { GameContext } from '../../../../api/GameContext'
+import { GameState } from '../../../../api/GameState'
 import Input from '../../elements/Input/Input'
 import Flashcard from '../../elements/Flashcard/Flashcard'
 import Label from '../../elements/Label/Label'
-
-function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
-  return cards.map(card => ({
-    id: card.id,
-    front: card.query,
-    back: '',
-    answer: '',
-    isAccepted: false,
-  }))
-}
+import { CardContext } from '../../../../api/CardContext'
+import { mapCardToGameResultItem } from '../../../../api/cardUtils'
 
 export default function Ongoing() {
-  const { state, dispatch } = useContext(GameContext)
-  const { cards } = state
-  const [index, setIndex] = useState(0)
+  const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
+  const { state: cardState } = useContext(CardContext)
+  const { cards: gameCards, currentCardIndex } = gameState
+  const { cards: contextCards } = cardState
   const [answer, setAnswer] = useState('')
-  const navigate = useNavigate()
 
   const progressLabel = () => {
     const progress =
-      cards.length > 0 ? Math.round((index / cards.length) * 100) : 0
+      gameCards.length > 0
+        ? Math.round((currentCardIndex / gameCards.length) * 100)
+        : 0
 
     return `Progress: ${progress}%`
   }
 
   useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const fetchedCards = await fetchFlashcards()
-        dispatch({
-          type: 'SET_CARDS',
-          payload: mapCardToGameResultItem(fetchedCards),
-        })
-      } catch (error) {
-        console.error(error)
-      }
+    if (
+      gameState.gameState === GameState.NOT_STARTED &&
+      gameCards.length === 0
+    ) {
+      gameDispatch({
+        type: 'INIT_GAME',
+        payload: mapCardToGameResultItem(contextCards),
+      })
     }
+  }, [gameDispatch, gameState.gameState, gameCards.length, contextCards])
 
-    fetchCards()
-  }, [dispatch])
+  useEffect(() => {
+    setAnswer('')
+  }, [currentCardIndex])
 
   const incrementIndex = () => {
-    setIndex(prevIndex =>
-      prevIndex < cards.length - 1 ? prevIndex + 1 : prevIndex
-    )
+    const newIndex =
+      currentCardIndex < gameCards.length - 1
+        ? currentCardIndex + 1
+        : currentCardIndex
+    gameDispatch({
+      type: 'SET_CARD_INDEX',
+      payload: newIndex,
+    })
   }
 
   const handleDeleteGame = () => {
-    dispatch({ type: 'DELETE_GAME' })
-    navigate('/')
+    gameDispatch({ type: 'DELETE_GAME' })
   }
 
   const validateCard = async () => {
-    const currentCard = cards[index]
-    try {
-      const result = await validateAnswer(currentCard.id, answer)
-      const updatedCards = [...cards]
-
-      updatedCards[index] = {
-        ...currentCard,
-        back: result.expectedAnswer,
-        isAccepted: result.isAnswerCorrect,
-        answer: answer,
-      }
-
-      dispatch({
-        type: 'SET_CARDS',
-        payload: updatedCards,
-      })
-    } catch (error) {
-      console.error(error)
+    const currentCard = gameCards[currentCardIndex]
+    if (!answer || !currentCard) {
+      return
     }
+
+    const isAnswerCorrect =
+      currentCard.back.trim().toLowerCase() === answer.trim().toLowerCase()
+    const updatedCards = [...gameCards]
+
+    updatedCards[currentCardIndex] = {
+      ...currentCard,
+      back: currentCard.back,
+      isAccepted: isAnswerCorrect,
+      answer: answer,
+    }
+
+    gameDispatch({
+      type: 'INIT_GAME',
+      payload: updatedCards,
+    })
 
     incrementIndex()
     setAnswer('')
 
-    if (index >= cards.length - 1) {
-      navigate('/end')
+    if (currentCardIndex >= gameCards.length - 1) {
+      gameDispatch({
+        type: 'FINISH_GAME',
+      })
     }
   }
 
@@ -99,7 +98,7 @@ export default function Ongoing() {
           className="delete-button"
         />
       </div>
-      <Flashcard text={cards[index]?.front} />
+      <Flashcard text={gameCards[currentCardIndex]?.front} />
       <div className="answer-section">
         <Input
           className="answer-input"

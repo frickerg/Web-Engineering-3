@@ -35,7 +35,7 @@ function InputFilter(props: Readonly<InputFilterProps>) {
         label="Add"
         onClick={() => props.handleAddNewCard(props.front, props.back)}
       />
-      <Checkbox // TODO fjv: delete or keep
+      <Checkbox
         className="input-checkbox"
         id="filter"
         label="Filter Table"

@@ -1,29 +1,26 @@
 import './NewPage.css'
 import Button from '../../elements/Button/Button'
-import { useNavigate } from 'react-router-dom'
 import { GameContext } from '../../../../api/GameContext'
+import { GameState } from '../../../../api/GameState'
 import { useContext } from 'react'
+import { startNewGame } from '../../../../api/cardUtils'
+import { CardContext } from '../../../../api/CardContext'
 
-export default function New() {
-  const { state, dispatch } = useContext(GameContext)
-  const { isGameOngoing } = state
-
-  const navigate = useNavigate()
-
-  const startNewGame = async () => {
-    dispatch({ type: 'DELETE_GAME' })
-    navigate('/ongoing')
-  }
+export default function NewPage() {
+  const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
+  const { state: cardState } = useContext(CardContext)
 
   return (
     <div className="new-page-container">
       <Button
         label="Start New Game"
         className="new-page-button"
-        onClick={() => startNewGame()}
+        onClick={() => startNewGame(cardState.cards, gameDispatch)}
       />
       <p className="new-page-label">
-        {isGameOngoing ? 'Continue Running Game' : 'No Running Game'}
+        {gameState.gameState === GameState.ONGOING
+          ? 'Continue Running Game'
+          : 'No game running'}
       </p>
     </div>
   )

@@ -1,11 +1,7 @@
-/**
- * TODO Eventuelle Verbesserung
- * Man könnte auch nur die ID und answer übergeben. Über ID würde man die Karte fetchen
- * und die Antwort würde man dynamisch Vergleichen. Setzt voraus, dass man weiss, welche Seite abgefragt wurde :)
- */
-
-import React, { createContext, useReducer, ReactNode, useMemo } from 'react'
+import React, { createContext, useReducer, ReactNode, useCallback } from 'react'
 import { CardProps } from '../client/components/elements/Card/Card'
+import { useNavigate } from 'react-router-dom'
+import { GameState } from './GameState'
 
 export interface GameResultItem extends CardProps {
   answer: string
@@ -14,36 +10,89 @@ export interface GameResultItem extends CardProps {
 
 type State = {
   cards: GameResultItem[]
-  isGameOngoing: boolean
+  gameState: GameState
+  buttonLabel: string
+  currentCardIndex: number
 }
 
-type SetCardsAction = {
-  type: 'SET_CARDS'
+export type InitGameAction = {
+  type: 'INIT_GAME'
   payload: GameResultItem[]
+}
+
+type SetCardIndexAction = {
+  type: 'SET_CARD_INDEX'
+  payload: number
 }
 
 type DeleteGameAction = {
   type: 'DELETE_GAME'
 }
 
-type Action = SetCardsAction | DeleteGameAction
+type FinishGameAction = {
+  type: 'FINISH_GAME'
+}
+
+type Action =
+  | InitGameAction
+  | SetCardIndexAction
+  | DeleteGameAction
+  | FinishGameAction
 
 type Props = {
   state: State
   dispatch: React.Dispatch<Action>
+  handleButtonClick: () => void
 }
 
 const initialState: State = {
   cards: [],
-  isGameOngoing: false,
+  gameState: GameState.NOT_STARTED,
+  buttonLabel: 'New Game',
+  currentCardIndex: 0,
 }
 
 const gameReducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'SET_CARDS':
-      return { ...state, cards: action.payload, isGameOngoing: true }
+    case 'INIT_GAME': {
+      return {
+        ...state,
+        cards: action.payload,
+        gameState: GameState.ONGOING,
+        currentCardIndex: 0,
+        buttonLabel: 'Solve #1',
+      }
+    }
+    case 'SET_CARD_INDEX': {
+      let newLabel
+      if (state.gameState === GameState.ONGOING) {
+        newLabel = 'Solve #' + (action.payload + 1)
+      } else if (state.gameState === GameState.FINISHED) {
+        newLabel = 'Finished'
+      } else {
+        newLabel = 'New Game'
+      }
+
+      return {
+        ...state,
+        currentCardIndex: action.payload,
+        buttonLabel: newLabel,
+      }
+    }
     case 'DELETE_GAME':
-      return { ...state, cards: [], isGameOngoing: false }
+      return {
+        ...state,
+        cards: [],
+        gameState: GameState.NOT_STARTED,
+        currentCardIndex: 0,
+        buttonLabel: 'New Game',
+      }
+    case 'FINISH_GAME':
+      return {
+        ...state,
+        gameState: GameState.FINISHED,
+        buttonLabel: 'Finished',
+      }
     default:
       return state
   }
@@ -52,18 +101,19 @@ const gameReducer = (state: State, action: Action): State => {
 export const GameContext = createContext<Props>({
   state: initialState,
   dispatch: () => null,
+  handleButtonClick: () => {},
 })
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState)
+  const navigate = useNavigate()
 
-  /* TODO You might have to use something other than useMemo here
-   * sonarlint(typescript:S6481)
-   * The object passed as the value prop to the Context provider changes every render.
-   * To fix this consider wrapping it in a useMemo hook.
-   * (property) dispatch: React.Dispatch<Action>
-   */
-  const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch])
+  const handleButtonClick = useCallback(() => {
+    dispatch({ type: 'SET_CARD_INDEX', payload: state.currentCardIndex })
+    navigate('/')
+  }, [navigate, state.currentCardIndex])
+
+  const contextValue = { state, dispatch, handleButtonClick }
 
   return (
     <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>

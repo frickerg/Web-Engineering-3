@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react'
 import Button from '../../elements/Button/Button'
 import { fetchFlashcards, validateAnswer } from '../../../../api/card'
 import { GameContext, GameResultItem } from '../../../../api/GameContext'
-import { useNavigate } from 'react-router-dom'
+import { GameState } from '../../../../api/GameState'
 import { FlashcardProps } from '../../../../model/Card'
 import Input from '../../elements/Input/Input'
 import Flashcard from '../../elements/Flashcard/Flashcard'
@@ -21,10 +21,8 @@ function mapCardToGameResultItem(cards: FlashcardProps[]): GameResultItem[] {
 
 export default function Ongoing() {
   const { state, dispatch } = useContext(GameContext)
-  const { cards } = state
-  const [index, setIndex] = useState(0)
+  const { cards, gameState, currentCardIndex } = state
   const [answer, setAnswer] = useState('')
-  const navigate = useNavigate()
 
   const progressLabel = () => {
     const progress =
@@ -46,27 +44,37 @@ export default function Ongoing() {
       }
     }
 
-    fetchCards()
-  }, [dispatch])
+    if (gameState === GameState.START) {
+      fetchCards()
+    }
+  }, [dispatch, gameState])
 
   const incrementIndex = () => {
-    setIndex(prevIndex =>
-      prevIndex < cards.length - 1 ? prevIndex + 1 : prevIndex
-    )
+    const newIndex =
+      currentCardIndex < cards.length - 1
+        ? currentCardIndex + 1
+        : currentCardIndex
+    dispatch({
+      type: 'SET_CARD_INDEX',
+      payload: newIndex,
+    })
   }
 
   const handleDeleteGame = () => {
     dispatch({ type: 'DELETE_GAME' })
-    navigate('/')
   }
 
   const validateCard = async () => {
-    const currentCard = cards[index]
+    if (!answer) {
+      return
+    }
+
+    const currentCard = cards[currentCardIndex]
     try {
       const result = await validateAnswer(currentCard.id, answer)
       const updatedCards = [...cards]
 
-      updatedCards[index] = {
+      updatedCards[currentCardIndex] = {
         ...currentCard,
         back: result.expectedAnswer,
         isAccepted: result.isAnswerCorrect,
@@ -84,8 +92,10 @@ export default function Ongoing() {
     incrementIndex()
     setAnswer('')
 
-    if (index >= cards.length - 1) {
-      navigate('/end')
+    if (currentCardIndex >= cards.length - 1) {
+      dispatch({
+        type: 'FINISH_GAME',
+      })
     }
   }
 

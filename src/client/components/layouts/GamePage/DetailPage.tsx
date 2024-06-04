@@ -41,7 +41,7 @@ export default function DetailPage() {
     if (card) {
       try {
         await updateCard(card)
-        navigate('/')
+        navigate('/cards')
       } catch (error) {
         console.error(error)
       }

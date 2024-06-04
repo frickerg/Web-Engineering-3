@@ -4,16 +4,13 @@ import './EndPage.css'
 import { Fragment, useContext } from 'react'
 import { GameContext } from '../../../../api/GameContext'
 import Button from '../../elements/Button/Button'
-import { useNavigate } from 'react-router-dom'
 
 export default function EndPage() {
   const { state, dispatch } = useContext(GameContext)
   const { cards } = state
-  const navigate = useNavigate()
 
   const startNewGame = async () => {
-    dispatch({ type: 'DELETE_GAME' })
-    navigate('/new')
+    dispatch({ type: 'START_GAME' })
   }
 
   return (

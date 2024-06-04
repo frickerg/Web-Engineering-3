@@ -2,10 +2,11 @@
   background-color: #182d4a;
   color: #fefefe;
   padding: 20px 15px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
 }
 
-.flex-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.manage-cards {
+  justify-self: end;
 }

@@ -2,9 +2,10 @@ import { useState, useContext, useEffect } from 'react'
 import Button from '../../elements/Button/Button'
 import { GameContext } from '../../../../api/GameContext'
 import { GameState } from '../../../../api/GameState'
-import { CardContext } from '../../../../api/CardContext'
-import './Ongoing.css'
-import { mapCardToGameResultItem } from '../../../../api/cardUtils'
+import { FlashcardProps } from '../../../../model/Card'
+import Input from '../../elements/Input/Input'
+import Flashcard from '../../elements/Flashcard/Flashcard'
+import Label from '../../elements/Label/Label'
 
 export default function Ongoing() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
@@ -13,10 +14,12 @@ export default function Ongoing() {
   const { cards: contextCards } = cardState
   const [answer, setAnswer] = useState('')
 
-  const progress =
-    gameCards.length > 0
-      ? Math.round((currentCardIndex / gameCards.length) * 100)
-      : 0
+  const progressLabel = () => {
+    const progress =
+      cards.length > 0 ? Math.round((index / cards.length) * 100) : 0
+
+    return `Progress: ${progress}%`
+  }
 
   useEffect(() => {
     if (
@@ -86,32 +89,27 @@ export default function Ongoing() {
   }
 
   return (
-    <div className="ongoing-page">
+    <div className="ongoing-container">
       <div className="ongoing-header">
-        <div className="ongoing-progress">Progress: {progress}%</div>
+        <Label label={progressLabel()} className="progress-label" />
         <Button
           label="Delete Game"
           onClick={handleDeleteGame}
-          className="ongoing-delete-button"
+          className="delete-button"
         />
       </div>
-      <div className="ongoing-card">
-        <div className="ongoing-card-content">
-          {gameCards.length > 0 && gameCards[currentCardIndex].front}
-        </div>
-      </div>
-      <div className="ongoing-answer-section">
-        <input
-          type="text"
+      <Flashcard text={cards[index]?.front} />
+      <div className="answer-section">
+        <Input
+          className="answer-input"
           value={answer}
-          onChange={e => setAnswer(e.target.value)}
-          className="ongoing-answer-input"
           placeholder="Answer"
+          handleInputChange={value => setAnswer(value)}
         />
         <Button
           label="Submit"
           onClick={validateCard}
-          className="ongoing-submit-button"
+          className="submit-button"
         />
       </div>
     </div>

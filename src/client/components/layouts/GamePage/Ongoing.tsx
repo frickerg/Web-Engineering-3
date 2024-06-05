@@ -1,79 +1,64 @@
 import './Ongoing.css'
 import { useState, useContext, useEffect } from 'react'
 import Button from '../../elements/Button/Button'
-import { GameContext } from '../../../../api/GameContext'
-import { GameState } from '../../../../api/GameState'
+import { GameContext } from '../../../session/Context'
+import { GameState } from '../../../../model/Game'
 import Input from '../../elements/Input/Input'
 import Flashcard from '../../elements/Flashcard/Flashcard'
 import Label from '../../elements/Label/Label'
-import { CardContext } from '../../../../api/CardContext'
-import { mapCardToGameResultItem } from '../../../../api/cardUtils'
+import { startNewGame } from '../../../session/helper'
 
 export default function Ongoing() {
-  const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
-  const { state: cardState } = useContext(CardContext)
-  const { cards: gameCards, currentCardIndex } = gameState
-  const { cards: contextCards } = cardState
+  const { state: state, dispatch } = useContext(GameContext)
+  const { gameCards: cards, currentCardIndex: index } = state
   const [answer, setAnswer] = useState('')
 
   const progressLabel = () => {
     const progress =
-      gameCards.length > 0
-        ? Math.round((currentCardIndex / gameCards.length) * 100)
-        : 0
-
+      cards.length > 0 ? Math.round((index / cards.length) * 100) : 0
     return `Progress: ${progress}%`
   }
 
   useEffect(() => {
-    if (
-      gameState.gameState === GameState.NOT_STARTED &&
-      gameCards.length === 0
-    ) {
-      gameDispatch({
-        type: 'INIT_GAME',
-        payload: mapCardToGameResultItem(contextCards),
-      })
+    if (state.gameState === GameState.NOT_STARTED && cards.length === 0) {
+      startNewGame(cards, dispatch)
     }
-  }, [gameDispatch, gameState.gameState, gameCards.length, contextCards])
+  }, [dispatch, state.gameState, cards.length, cards])
 
   useEffect(() => {
     setAnswer('')
-  }, [currentCardIndex])
+  }, [index])
 
   const incrementIndex = () => {
-    const newIndex =
-      currentCardIndex < gameCards.length - 1
-        ? currentCardIndex + 1
-        : currentCardIndex
-    gameDispatch({
+    const newIndex = index < cards.length - 1 ? index + 1 : index
+    dispatch({
       type: 'SET_CARD_INDEX',
       payload: newIndex,
     })
   }
 
   const handleDeleteGame = () => {
-    gameDispatch({ type: 'DELETE_GAME' })
+    dispatch({ type: 'DELETE_GAME' })
   }
 
   const validateCard = async () => {
-    const currentCard = gameCards[currentCardIndex]
+    const currentCard = cards[index]
     if (!answer || !currentCard) {
       return
     }
 
     const isAnswerCorrect =
       currentCard.back.trim().toLowerCase() === answer.trim().toLowerCase()
-    const updatedCards = [...gameCards]
+    const updatedCards = [...cards]
 
-    updatedCards[currentCardIndex] = {
+    updatedCards[index] = {
       ...currentCard,
       back: currentCard.back,
       isAccepted: isAnswerCorrect,
       answer: answer,
     }
 
-    gameDispatch({
+    dispatch({
       type: 'INIT_GAME',
       payload: updatedCards,
     })
@@ -81,8 +66,8 @@ export default function Ongoing() {
     incrementIndex()
     setAnswer('')
 
-    if (currentCardIndex >= gameCards.length - 1) {
-      gameDispatch({
+    if (index >= cards.length - 1) {
+      dispatch({
         type: 'FINISH_GAME',
       })
     }
@@ -98,7 +83,7 @@ export default function Ongoing() {
           className="delete-button"
         />
       </div>
-      <Flashcard text={gameCards[currentCardIndex]?.front} />
+      <Flashcard text={cards[index]?.front} />
       <div className="answer-section">
         <Input
           className="answer-input"

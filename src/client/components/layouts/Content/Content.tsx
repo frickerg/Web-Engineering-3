@@ -3,12 +3,19 @@ import { useContext } from 'react'
 import InputFilter from '../../handlers/InputFilter/InputFilter'
 import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
-import { addCard, deleteCard } from '../../../../api/card'
-import { CardContext, InputType } from '../../../../api/CardContext'
+import { addCard, deleteCard } from '../../../api'
+import { GameContext } from '../../../session/Context'
+import { InputType } from '../../../../model/Card'
 
 function Content() {
-  const { state, dispatch } = useContext(CardContext)
-  const { cards, sortType, sortDirection, cardInput, filterChecked } = state
+  const { state, dispatch } = useContext(GameContext)
+  const {
+    storeCards: cards,
+    sortType,
+    sortDirection,
+    cardInput,
+    filterChecked,
+  } = state
 
   const handleSortSelection = (e: InputType) => {
     if (e === sortType) {

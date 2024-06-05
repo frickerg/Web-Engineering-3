@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { GameContext } from '../../../../api/GameContext'
+import { GameContext } from '../../../session/Context'
 import Button from '../../elements/Button/Button'
 import styled from 'styled-components'
 

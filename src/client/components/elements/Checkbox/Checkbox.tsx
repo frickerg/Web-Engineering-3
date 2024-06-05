@@ -8,7 +8,7 @@ type CheckboxProps = {
   className?: string
 }
 
-function Checkbox(props: CheckboxProps) {
+function Checkbox(props: Readonly<CheckboxProps>) {
   return (
     <div className={`checkbox ${props.className}`}>
       <input

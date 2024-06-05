@@ -1,6 +1,6 @@
 import './SortHeader.css'
 import Label from '../../elements/Label/Label'
-import { InputType, SortDirection } from '../../../../api/CardContext'
+import { InputType, SortDirection } from '../../../../model/Card'
 
 type SortHeaderProps = {
   sortType: InputType

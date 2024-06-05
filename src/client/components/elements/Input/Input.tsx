@@ -8,7 +8,7 @@ type InputProps = {
   className?: string
 }
 
-function Input(props: InputProps) {
+function Input(props: Readonly<InputProps>) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     props.handleInputChange(e.target.value)
   }

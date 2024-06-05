@@ -1,4 +1,8 @@
-import './NewPage.css'
+import Paragraph from '../../typography/texts/Paragraph'
+import QuizContainer from '../../elements/Container/QuizContainer'
+import StartButton from '../../elements/Button/StartButton'
+import { GameContext } from '../../../../api/GameContext'
+import { GameState } from '../../../../api/GameState'
 import { useContext } from 'react'
 import Button from '../../elements/Button/Button'
 import { GameContext } from '../../../session/Context'
@@ -11,15 +15,16 @@ export default function NewPage() {
   const isGameRunning = state.gameState === GameState.ONGOING
 
   return (
-    <div className="new-page-container">
-      <Button
+    <QuizContainer>
+      <StartButton
         label="Start New Game"
-        className="new-page-button"
-        onClick={() => startNewGame(cards, dispatch)}
+        onClick={() => startNewGame(cardState.cards, gameDispatch)}
       />
-      <p className="new-page-label">
-        {isGameRunning ? 'Continue Running Game' : 'No game running'}
-      </p>
-    </div>
+      <Paragraph>
+        {gameState.gameState === GameState.ONGOING
+          ? 'Continue Running Game'
+          : 'No game running'}
+      </Paragraph>
+    </QuizContainer>
   )
 }

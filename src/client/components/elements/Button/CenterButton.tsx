@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { GameContext } from '../../../session/Context'
-import Button from '../../elements/Button/Button'
+import { GameContext } from '../../../../api/GameContext'
+import Button from './Button'
 import styled from 'styled-components'
 
 const CenterButtonWrapper = styled.div`

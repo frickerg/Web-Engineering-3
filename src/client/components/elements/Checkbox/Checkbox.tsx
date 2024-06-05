@@ -1,4 +1,4 @@
-import './Checkbox.css'
+import styled from 'styled-components'
 
 type CheckboxProps = {
   id: string
@@ -8,10 +8,25 @@ type CheckboxProps = {
   className?: string
 }
 
-function Checkbox(props: Readonly<CheckboxProps>) {
+const StyledCheckbox = styled.div`
+  padding-left: 10px;
+  padding-bottom: 0;
+`
+const StyledCheckboxInput = styled.input`
+  width: 20px;
+  height: 20px;
+`
+
+const StyledCheckboxLabel = styled.label`
+  font-size: 23px;
+  padding-left: 5px;
+  color: #457b9d;
+`
+
+function Checkbox(props: CheckboxProps) {
   return (
-    <div className={`checkbox ${props.className}`}>
-      <input
+    <StyledCheckbox className={props.className}>
+      <StyledCheckboxInput
         type="checkbox"
         name={props.id}
         value={props.id}
@@ -19,8 +34,9 @@ function Checkbox(props: Readonly<CheckboxProps>) {
         onChange={() => props.onChange(!props.checked)}
         checked={props.checked}
       />
-      <label htmlFor={`${props.id}-checkbox`}>{props.label}</label>
-    </div>
+      <StyledCheckboxLabel htmlFor={`${props.id}-checkbox`}>{props.label}
+      </StyledCheckboxLabel>
+    </StyledCheckbox>
   )
 }
 

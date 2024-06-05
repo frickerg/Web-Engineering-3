@@ -1,12 +1,15 @@
-import './Ongoing.css'
 import { useState, useContext, useEffect } from 'react'
-import Button from '../../elements/Button/Button'
-import { GameContext } from '../../../session/Context'
-import { GameState } from '../../../../model/Game'
-import Input from '../../elements/Input/Input'
+import QuizButton from '../../elements/Button/QuizButton'
+import ProgressHeader from '../../typography/headings/ProgressHeader'
+import { ProgressLabel as StyledProgressLabel } from '../../elements/Label/ProgressLabel'
+import QuizAnswerContainer from '../../elements/Container/QuizAnswerContainer'
+import QuizContainer from '../../elements/Container/QuizContainer'
+import { GameContext } from '../../../../api/GameContext'
+import { GameState } from '../../../../api/GameState'
+import InputAnswer from '../../elements/Input/InputAnswer'
 import Flashcard from '../../elements/Flashcard/Flashcard'
-import Label from '../../elements/Label/Label'
-import { startNewGame } from '../../../session/helper'
+import { CardContext } from '../../../../api/CardContext'
+import { mapCardToGameResultItem } from '../../../../api/cardUtils'
 
 export default function Ongoing() {
   const { state: state, dispatch } = useContext(GameContext)
@@ -74,29 +77,26 @@ export default function Ongoing() {
   }
 
   return (
-    <div className="ongoing-container">
-      <div className="ongoing-header">
-        <Label label={progressLabel()} className="progress-label" />
-        <Button
+    <QuizContainer>
+      <ProgressHeader>
+        <StyledProgressLabel label={progressLabel()} />
+        <QuizButton
           label="Delete Game"
           onClick={handleDeleteGame}
-          className="delete-button"
         />
-      </div>
-      <Flashcard text={cards[index]?.front} />
-      <div className="answer-section">
-        <Input
-          className="answer-input"
+      </ProgressHeader>
+      <Flashcard text={gameCards[currentCardIndex]?.front} />
+      <QuizAnswerContainer>
+        <InputAnswer
           value={answer}
           placeholder="Answer"
           handleInputChange={value => setAnswer(value)}
         />
-        <Button
+        <QuizButton
           label="Submit"
           onClick={validateCard}
-          className="submit-button"
         />
-      </div>
-    </div>
+      </QuizAnswerContainer>
+    </QuizContainer>
   )
 }

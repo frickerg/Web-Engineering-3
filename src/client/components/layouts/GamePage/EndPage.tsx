@@ -1,9 +1,9 @@
 // TODO man könnte Label anstelle von h2 und p verwenden
 
-import Header2 from '../../typography/headings/Header2'
-import TableHeader1 from '../../typography/headings/TableHeader1'
+import CenterHeader from '../../typography/headings/CenterHeader'
+import FilledTableHeader from '../../typography/headings/FilledTableHeader'
 import Item from '../../typography/texts/Item'
-import Paragraph from '../../typography/texts/Paragraph'
+import { ScoreLabel as StyledScoreLabel } from '../../elements/Label/ScoreLabel'
 import QuizContainer from '../../elements/Container/QuizContainer'
 import QuizResultsContainer from '../../elements/Container/QuizResultsContainer'
 import StartButton from '../../elements/Button/StartButton'
@@ -17,22 +17,24 @@ export default function EndPage() {
   const { state: cardState } = useContext(CardContext)
   const { cards: gameCards } = gameState
 
+  const scoreLabel = () => {
+    const score = gameCards.filter(card => card.isAccepted).length
+    return `Solved ${score} out of ${' '}${gameCards.length} correctly.`
+  }
+
   return (
     <QuizContainer>
       <StartButton
         label="Start New Game"
         onClick={() => startNewGame(cardState.cards, gameDispatch)}
       />
-      <Header2>Game Results</Header2>
-      <Paragraph>
-        Solved {gameCards.filter(card => card.isAccepted).length} out of{' '}
-        {gameCards.length} correctly.
-      </Paragraph>
+      <CenterHeader>Game Results</CenterHeader>
+      <StyledScoreLabel label={scoreLabel()}></StyledScoreLabel>
       <QuizResultsContainer>
-        <TableHeader1>Front</TableHeader1>
-        <TableHeader1>Back</TableHeader1>
-        <TableHeader1>Your Answer</TableHeader1>
-        <TableHeader1>Accepted</TableHeader1>
+        <FilledTableHeader>Front</FilledTableHeader>
+        <FilledTableHeader>Back</FilledTableHeader>
+        <FilledTableHeader>Your Answer</FilledTableHeader>
+        <FilledTableHeader>Accepted</FilledTableHeader>
         {gameCards.map(card => (
           <Fragment key={card.id}>
             <Item>{card.front}</Item>

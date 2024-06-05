@@ -1,5 +1,5 @@
 import TableHeaderContainer from '../../elements/Container/TableHeaderContainer'
-import TableHeader2 from '../../typography/headings/TableHeader2'
+import SimpleTableHeader from '../../typography/headings/SimpleTableHeader'
 import Label from '../../elements/Label/Label'
 import { InputType, SortDirection } from '../../../../api/CardContext'
 
@@ -14,7 +14,7 @@ const sortableTypes: InputType[] = ['front', 'back']
 
 function SortHeader(props: Readonly<SortHeaderProps>) {
   return (
-    <TableHeader2>
+    <SimpleTableHeader>
       <TableHeaderContainer>
       
       {sortableTypes.map(type => (
@@ -28,7 +28,7 @@ function SortHeader(props: Readonly<SortHeaderProps>) {
       ))}
       
       </TableHeaderContainer>
-    </TableHeader2>
+    </SimpleTableHeader>
   )
 }
 export default SortHeader

@@ -1,43 +1,15 @@
 import { useState, useContext, useEffect } from 'react'
-import Button from '../../elements/Button/Button'
-import Container from '../../elements/Container/Container'
+import QuizButton from '../../elements/Button/QuizButton'
 import ProgressHeader from '../../typography/headings/ProgressHeader'
+import { ProgressLabel as StyledProgressLabel } from '../../elements/Label/ProgressLabel'
+import QuizAnswerContainer from '../../elements/Container/QuizAnswerContainer'
+import QuizContainer from '../../elements/Container/QuizContainer'
 import { GameContext } from '../../../../api/GameContext'
 import { GameState } from '../../../../api/GameState'
-import Input from '../../elements/Input/Input'
+import InputAnswer from '../../elements/Input/InputAnswer'
 import Flashcard from '../../elements/Flashcard/Flashcard'
-import Label from '../../elements/Label/Label'
 import { CardContext } from '../../../../api/CardContext'
 import { mapCardToGameResultItem } from '../../../../api/cardUtils'
-import styled from 'styled-components'
-
-const OngoingButton = styled(Button)`
-  width: auto;
-  padding: 10px 20px;
-`
-
-const OngoingContainer = styled(Container)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-`
-
-const OngoingAnswerSection = styled(Container)`
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  width: 500px;
-`
-
-const OngoingProgressLabel = styled(Label)`
-  font-size: 24px;
-  font-weight: bold;
-`
-
-const OngoingAnswerInput = styled(Input)`
-  margin-right: 20px;
-`
 
 export default function Ongoing() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
@@ -119,29 +91,26 @@ export default function Ongoing() {
   }
 
   return (
-    <OngoingContainer className="ongoing-container">
+    <QuizContainer>
       <ProgressHeader>
-        <OngoingProgressLabel label={progressLabel()} className="progress-label" />
-        <OngoingButton
+        <StyledProgressLabel label={progressLabel()} />
+        <QuizButton
           label="Delete Game"
           onClick={handleDeleteGame}
-          className="delete-button"
         />
       </ProgressHeader>
       <Flashcard text={gameCards[currentCardIndex]?.front} />
-      <OngoingAnswerSection className="answer-section">
-        <OngoingAnswerInput
-          className="answer-input"
+      <QuizAnswerContainer>
+        <InputAnswer
           value={answer}
           placeholder="Answer"
           handleInputChange={value => setAnswer(value)}
         />
-        <OngoingButton
+        <QuizButton
           label="Submit"
           onClick={validateCard}
-          className="submit-button"
         />
-      </OngoingAnswerSection>
-    </OngoingContainer>
+      </QuizAnswerContainer>
+    </QuizContainer>
   )
 }

@@ -4,34 +4,13 @@ import Header2 from '../../typography/headings/Header2'
 import TableHeader1 from '../../typography/headings/TableHeader1'
 import Item from '../../typography/texts/Item'
 import Paragraph from '../../typography/texts/Paragraph'
+import QuizContainer from '../../elements/Container/QuizContainer'
+import QuizResultsContainer from '../../elements/Container/QuizResultsContainer'
+import StartButton from '../../elements/Button/StartButton'
 import { Fragment, useContext } from 'react'
 import { GameContext } from '../../../../api/GameContext'
-import Button from '../../elements/Button/Button'
-import Container from '../../elements/Container/Container'
 import { startNewGame } from '../../../../api/cardUtils'
 import { CardContext } from '../../../../api/CardContext'
-import styled from 'styled-components'
-
-const EndPageButton = styled(Button)`
-  width: auto;
-  padding: 10px 20px;
-  margin: 20px;
-`
-
-const EndPageResultsContainer = styled(Container)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-`
-
-const EndPageContainer = styled(Container)`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
-  width: 95%;
-`
 
 export default function EndPage() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
@@ -39,10 +18,9 @@ export default function EndPage() {
   const { cards: gameCards } = gameState
 
   return (
-    <EndPageResultsContainer className="end-page-results">
-      <EndPageButton
+    <QuizContainer>
+      <StartButton
         label="Start New Game"
-        className="end-page-button"
         onClick={() => startNewGame(cardState.cards, gameDispatch)}
       />
       <Header2>Game Results</Header2>
@@ -50,7 +28,7 @@ export default function EndPage() {
         Solved {gameCards.filter(card => card.isAccepted).length} out of{' '}
         {gameCards.length} correctly.
       </Paragraph>
-      <EndPageContainer className="end-page-container">
+      <QuizResultsContainer>
         <TableHeader1>Front</TableHeader1>
         <TableHeader1>Back</TableHeader1>
         <TableHeader1>Your Answer</TableHeader1>
@@ -63,7 +41,7 @@ export default function EndPage() {
             <Item>{card.isAccepted ? '✓' : '✗'}</Item>
           </Fragment>
         ))}
-      </EndPageContainer>
-    </EndPageResultsContainer>
+      </QuizResultsContainer>
+    </QuizContainer>
   )
 }

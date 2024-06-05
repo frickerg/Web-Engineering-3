@@ -3,7 +3,6 @@ import styled from 'styled-components'
 type ContainerProps = {
   className?: string
   children: React.ReactNode;
-
 }
 
 const StyledContainer = styled.div`

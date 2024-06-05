@@ -4,7 +4,7 @@ import LayoutContainer from '../components/elements/Container/LayoutContainer'
 
 export function Layout() {
   return (
-    <LayoutContainer className="container">
+    <LayoutContainer>
       <Appbar />
       <Outlet />
     </LayoutContainer>

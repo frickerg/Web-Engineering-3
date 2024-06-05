@@ -6,8 +6,6 @@ type TopBannerRouterLinkProps = {
   to: string;
 }
 
-// const StyledTopBannerRouterLink = styled(RouterLink)`
-// `
 const StyledTopBannerRouterLink = styled(Link)`
   color: lightblue;
   text-decoration: none;

@@ -20,7 +20,7 @@ const StyledFlashcard = styled.div`
 `
 
 function Flashcard(props: InputProps) {
-  return <StyledFlashcard className="flashcard">{props.text ?? 'No cards found'}</StyledFlashcard>
+  return <StyledFlashcard>{props.text ?? 'No cards found'}</StyledFlashcard>
 }
 
 export default Flashcard

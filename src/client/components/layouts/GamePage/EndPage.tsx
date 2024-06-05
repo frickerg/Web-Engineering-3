@@ -4,7 +4,7 @@ import './EndPage.css'
 import { Fragment, useContext } from 'react'
 import { GameContext } from '../../../session/Context'
 import Button from '../../elements/Button/Button'
-import { startNewGame } from '../../../session/startNewGame'
+import { startNewGame } from '../../../session/helper'
 
 export default function EndPage() {
   const { state, dispatch } = useContext(GameContext)

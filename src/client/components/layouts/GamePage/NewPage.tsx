@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import Button from '../../elements/Button/Button'
 import { GameContext } from '../../../session/Context'
 import { GameState } from '../../../../model/Game'
-import { startNewGame } from '../../../session/startNewGame'
+import { startNewGame } from '../../../session/helper'
 
 export default function NewPage() {
   const { state, dispatch } = useContext(GameContext)

@@ -6,7 +6,7 @@ import { GameState } from '../../../../model/Game'
 import Input from '../../elements/Input/Input'
 import Flashcard from '../../elements/Flashcard/Flashcard'
 import Label from '../../elements/Label/Label'
-import { startNewGame } from '../../../session/startNewGame'
+import { startNewGame } from '../../../session/helper'
 
 export default function Ongoing() {
   const { state: state, dispatch } = useContext(GameContext)

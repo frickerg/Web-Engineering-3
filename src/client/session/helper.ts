@@ -1,4 +1,5 @@
 import { CardProps } from '../../model/Card'
+import { GameState } from '../../model/Game'
 import { fetchGameSize } from '../api'
 import { Action } from './Context'
 
@@ -28,4 +29,17 @@ export async function startNewGame(
       })
     })
     .catch(error => console.error(error))
+}
+
+export function retrieveLabel(state: GameState, payload: number = 0) {
+  switch (state) {
+    case GameState.NOT_STARTED:
+      return 'New Game'
+    case GameState.ONGOING:
+      return `Solve #${payload + 1}`
+    case GameState.FINISHED:
+      return 'Finished'
+    default:
+      return 'Unknown'
+  }
 }

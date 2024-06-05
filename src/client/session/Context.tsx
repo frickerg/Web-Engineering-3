@@ -1,7 +1,14 @@
-import React, { createContext, useReducer, ReactNode, useCallback } from 'react'
+import React, {
+  createContext,
+  useReducer,
+  ReactNode,
+  useCallback,
+  useMemo,
+} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CardProps, InputType, SortDirection } from '../../model/Card'
 import { GameState } from '../../model/Game'
+import { retrieveLabel } from './helper'
 
 export interface GameResultItem extends CardProps {
   answer?: string
@@ -43,7 +50,7 @@ const initialState: State = {
   gameCards: [],
   storeCards: [],
   gameState: GameState.NOT_STARTED,
-  buttonLabel: 'New Game',
+  buttonLabel: retrieveLabel(GameState.NOT_STARTED),
   currentCardIndex: 0,
   sortType: 'front',
   sortDirection: 'asc',
@@ -59,23 +66,14 @@ const reducer = (state: State, action: Action): State => {
         gameCards: action.payload,
         gameState: GameState.ONGOING,
         currentCardIndex: 0,
-        buttonLabel: 'Solve #1',
+        buttonLabel: retrieveLabel(GameState.ONGOING),
       }
     }
     case 'SET_CARD_INDEX': {
-      let newLabel
-      if (state.gameState === GameState.ONGOING) {
-        newLabel = 'Solve #' + (action.payload + 1)
-      } else if (state.gameState === GameState.FINISHED) {
-        newLabel = 'Finished'
-      } else {
-        newLabel = 'New Game'
-      }
-
       return {
         ...state,
         currentCardIndex: action.payload,
-        buttonLabel: newLabel,
+        buttonLabel: retrieveLabel(state.gameState, action.payload),
       }
     }
     case 'DELETE_GAME':
@@ -84,13 +82,13 @@ const reducer = (state: State, action: Action): State => {
         gameCards: [],
         gameState: GameState.NOT_STARTED,
         currentCardIndex: 0,
-        buttonLabel: 'New Game',
+        buttonLabel: retrieveLabel(GameState.NOT_STARTED),
       }
     case 'FINISH_GAME':
       return {
         ...state,
         gameState: GameState.FINISHED,
-        buttonLabel: 'Finished',
+        buttonLabel: retrieveLabel(GameState.FINISHED),
       }
     case 'SET_CARDS':
       return { ...state, storeCards: action.payload }
@@ -129,9 +127,11 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     navigate('/')
   }, [navigate, state.currentCardIndex])
 
+  const contextValue = useMemo(
+    () => ({ state, dispatch, handleButtonClick }),
+    [state, dispatch, handleButtonClick]
+  )
   return (
-    <GameContext.Provider value={{ state, dispatch, handleButtonClick }}>
-      {children}
-    </GameContext.Provider>
+    <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>
   )
 }

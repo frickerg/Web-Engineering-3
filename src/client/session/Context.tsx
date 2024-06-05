@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useReducer,
-  ReactNode,
-  useCallback,
-  useMemo,
-} from 'react'
+import React, { createContext, useReducer, ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CardProps, InputType, SortDirection } from '../../model/Card'
 import { GameState } from '../../model/Game'
@@ -122,15 +116,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const navigate = useNavigate()
 
-  const handleButtonClick = useCallback(() => {
+  const handleButtonClick = () => {
     dispatch({ type: 'SET_CARD_INDEX', payload: state.currentCardIndex })
     navigate('/')
-  }, [navigate, state.currentCardIndex])
+  }
 
-  const contextValue = useMemo(
-    () => ({ state, dispatch, handleButtonClick }),
-    [state, dispatch, handleButtonClick]
-  )
+  const contextValue = { state, dispatch, handleButtonClick }
   return (
     <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>
   )

@@ -1,8 +1,9 @@
 import NoResultsMessage from '../../typography/texts/NoResultsMessage'
 import Button from '../../elements/Button/Button'
-import Card, { CardProps } from '../../elements/Card/Card'
 import RouterLink from '../../typography/links/RouterLink'
 import TableContentContainer from '../../elements/Container/TableContentContainer'
+import { CardProps } from '../../../../model/Card'
+import Card from '../../elements/Card/Card'
 
 type CardRowsProps = {
   cards: CardProps[]

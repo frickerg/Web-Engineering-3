@@ -4,12 +4,11 @@ import ProgressHeader from '../../typography/headings/ProgressHeader'
 import { ProgressLabel as StyledProgressLabel } from '../../elements/Label/ProgressLabel'
 import QuizAnswerContainer from '../../elements/Container/QuizAnswerContainer'
 import QuizContainer from '../../elements/Container/QuizContainer'
-import { GameContext } from '../../../../api/GameContext'
-import { GameState } from '../../../../api/GameState'
 import InputAnswer from '../../elements/Input/InputAnswer'
 import Flashcard from '../../elements/Flashcard/Flashcard'
-import { CardContext } from '../../../../api/CardContext'
-import { mapCardToGameResultItem } from '../../../../api/cardUtils'
+import { GameContext } from '../../../session/Context'
+import { GameState } from '../../../../model/Game'
+import { startNewGame } from '../../../session/helper'
 
 export default function Ongoing() {
   const { state: state, dispatch } = useContext(GameContext)
@@ -80,22 +79,16 @@ export default function Ongoing() {
     <QuizContainer>
       <ProgressHeader>
         <StyledProgressLabel label={progressLabel()} />
-        <QuizButton
-          label="Delete Game"
-          onClick={handleDeleteGame}
-        />
+        <QuizButton label="Delete Game" onClick={handleDeleteGame} />
       </ProgressHeader>
-      <Flashcard text={gameCards[currentCardIndex]?.front} />
+      <Flashcard text={cards[index]?.front} />
       <QuizAnswerContainer>
         <InputAnswer
           value={answer}
           placeholder="Answer"
           handleInputChange={value => setAnswer(value)}
         />
-        <QuizButton
-          label="Submit"
-          onClick={validateCard}
-        />
+        <QuizButton label="Submit" onClick={validateCard} />
       </QuizAnswerContainer>
     </QuizContainer>
   )

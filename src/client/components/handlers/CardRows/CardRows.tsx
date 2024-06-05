@@ -1,8 +1,9 @@
-import './CardRows.css'
-import Card from '../../elements/Card/Card'
+import NoResultsMessage from '../../typography/texts/NoResultsMessage'
 import Button from '../../elements/Button/Button'
-import { Link } from 'react-router-dom'
+import RouterLink from '../../typography/links/RouterLink'
+import TableContentContainer from '../../elements/Container/TableContentContainer'
 import { CardProps } from '../../../../model/Card'
+import Card from '../../elements/Card/Card'
 
 type CardRowsProps = {
   cards: CardProps[]
@@ -12,19 +13,19 @@ type CardRowsProps = {
 function CardRows(props: CardRowsProps) {
   return props.cards.length ? (
     props.cards.map(card => (
-      <div className="card-container" key={card.id}>
+      <TableContentContainer key={card.id}>
         <Card id={card.id} front={card.front} back={card.back} />
-        <Link to={`details/${card.id}`}>
+        <RouterLink to={`details/${card.id}`}>
           <Button label="Edit"></Button>
-        </Link>
+        </RouterLink>
         <Button
           label="Delete"
           onClick={() => props.handleDeleteById(card.id)}
         />
-      </div>
+      </TableContentContainer>
     ))
   ) : (
-    <div className="no-data">No Data</div>
+    <NoResultsMessage>No Data</NoResultsMessage>
   )
 }
 

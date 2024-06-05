@@ -1,4 +1,3 @@
-import './Content.css'
 import { useContext } from 'react'
 import InputFilter from '../../handlers/InputFilter/InputFilter'
 import SortHeader from '../../handlers/SortHeader/SortHeader'

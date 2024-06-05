@@ -1,4 +1,4 @@
-import './Label.css'
+import styled from 'styled-components'
 import { SortDirection } from '../../../../model/Card'
 
 type LabelProps = {
@@ -9,12 +9,18 @@ type LabelProps = {
   className?: string
 }
 
+const StyledLabel = styled.label`
+  font-weight: bold;
+  padding-top: 0;
+  padding-bottom: 0;
+`
+
 function Label(props: Readonly<LabelProps>) {
   return (
-    <div className={`label ${props.className}`} onClick={props.onClick}>
+    <StyledLabel className={props.className} onClick={props.onClick}>
       {props.label}{' '}
       {props.isSorted ? (props.sortDirection === 'asc' ? '▲' : '▼') : ''}
-    </div>
+    </StyledLabel>
   )
 }
 

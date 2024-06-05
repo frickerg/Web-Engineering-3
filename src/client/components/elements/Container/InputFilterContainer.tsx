@@ -1,4 +1,7 @@
-.input-container {
+import styled from 'styled-components'
+import Container from './Container';
+
+const InputFilterContainer = styled(Container)`
   display: grid;
   grid-template-columns: 1fr 1fr 18%;
   grid-template-rows: auto auto;
@@ -10,20 +13,6 @@
   grid-template-areas:
     'input-front input-back input-button'
     'spacer spacer input-checkbox';
-}
+`
 
-.input-front {
-  grid-area: input-front;
-}
-
-.input-back {
-  grid-area: input-back;
-}
-
-.input-button {
-  grid-area: input-button;
-}
-
-.input-checkbox {
-  grid-area: input-checkbox;
-}
+export default InputFilterContainer

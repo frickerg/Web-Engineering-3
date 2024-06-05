@@ -1,4 +1,5 @@
-import './SortHeader.css'
+import TableHeaderContainer from '../../elements/Container/TableHeaderContainer'
+import SimpleTableHeader from '../../typography/headings/SimpleTableHeader'
 import Label from '../../elements/Label/Label'
 import { InputType, SortDirection } from '../../../../model/Card'
 
@@ -13,7 +14,9 @@ const sortableTypes: InputType[] = ['front', 'back']
 
 function SortHeader(props: Readonly<SortHeaderProps>) {
   return (
-    <div className="header header-container">
+    <SimpleTableHeader>
+      <TableHeaderContainer>
+      
       {sortableTypes.map(type => (
         <Label
           key={type}
@@ -23,7 +26,9 @@ function SortHeader(props: Readonly<SortHeaderProps>) {
           sortDirection={props.sortDirection}
         />
       ))}
-    </div>
+      
+      </TableHeaderContainer>
+    </SimpleTableHeader>
   )
 }
 export default SortHeader

@@ -1,7 +1,8 @@
-import './InputFilter.css'
-import Input from '../../elements/Input/Input'
-import Button from '../../elements/Button/Button'
-import Checkbox from '../../elements/Checkbox/Checkbox'
+import InputFilterFront from './InputFilterFront'
+import InputFilterBack from './InputFilterBack'
+import InputFilterButton from '../../elements/Button/InputFilterButton'
+import InputFilterCheckbox from '../../elements/Checkbox/InputFilterCheckbox'
+import InputFilterContainer from '../../elements/Container/InputFilterContainer'
 import { InputType } from '../../../../model/Card'
 
 type InputFilterProps = {
@@ -15,34 +16,30 @@ type InputFilterProps = {
 
 function InputFilter(props: Readonly<InputFilterProps>) {
   return (
-    <div className="input-container">
-      <Input
-        className="input-front"
+    <InputFilterContainer>
+      <InputFilterFront
         key="front"
         value={props.front}
         placeholder="Front"
         handleInputChange={value => props.handleInputChange('front', value)}
       />
-      <Input
-        className="input-back"
+      <InputFilterBack
         key="back"
         value={props.back}
         placeholder="Back"
         handleInputChange={value => props.handleInputChange('back', value)}
       />
-      <Button
-        className="input-button"
+      <InputFilterButton
         label="Add"
         onClick={() => props.handleAddNewCard(props.front, props.back)}
       />
-      <Checkbox
-        className="input-checkbox"
+      <InputFilterCheckbox
         id="filter"
         label="Filter Table"
         checked={props.filterChecked}
         onChange={props.handleCheckboxChange}
       />
-    </div>
+    </InputFilterContainer>
   )
 }
 

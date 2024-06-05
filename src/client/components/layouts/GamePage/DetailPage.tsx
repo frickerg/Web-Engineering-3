@@ -1,7 +1,9 @@
-import './DetailPage.css'
-import Button from '../../elements/Button/Button'
-import Input from '../../elements/Input/Input'
-import Label from '../../elements/Label/Label'
+import CardBackLabel from '../../elements/Label/CardBackLabel'
+import CardFrontLabel from '../../elements/Label/CardFrontLabel'
+import CardDetailContainer from '../../elements/Container/CardDetailContainer'
+import InputCardFront from '../../elements/Input/InputCardFront'
+import InputCardBack from '../../elements/Input/InputCardBack'
+import { SelfAlignedButton as DetailPageButton } from '../../elements/Button/SelfAlignedButton'
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchCards, updateCard } from '../../../api'
@@ -45,28 +47,22 @@ export default function DetailPage() {
   }
 
   return (
-    <div className="detail-container">
-      <Label className="detail-label-front" label="Front"></Label>
-      <Label className="detail-label-back" label="Back"></Label>
-      <Input
-        className="detail-card-front"
+    <CardDetailContainer>
+      <CardFrontLabel label="Front"></CardFrontLabel>
+      <CardBackLabel label="Back"></CardBackLabel>
+      <InputCardFront
         key="front"
         value={card.front}
         placeholder="Front"
         handleInputChange={value => handleInputChange('front', value)}
       />
-      <Input
-        className="detail-card-back"
+      <InputCardBack
         key="back"
         value={card.back}
         placeholder="Back"
         handleInputChange={value => handleInputChange('back', value)}
       />
-      <Button
-        className="detail-button"
-        label="Update"
-        onClick={() => handleUpdate()}
-      />
-    </div>
+      <DetailPageButton label="Update" onClick={() => handleUpdate()} />
+    </CardDetailContainer>
   )
 }

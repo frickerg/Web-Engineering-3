@@ -4,7 +4,7 @@ import { CardProps } from '../../model/Card'
 import cardStore from '../store/CardStore'
 
 export const getCards = (_req: Request, res: Response) => {
-  res.send(cardStore.getCards())
+  res.status(200).send(cardStore.getCards())
 }
 
 export const addCard = (req: Request, res: Response) => {
@@ -24,7 +24,7 @@ export const updateCard = (req: Request, res: Response) => {
   if (!updatedCard) {
     return res.status(404).send('Card not found')
   }
-  res.send(updatedCard)
+  res.status(200).send(updatedCard)
 }
 
 export const deleteCard = (req: Request, res: Response) => {
@@ -43,7 +43,7 @@ export const fetchGameSize = (_req: Request, res: Response) => {
   const randomGameSize = randomNumberBetween(minIndex, maxIndex)
 
   if (cards.length < randomGameSize) {
-    return res.status(400).send('more elements taken than available')
+    return res.status(400).send('More elements taken than available')
   }
 
   res.status(200).send({ gameSize: randomGameSize })

@@ -34,7 +34,8 @@ function Checkbox(props: Readonly<CheckboxProps>) {
         onChange={() => props.onChange(!props.checked)}
         checked={props.checked}
       />
-      <StyledCheckboxLabel htmlFor={`${props.id}-checkbox`}>{props.label}
+      <StyledCheckboxLabel htmlFor={`${props.id}-checkbox`}>
+        {props.label}
       </StyledCheckboxLabel>
     </StyledCheckbox>
   )

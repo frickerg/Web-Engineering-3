@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 type TopBannerRouterLinkProps = {
-  children: React.ReactNode;
-  to: string;
+  children: React.ReactNode
+  to: string
 }
 
 const StyledTopBannerRouterLink = styled(Link)`

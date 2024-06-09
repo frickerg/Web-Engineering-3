@@ -8,9 +8,7 @@ function Appbar() {
     <TopBannerContainer>
       <TitleHeader>Mimir</TitleHeader>
       <CenterButton />
-      <TopBannerRouterLink to="/cards">
-        Manage Cards
-      </TopBannerRouterLink>
+      <TopBannerRouterLink to="/cards">Manage Cards</TopBannerRouterLink>
     </TopBannerContainer>
   )
 }

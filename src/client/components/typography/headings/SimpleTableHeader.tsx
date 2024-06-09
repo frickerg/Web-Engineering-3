@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 type SimpleTableHeaderProps = {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const StyledSimpleTableHeader = styled.h3`
@@ -11,11 +11,7 @@ const StyledSimpleTableHeader = styled.h3`
 `
 
 function SimpleTableHeader(props: Readonly<SimpleTableHeaderProps>) {
-  return (
-    <StyledSimpleTableHeader>
-      {props.children}
-    </StyledSimpleTableHeader>
-  )
+  return <StyledSimpleTableHeader>{props.children}</StyledSimpleTableHeader>
 }
 
 export default SimpleTableHeader

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 type TitleHeaderProps = {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const StyledTitleHeader = styled.h1`
@@ -10,11 +10,7 @@ const StyledTitleHeader = styled.h1`
 `
 
 function TitleHeader(props: Readonly<TitleHeaderProps>) {
-  return (
-    <StyledTitleHeader>
-      {props.children}
-    </StyledTitleHeader>
-  )
+  return <StyledTitleHeader>{props.children}</StyledTitleHeader>
 }
 
 export default TitleHeader

@@ -8,7 +8,7 @@ type InputProps = {
   className?: string
 }
 
-const StyledInput =  styled.input`
+const StyledInput = styled.input`
   width: 100%;
   color: #6a94b8;
   background-color: transparent;
@@ -19,7 +19,8 @@ const StyledInput =  styled.input`
   ::placeholder {
     color: #99b4c5;
   }
-  &:focus, &:focus-visible {
+  &:focus,
+  &:focus-visible {
     outline: none;
     border-bottom: 2px solid #457b9d;
   }

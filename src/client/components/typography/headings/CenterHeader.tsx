@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 type CenterHeaderProps = {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const StyledCenterHeader = styled.h2`
@@ -9,11 +9,7 @@ const StyledCenterHeader = styled.h2`
 `
 
 function CenterHeader(props: Readonly<CenterHeaderProps>) {
-  return (
-    <StyledCenterHeader>
-      {props.children}
-    </StyledCenterHeader>
-  )
+  return <StyledCenterHeader>{props.children}</StyledCenterHeader>
 }
 
 export default CenterHeader

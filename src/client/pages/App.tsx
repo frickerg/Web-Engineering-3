@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { Layout } from './Layout'
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from 'styled-components'
 import DefaultTheme from '../themes/DefaultTheme'
 import Content from '../components/layouts/Content/Content'
 import NewPage from '../components/layouts/GamePage/NewPage'
@@ -38,17 +38,17 @@ function App() {
         return <NewPage />
     }
   }
-  
+
   return (
     <ThemeProvider theme={DefaultTheme}>
-    <DefaultTheme />
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={renderContent()} />
-        <Route path="cards" element={<Content />} />
-        <Route path="cards/details/:cardId" element={<DetailPage />} />
-      </Route>
-    </Routes>
+      <DefaultTheme />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={renderContent()} />
+          <Route path="cards" element={<Content />} />
+          <Route path="cards/details/:cardId" element={<DetailPage />} />
+        </Route>
+      </Routes>
     </ThemeProvider>
   )
 }

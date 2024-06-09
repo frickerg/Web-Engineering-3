@@ -16,17 +16,15 @@ function SortHeader(props: Readonly<SortHeaderProps>) {
   return (
     <SimpleTableHeader>
       <TableHeaderContainer>
-      
-      {sortableTypes.map(type => (
-        <Label
-          key={type}
-          label={capitalize(type)}
-          onClick={() => props.handleSortSelection(type)}
-          isSorted={props.sortType === type}
-          sortDirection={props.sortDirection}
-        />
-      ))}
-      
+        {sortableTypes.map(type => (
+          <Label
+            key={type}
+            label={capitalize(type)}
+            onClick={() => props.handleSortSelection(type)}
+            isSorted={props.sortType === type}
+            sortDirection={props.sortDirection}
+          />
+        ))}
       </TableHeaderContainer>
     </SimpleTableHeader>
   )

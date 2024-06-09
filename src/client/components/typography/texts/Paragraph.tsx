@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 type ParagraphProps = {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const StyledParagraph = styled.p`
@@ -9,11 +9,7 @@ const StyledParagraph = styled.p`
 `
 
 function Paragraph(props: Readonly<ParagraphProps>) {
-  return (
-    <StyledParagraph>
-      {props.children}
-    </StyledParagraph>
-  )
+  return <StyledParagraph>{props.children}</StyledParagraph>
 }
 
 export default Paragraph

@@ -2,11 +2,10 @@ import styled from 'styled-components'
 
 type ContainerProps = {
   className?: string
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
-const StyledContainer = styled.div`
-`
+const StyledContainer = styled.div``
 
 function Container(props: Readonly<ContainerProps>) {
   return (

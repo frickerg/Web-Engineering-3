@@ -19,7 +19,7 @@ const StyledFlashcard = styled.div`
   box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.1);
 `
 
-function Flashcard(props: InputProps) {
+function Flashcard(props: Readonly<InputProps>) {
   return <StyledFlashcard>{props.text ?? 'No cards found'}</StyledFlashcard>
 }
 

@@ -11,7 +11,7 @@ import { GameState } from '../../../../model/Game'
 import { startNewGame } from '../../../session/helper'
 
 export default function Ongoing() {
-  const { state: state, dispatch } = useContext(GameContext)
+  const { state, dispatch } = useContext(GameContext)
   const { gameCards: cards, currentCardIndex: index } = state
   const [answer, setAnswer] = useState('')
 

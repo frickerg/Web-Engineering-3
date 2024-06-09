@@ -23,7 +23,7 @@ const StyledCheckboxLabel = styled.label`
   color: #457b9d;
 `
 
-function Checkbox(props: CheckboxProps) {
+function Checkbox(props: Readonly<CheckboxProps>) {
   return (
     <StyledCheckbox className={props.className}>
       <StyledCheckboxInput

@@ -8,11 +8,6 @@ class CardStore {
     return this.cards
   }
 
-  // TODO not used
-  getCardById(id: string): CardProps | undefined {
-    return this.cards.find(card => card.id === id)
-  }
-
   addCard(card: CardProps): void {
     this.cards.push(card)
   }

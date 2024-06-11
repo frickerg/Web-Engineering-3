@@ -15,13 +15,18 @@ const StyledLabel = styled.label`
   padding-bottom: 0;
 `
 
-function Label(props: Readonly<LabelProps>) {
+export default function Label(props: Readonly<LabelProps>) {
+  const getSortIndicator = (): string => {
+    if (props.isSorted) {
+      return props.sortDirection === 'asc' ? '▲' : '▼'
+    } else {
+      return ''
+    }
+  }
+
   return (
     <StyledLabel className={props.className} onClick={props.onClick}>
-      {props.label}{' '}
-      {props.isSorted ? (props.sortDirection === 'asc' ? '▲' : '▼') : ''}
+      {props.label} {getSortIndicator()}
     </StyledLabel>
   )
 }
-
-export default Label

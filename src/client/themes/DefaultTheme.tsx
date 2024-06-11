@@ -1,6 +1,4 @@
-// Default Theme enthält aktuell einfach die globalen style Definitionen
-
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
 const DefaultTheme = createGlobalStyle`
 * {

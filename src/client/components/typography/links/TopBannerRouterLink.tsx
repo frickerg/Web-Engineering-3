@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 type TopBannerRouterLinkProps = {
-  children: React.ReactNode;
-  to: string;
+  children: React.ReactNode
+  to: string
 }
 
 const StyledTopBannerRouterLink = styled(Link)`
@@ -15,12 +15,12 @@ const StyledTopBannerRouterLink = styled(Link)`
   }
 `
 
-function TopBannerRouterLink(props: Readonly<TopBannerRouterLinkProps>) {
+export default function TopBannerRouterLink(
+  props: Readonly<TopBannerRouterLinkProps>
+) {
   return (
     <StyledTopBannerRouterLink to={props.to}>
       {props.children}
     </StyledTopBannerRouterLink>
   )
 }
-
-export default TopBannerRouterLink

@@ -12,23 +12,20 @@ type SortHeaderProps = {
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 const sortableTypes: InputType[] = ['front', 'back']
 
-function SortHeader(props: Readonly<SortHeaderProps>) {
+export default function SortHeader(props: Readonly<SortHeaderProps>) {
   return (
     <SimpleTableHeader>
       <TableHeaderContainer>
-      
-      {sortableTypes.map(type => (
-        <Label
-          key={type}
-          label={capitalize(type)}
-          onClick={() => props.handleSortSelection(type)}
-          isSorted={props.sortType === type}
-          sortDirection={props.sortDirection}
-        />
-      ))}
-      
+        {sortableTypes.map(type => (
+          <Label
+            key={type}
+            label={capitalize(type)}
+            onClick={() => props.handleSortSelection(type)}
+            isSorted={props.sortType === type}
+            sortDirection={props.sortDirection}
+          />
+        ))}
       </TableHeaderContainer>
     </SimpleTableHeader>
   )
 }
-export default SortHeader

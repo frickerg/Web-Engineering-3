@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 type NoResultsMessageProps = {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const StyledNoResultsMessage = styled.p`
@@ -10,12 +10,8 @@ const StyledNoResultsMessage = styled.p`
   grid-column: 1 / span 3;
 `
 
-function NoResultsMessage(props: Readonly<NoResultsMessageProps>) {
-  return (
-    <StyledNoResultsMessage>
-      {props.children}
-    </StyledNoResultsMessage>
-  )
+export default function NoResultsMessage(
+  props: Readonly<NoResultsMessageProps>
+) {
+  return <StyledNoResultsMessage>{props.children}</StyledNoResultsMessage>
 }
-
-export default NoResultsMessage

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 type FilledTableHeaderProps = {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const StyledFilledTableHeader = styled.h3`
@@ -11,12 +11,8 @@ const StyledFilledTableHeader = styled.h3`
   text-align: center;
 `
 
-function FilledTableHeader(props: Readonly<FilledTableHeaderProps>) {
-  return (
-    <StyledFilledTableHeader>
-      {props.children}
-    </StyledFilledTableHeader>
-  )
+export default function FilledTableHeader(
+  props: Readonly<FilledTableHeaderProps>
+) {
+  return <StyledFilledTableHeader>{props.children}</StyledFilledTableHeader>
 }
-
-export default FilledTableHeader

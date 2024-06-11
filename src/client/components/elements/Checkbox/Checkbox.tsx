@@ -23,7 +23,7 @@ const StyledCheckboxLabel = styled.label`
   color: #457b9d;
 `
 
-function Checkbox(props: CheckboxProps) {
+export default function Checkbox(props: Readonly<CheckboxProps>) {
   return (
     <StyledCheckbox className={props.className}>
       <StyledCheckboxInput
@@ -34,10 +34,9 @@ function Checkbox(props: CheckboxProps) {
         onChange={() => props.onChange(!props.checked)}
         checked={props.checked}
       />
-      <StyledCheckboxLabel htmlFor={`${props.id}-checkbox`}>{props.label}
+      <StyledCheckboxLabel htmlFor={`${props.id}-checkbox`}>
+        {props.label}
       </StyledCheckboxLabel>
     </StyledCheckbox>
   )
 }
-
-export default Checkbox

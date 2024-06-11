@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 type ProgressHeaderProps = {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const StyledProgressHeader = styled.h2`
@@ -12,12 +12,6 @@ const StyledProgressHeader = styled.h2`
   margin-bottom: 20px;
 `
 
-function ProgressHeader(props: Readonly<ProgressHeaderProps>) {
-  return (
-    <StyledProgressHeader>
-      {props.children}
-    </StyledProgressHeader>
-  )
+export default function ProgressHeader(props: Readonly<ProgressHeaderProps>) {
+  return <StyledProgressHeader>{props.children}</StyledProgressHeader>
 }
-
-export default ProgressHeader

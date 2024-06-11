@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Container from './Container';
+import Container from './Container'
 
 const InputFilterContainer = styled(Container)`
   display: grid;

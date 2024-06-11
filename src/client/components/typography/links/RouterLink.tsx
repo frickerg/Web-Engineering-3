@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 type RouterLinkProps = {
-  children: React.ReactNode;
-  to: string;
+  children: React.ReactNode
+  to: string
 }
 
 const StyledRouterLink = styled(Link)`
@@ -14,12 +14,6 @@ const StyledRouterLink = styled(Link)`
   }
 `
 
-function RouterLink(props: Readonly<RouterLinkProps>) {
-  return (
-    <StyledRouterLink to={props.to}>
-      {props.children}
-    </StyledRouterLink>
-  )
+export default function RouterLink(props: Readonly<RouterLinkProps>) {
+  return <StyledRouterLink to={props.to}>{props.children}</StyledRouterLink>
 }
-
-export default RouterLink

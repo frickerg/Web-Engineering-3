@@ -1,5 +1,4 @@
 import React, { createContext, useReducer, ReactNode } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { CardProps, InputType, SortDirection } from '../../model/Card'
 import { GameResultItem, GameState } from '../../model/Game'
 import { retrieveLabel } from './helper'
@@ -32,7 +31,6 @@ export type Action =
 type ContextProps = {
   state: State
   dispatch: React.Dispatch<Action>
-  handleButtonClick: () => void
 }
 
 const initialState: State = {
@@ -104,20 +102,14 @@ const reducer = (state: State, action: Action): State => {
 export const GameContext = createContext<ContextProps>({
   state: initialState,
   dispatch: () => null,
-  handleButtonClick: () => {},
 })
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  const navigate = useNavigate()
 
-  const handleButtonClick = () => {
-    dispatch({ type: 'SET_CARD_INDEX', payload: state.currentCardIndex })
-    navigate('/')
-  }
-
-  const contextValue = { state, dispatch, handleButtonClick }
   return (
-    <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>
+    <GameContext.Provider value={{ state, dispatch }}>
+      {children}
+    </GameContext.Provider>
   )
 }

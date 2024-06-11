@@ -1,16 +1,16 @@
 import { CardProps } from '../../model/Card'
-import { GameResultItem, GameState } from '../../model/Game'
+import { GameState } from '../../model/Game'
 import { fetchGameSize } from '../api'
 import { Action } from './Context'
 
-function getRandomGameCards(array: CardProps[], numberOfEntries: number) {
+function getRandomCards(array: CardProps[], numberOfEntries: number) {
   if (numberOfEntries > array.length) return []
   const result = new Set<CardProps>()
   while (result.size < numberOfEntries) {
     const randomIndex = Math.floor(Math.random() * array.length)
     result.add(array[randomIndex])
   }
-  return Array.from<GameResultItem>(result)
+  return Array.from(result)
 }
 
 export async function startNewGame(
@@ -21,7 +21,7 @@ export async function startNewGame(
     .then(size => {
       dispatch({
         type: 'INIT_GAME',
-        payload: getRandomGameCards(storeCards, size),
+        payload: getRandomCards(storeCards, size),
       })
     })
     .catch(error => console.error(error))

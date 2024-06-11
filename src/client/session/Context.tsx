@@ -7,13 +7,8 @@ import React, {
 } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CardProps, InputType, SortDirection } from '../../model/Card'
-import { GameState } from '../../model/Game'
+import { GameResultItem, GameState } from '../../model/Game'
 import { retrieveLabel } from './helper'
-
-export interface GameResultItem extends CardProps {
-  answer?: string
-  isAccepted?: boolean
-}
 
 type State = {
   gameCards: GameResultItem[]
@@ -32,7 +27,7 @@ export type Action =
   | { type: 'SET_CARD_INDEX'; payload: number }
   | { type: 'FINISH_GAME' }
   | { type: 'DELETE_GAME' }
-  | { type: 'SET_CARDS'; payload: GameResultItem[] }
+  | { type: 'SET_CARDS'; payload: CardProps[] }
   | { type: 'ADD_CARD'; payload: CardProps }
   | { type: 'DELETE_CARD'; payload: string }
   | { type: 'SET_SORT_TYPE'; payload: InputType }

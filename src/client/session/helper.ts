@@ -1,5 +1,5 @@
 import { CardProps } from '../../model/Card'
-import { GameState } from '../../model/Game'
+import { GameResultItem, GameState } from '../../model/Game'
 import { fetchGameSize } from '../api'
 import { Action } from './Context'
 
@@ -10,11 +10,7 @@ function getRandomGameCards(array: CardProps[], numberOfEntries: number) {
     const randomIndex = Math.floor(Math.random() * array.length)
     result.add(array[randomIndex])
   }
-  return Array.from(result).map(card => ({
-    ...card,
-    answer: '',
-    isAccepted: false,
-  }))
+  return Array.from<GameResultItem>(result)
 }
 
 export async function startNewGame(

@@ -7,12 +7,10 @@ type ContainerProps = {
 
 const StyledContainer = styled.div``
 
-function Container(props: Readonly<ContainerProps>) {
+export default function Container(props: Readonly<ContainerProps>) {
   return (
     <StyledContainer className={props.className}>
       {props.children}
     </StyledContainer>
   )
 }
-
-export default Container

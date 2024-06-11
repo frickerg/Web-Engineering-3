@@ -14,7 +14,7 @@ type InputFilterProps = {
   handleCheckboxChange: (checked: boolean) => void
 }
 
-function InputFilter(props: Readonly<InputFilterProps>) {
+export default function InputFilter(props: Readonly<InputFilterProps>) {
   return (
     <InputFilterContainer>
       <InputFilterFront
@@ -42,5 +42,3 @@ function InputFilter(props: Readonly<InputFilterProps>) {
     </InputFilterContainer>
   )
 }
-
-export default InputFilter

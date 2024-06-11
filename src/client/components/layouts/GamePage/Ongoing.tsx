@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react'
 import QuizButton from '../../elements/Button/QuizButton'
 import ProgressHeader from '../../typography/headings/ProgressHeader'
-import { ProgressLabel as StyledProgressLabel } from '../../elements/Label/ProgressLabel'
+import ProgressLabel from '../../elements/Label/ProgressLabel'
 import QuizAnswerContainer from '../../elements/Container/QuizAnswerContainer'
 import QuizContainer from '../../elements/Container/QuizContainer'
 import InputAnswer from '../../elements/Input/InputAnswer'
@@ -78,7 +78,7 @@ export default function Ongoing() {
   return (
     <QuizContainer>
       <ProgressHeader>
-        <StyledProgressLabel label={progressLabel()} />
+        <ProgressLabel label={progressLabel()} />
         <QuizButton label="Delete Game" onClick={handleDeleteGame} />
       </ProgressHeader>
       <Flashcard text={cards[index]?.front} />

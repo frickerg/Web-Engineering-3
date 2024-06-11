@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import { Layout } from './Layout'
+import Layout from './Layout'
 import { ThemeProvider } from 'styled-components'
 import DefaultTheme from '../themes/DefaultTheme'
 import Content from '../components/layouts/Content/Content'
@@ -12,7 +12,7 @@ import { GameContext } from '../session/Context'
 import { GameState } from '../../model/Game'
 import { fetchCards } from '../api'
 
-function App() {
+export default function App() {
   const { state, dispatch } = useContext(GameContext)
 
   useEffect(() => {
@@ -52,5 +52,3 @@ function App() {
     </ThemeProvider>
   )
 }
-
-export default App

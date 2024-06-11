@@ -9,8 +9,6 @@ const StyledTitleHeader = styled.h1`
   font-size: 30px;
 `
 
-function TitleHeader(props: Readonly<TitleHeaderProps>) {
+export default function TitleHeader(props: Readonly<TitleHeaderProps>) {
   return <StyledTitleHeader>{props.children}</StyledTitleHeader>
 }
-
-export default TitleHeader

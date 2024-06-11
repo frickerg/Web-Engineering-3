@@ -23,7 +23,7 @@ const StyledCheckboxLabel = styled.label`
   color: #457b9d;
 `
 
-function Checkbox(props: Readonly<CheckboxProps>) {
+export default function Checkbox(props: Readonly<CheckboxProps>) {
   return (
     <StyledCheckbox className={props.className}>
       <StyledCheckboxInput
@@ -40,5 +40,3 @@ function Checkbox(props: Readonly<CheckboxProps>) {
     </StyledCheckbox>
   )
 }
-
-export default Checkbox

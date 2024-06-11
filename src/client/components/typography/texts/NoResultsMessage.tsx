@@ -10,8 +10,8 @@ const StyledNoResultsMessage = styled.p`
   grid-column: 1 / span 3;
 `
 
-function NoResultsMessage(props: Readonly<NoResultsMessageProps>) {
+export default function NoResultsMessage(
+  props: Readonly<NoResultsMessageProps>
+) {
   return <StyledNoResultsMessage>{props.children}</StyledNoResultsMessage>
 }
-
-export default NoResultsMessage

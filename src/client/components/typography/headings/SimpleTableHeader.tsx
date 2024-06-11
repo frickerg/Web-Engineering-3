@@ -10,8 +10,8 @@ const StyledSimpleTableHeader = styled.h3`
   padding-bottom: 0;
 `
 
-function SimpleTableHeader(props: Readonly<SimpleTableHeaderProps>) {
+export default function SimpleTableHeader(
+  props: Readonly<SimpleTableHeaderProps>
+) {
   return <StyledSimpleTableHeader>{props.children}</StyledSimpleTableHeader>
 }
-
-export default SimpleTableHeader

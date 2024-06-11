@@ -6,7 +6,7 @@ import { addCard, deleteCard } from '../../../api'
 import { GameContext } from '../../../session/Context'
 import { InputType } from '../../../../model/Card'
 
-function Content() {
+export default function Content() {
   const { state, dispatch } = useContext(GameContext)
   const {
     storeCards: cards,
@@ -94,5 +94,3 @@ function Content() {
     </div>
   )
 }
-
-export default Content

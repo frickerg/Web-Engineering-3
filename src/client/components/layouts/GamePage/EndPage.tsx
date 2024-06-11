@@ -1,7 +1,7 @@
 import CenterHeader from '../../typography/headings/CenterHeader'
 import FilledTableHeader from '../../typography/headings/FilledTableHeader'
 import Item from '../../typography/texts/Item'
-import { ScoreLabel as StyledScoreLabel } from '../../elements/Label/ScoreLabel'
+import ScoreLabel from '../../elements/Label/ScoreLabel'
 import QuizContainer from '../../elements/Container/QuizContainer'
 import QuizResultsContainer from '../../elements/Container/QuizResultsContainer'
 import StartButton from '../../elements/Button/StartButton'
@@ -25,7 +25,7 @@ export default function EndPage() {
         onClick={() => startNewGame(cards, dispatch)}
       />
       <CenterHeader>Game Results</CenterHeader>
-      <StyledScoreLabel label={scoreLabel()}></StyledScoreLabel>
+      <ScoreLabel label={scoreLabel()}></ScoreLabel>
       <QuizResultsContainer>
         <FilledTableHeader>Front</FilledTableHeader>
         <FilledTableHeader>Back</FilledTableHeader>

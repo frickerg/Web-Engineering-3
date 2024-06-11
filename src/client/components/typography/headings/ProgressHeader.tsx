@@ -12,8 +12,6 @@ const StyledProgressHeader = styled.h2`
   margin-bottom: 20px;
 `
 
-function ProgressHeader(props: Readonly<ProgressHeaderProps>) {
+export default function ProgressHeader(props: Readonly<ProgressHeaderProps>) {
   return <StyledProgressHeader>{props.children}</StyledProgressHeader>
 }
-
-export default ProgressHeader

@@ -15,7 +15,7 @@ const StyledLabel = styled.label`
   padding-bottom: 0;
 `
 
-function Label(props: Readonly<LabelProps>) {
+export default function Label(props: Readonly<LabelProps>) {
   const getSortIndicator = (): string => {
     if (props.isSorted) {
       return props.sortDirection === 'asc' ? '▲' : '▼'
@@ -30,5 +30,3 @@ function Label(props: Readonly<LabelProps>) {
     </StyledLabel>
   )
 }
-
-export default Label

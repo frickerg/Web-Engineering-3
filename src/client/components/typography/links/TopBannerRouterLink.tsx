@@ -15,12 +15,12 @@ const StyledTopBannerRouterLink = styled(Link)`
   }
 `
 
-function TopBannerRouterLink(props: Readonly<TopBannerRouterLinkProps>) {
+export default function TopBannerRouterLink(
+  props: Readonly<TopBannerRouterLinkProps>
+) {
   return (
     <StyledTopBannerRouterLink to={props.to}>
       {props.children}
     </StyledTopBannerRouterLink>
   )
 }
-
-export default TopBannerRouterLink

@@ -10,8 +10,6 @@ const StyledItem = styled.p`
   text-align: center;
 `
 
-function Item(props: Readonly<ItemProps>) {
+export default function Item(props: Readonly<ItemProps>) {
   return <StyledItem>{props.children}</StyledItem>
 }
-
-export default Item

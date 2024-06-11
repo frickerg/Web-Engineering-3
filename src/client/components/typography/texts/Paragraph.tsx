@@ -8,8 +8,6 @@ const StyledParagraph = styled.p`
   margin: 10px;
 `
 
-function Paragraph(props: Readonly<ParagraphProps>) {
+export default function Paragraph(props: Readonly<ParagraphProps>) {
   return <StyledParagraph>{props.children}</StyledParagraph>
 }
-
-export default Paragraph

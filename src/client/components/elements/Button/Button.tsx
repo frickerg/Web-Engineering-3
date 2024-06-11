@@ -21,12 +21,10 @@ const StyledButton = styled.button`
   }
 `
 
-function Button(props: Readonly<ButtonProps>) {
+export default function Button(props: Readonly<ButtonProps>) {
   return (
     <StyledButton className={props.className} onClick={props.onClick}>
       {props.label}
     </StyledButton>
   )
 }
-
-export default Button

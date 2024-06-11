@@ -10,7 +10,7 @@ type CardRowsProps = {
   handleDeleteById: (id: string) => void
 }
 
-function CardRows(props: CardRowsProps) {
+export default function CardRows(props: CardRowsProps) {
   return props.cards.length ? (
     props.cards.map(card => (
       <TableContentContainer key={card.id}>
@@ -28,5 +28,3 @@ function CardRows(props: CardRowsProps) {
     <NoResultsMessage>No Data</NoResultsMessage>
   )
 }
-
-export default CardRows

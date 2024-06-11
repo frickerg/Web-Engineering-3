@@ -26,7 +26,7 @@ const StyledInput = styled.input`
   }
 `
 
-function Input(props: Readonly<InputProps>) {
+export default function Input(props: Readonly<InputProps>) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     props.handleInputChange(e.target.value)
   }
@@ -41,5 +41,3 @@ function Input(props: Readonly<InputProps>) {
     />
   )
 }
-
-export default Input

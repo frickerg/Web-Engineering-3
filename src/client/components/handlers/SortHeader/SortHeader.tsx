@@ -12,7 +12,7 @@ type SortHeaderProps = {
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 const sortableTypes: InputType[] = ['front', 'back']
 
-function SortHeader(props: Readonly<SortHeaderProps>) {
+export default function SortHeader(props: Readonly<SortHeaderProps>) {
   return (
     <SimpleTableHeader>
       <TableHeaderContainer>
@@ -29,4 +29,3 @@ function SortHeader(props: Readonly<SortHeaderProps>) {
     </SimpleTableHeader>
   )
 }
-export default SortHeader

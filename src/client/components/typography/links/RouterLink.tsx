@@ -14,8 +14,6 @@ const StyledRouterLink = styled(Link)`
   }
 `
 
-function RouterLink(props: Readonly<RouterLinkProps>) {
+export default function RouterLink(props: Readonly<RouterLinkProps>) {
   return <StyledRouterLink to={props.to}>{props.children}</StyledRouterLink>
 }
-
-export default RouterLink

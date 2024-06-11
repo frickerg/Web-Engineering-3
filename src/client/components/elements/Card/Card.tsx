@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import type { CardProps } from '../../../../model/Card'
 
-function Card(props: Readonly<CardProps>) {
+export default function Card(props: Readonly<CardProps>) {
   return (
     <Fragment>
       <div>{props.front}</div>
@@ -9,5 +9,3 @@ function Card(props: Readonly<CardProps>) {
     </Fragment>
   )
 }
-
-export default Card

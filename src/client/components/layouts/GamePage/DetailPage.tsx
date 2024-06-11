@@ -3,7 +3,7 @@ import CardFrontLabel from '../../elements/Label/CardFrontLabel'
 import CardDetailContainer from '../../elements/Container/CardDetailContainer'
 import InputCardFront from '../../elements/Input/InputCardFront'
 import InputCardBack from '../../elements/Input/InputCardBack'
-import { SelfAlignedButton as DetailPageButton } from '../../elements/Button/SelfAlignedButton'
+import SelfAlignedButton from '../../elements/Button/SelfAlignedButton'
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchCards, updateCard } from '../../../api'
@@ -62,7 +62,7 @@ export default function DetailPage() {
         placeholder="Back"
         handleInputChange={value => handleInputChange('back', value)}
       />
-      <DetailPageButton label="Update" onClick={() => handleUpdate()} />
+      <SelfAlignedButton label="Update" onClick={() => handleUpdate()} />
     </CardDetailContainer>
   )
 }

@@ -3,7 +3,7 @@ import TitleHeader from '../../typography/headings/TitleHeader'
 import TopBannerContainer from '../../elements/Container/TopBannerContainer'
 import TopBannerRouterLink from '../../typography/links/TopBannerRouterLink'
 
-function Appbar() {
+export default function Appbar() {
   return (
     <TopBannerContainer>
       <TitleHeader>Mimir</TitleHeader>
@@ -12,5 +12,3 @@ function Appbar() {
     </TopBannerContainer>
   )
 }
-
-export default Appbar

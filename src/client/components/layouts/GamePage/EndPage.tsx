@@ -11,18 +11,18 @@ import { startNewGame } from '../../../session/helper'
 
 export default function EndPage() {
   const { state, dispatch } = useContext(GameContext)
-  const { gameCards: cards } = state
+  const { gameCards, storeCards } = state
 
   const scoreLabel = () => {
-    const score = cards.filter(card => card.isAccepted).length
-    return `Solved ${score} out of ${' '}${cards.length} correctly.`
+    const score = gameCards.filter(card => card.isAccepted).length
+    return `Solved ${score} out of ${' '}${gameCards.length} correctly.`
   }
 
   return (
     <QuizContainer>
       <StartButton
         label="Start New Game"
-        onClick={() => startNewGame(cards, dispatch)}
+        onClick={() => startNewGame(storeCards, dispatch)}
       />
       <CenterHeader>Game Results</CenterHeader>
       <ScoreLabel label={scoreLabel()}></ScoreLabel>
@@ -31,7 +31,7 @@ export default function EndPage() {
         <FilledTableHeader>Back</FilledTableHeader>
         <FilledTableHeader>Your Answer</FilledTableHeader>
         <FilledTableHeader>Accepted</FilledTableHeader>
-        {cards.map(card => (
+        {gameCards.map(card => (
           <Fragment key={card.id}>
             <Item>{card.front}</Item>
             <Item>{card.back}</Item>

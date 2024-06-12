@@ -4,9 +4,9 @@ export type GameSize = {
   gameSize: number
 }
 
-export type GameAnswer = CardProps & {
-  answer: string
-  isAnswerAccepted: boolean
+export type GameResultItem = CardProps & {
+  answer?: string
+  isAccepted?: boolean
 }
 
 export enum GameState {

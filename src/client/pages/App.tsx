@@ -18,8 +18,7 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedCards = await fetchCards()
-        dispatch({ type: 'SET_CARDS', payload: fetchedCards })
+        dispatch({ type: 'SET_CARDS', payload: await fetchCards() })
       } catch (error) {
         console.error(error)
       }

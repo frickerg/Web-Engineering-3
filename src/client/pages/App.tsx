@@ -2,11 +2,11 @@ import { Route, Routes } from 'react-router-dom'
 import Layout from './Layout'
 import { ThemeProvider } from 'styled-components'
 import DefaultTheme from '../themes/DefaultTheme'
-import Content from '../components/layouts/Content/Content'
-import NewPage from '../components/layouts/GamePage/NewPage'
-import Ongoing from '../components/layouts/GamePage/Ongoing'
-import EndPage from '../components/layouts/GamePage/EndPage'
-import DetailPage from '../components/layouts/GamePage/DetailPage'
+import ManageCardsPage from '../components/layouts/ManageCardDetails/ManageCardsPage'
+import StartNewGamePage from '../components/layouts/GamePage/StartNewGamePage'
+import OngoingGamePage from '../components/layouts/GamePage/OngoingGamePage'
+import GameResultPage from '../components/layouts/GamePage/GameResultPage'
+import CardDetailPage from '../components/layouts/ManageCardDetails/CardDetailPage'
 import { useContext, useEffect } from 'react'
 import { GameContext } from '../session/Context'
 import { GameState } from '../../model/Game'
@@ -29,12 +29,12 @@ export default function App() {
   const renderContent = () => {
     switch (state.gameState) {
       case GameState.ONGOING:
-        return <Ongoing />
+        return <OngoingGamePage />
       case GameState.FINISHED:
-        return <EndPage />
+        return <GameResultPage />
       case GameState.NOT_STARTED:
       default:
-        return <NewPage />
+        return <StartNewGamePage />
     }
   }
 
@@ -44,8 +44,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={renderContent()} />
-          <Route path="cards" element={<Content />} />
-          <Route path="cards/details/:cardId" element={<DetailPage />} />
+          <Route path="cards" element={<ManageCardsPage />} />
+          <Route path="cards/details/:cardId" element={<CardDetailPage />} />
         </Route>
       </Routes>
     </ThemeProvider>

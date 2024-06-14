@@ -3,7 +3,7 @@ import Button from '../../elements/Button/Button'
 import RouterLink from '../../typography/links/RouterLink'
 import TableContentContainer from '../../elements/Container/TableContentContainer'
 import { CardProps } from '../../../../model/Card'
-import Card from '../../elements/Card/Card'
+import CardItem from '../../elements/CardItem/CardItem'
 
 type CardRowsProps = {
   cards: CardProps[]
@@ -14,7 +14,7 @@ export default function CardRows(props: CardRowsProps) {
   return props.cards.length ? (
     props.cards.map(card => (
       <TableContentContainer key={card.id}>
-        <Card id={card.id} front={card.front} back={card.back} />
+        <CardItem id={card.id} front={card.front} back={card.back} />
         <RouterLink to={`details/${card.id}`}>
           <Button label="Edit"></Button>
         </RouterLink>

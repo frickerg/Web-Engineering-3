@@ -6,7 +6,7 @@ import { addCard, deleteCard } from '../../../api'
 import { GameContext } from '../../../session/Context'
 import { InputType } from '../../../../model/Card'
 
-export default function Content() {
+export default function ManageCardsPage() {
   const { state, dispatch } = useContext(GameContext)
   const {
     storeCards: cards,

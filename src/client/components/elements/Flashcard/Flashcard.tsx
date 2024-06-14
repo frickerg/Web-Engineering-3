@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-type InputProps = {
+type FlashcardProps = {
   text: string
 }
 
@@ -19,6 +19,6 @@ const StyledFlashcard = styled.div`
   box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.1);
 `
 
-export default function Flashcard(props: Readonly<InputProps>) {
+export default function Flashcard(props: Readonly<FlashcardProps>) {
   return <StyledFlashcard>{props.text ?? 'No cards found'}</StyledFlashcard>
 }

@@ -1,5 +1,5 @@
 import express from 'express'
-import cardsRoutes from './routes/cardRoute'
+import cardsRoutes from './routes'
 
 const app = express()
 app.use(express.json())

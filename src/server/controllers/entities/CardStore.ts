@@ -1,5 +1,5 @@
-import { CardProps } from '../../model/Card'
-import InitialCards from '../data/cardData'
+import { CardProps } from '../../../model/Card'
+import InitialCards from '../data'
 
 class CardStore {
   private cards: CardProps[] = [...InitialCards]

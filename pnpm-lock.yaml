@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@types/styled-components':
-        specifier: ^5.1.34
-        version: 5.1.34
       express:
         specifier: ^4.19.2
         version: 4.19.2
@@ -39,6 +36,9 @@ importers:
       '@types/react-router-dom':
         specifier: ^5.3.3
         version: 5.3.3
+      '@types/styled-components':
+        specifier: ^5.1.34
+        version: 5.1.34
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8

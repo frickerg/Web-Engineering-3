@@ -54,5 +54,5 @@ export const deleteCard = async (id: string): Promise<void> => {
 }
 
 export const fetchGameSize = async (): Promise<number> => {
-  return (await request<GameSize>(`/api/cards/fetchGameSize`)).gameSize
+  return (await request<GameSize>(`/api/cards/getGameSize`)).gameSize
 }

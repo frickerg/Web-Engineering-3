@@ -36,7 +36,7 @@ function randomNumberBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-export const fetchGameSize = (_req: Request, res: Response) => {
+export const getGameSize = (_req: Request, res: Response) => {
   const cards = cardStore.getCards()
   const maxIndex = cards.length > 10 ? 10 : cards.length
   const minIndex = cards.length >= 3 ? 3 : cards.length

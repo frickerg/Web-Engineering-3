@@ -1,4 +1,4 @@
-import type { CardProps } from '../../model/Card'
+import type { CardProps } from '../../shared/types'
 import { randomUUID } from 'crypto'
 
 const cards: CardProps[] = [

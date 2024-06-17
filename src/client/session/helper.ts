@@ -1,7 +1,12 @@
-import { CardProps } from '../../model/Card'
-import { GameState } from '../../model/Game'
+import { CardProps } from '../../shared/types'
 import { fetchGameSize } from '../api'
 import { Action } from './Context'
+
+export enum GameState {
+  NOT_STARTED = 'NOT_STARTED',
+  ONGOING = 'ONGOING',
+  FINISHED = 'FINISHED',
+}
 
 function getRandomCards(array: CardProps[], numberOfEntries: number) {
   if (numberOfEntries > array.length) return []

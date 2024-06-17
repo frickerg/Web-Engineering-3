@@ -1,7 +1,7 @@
 import TableHeaderContainer from '../../elements/Container/TableHeaderContainer'
 import SimpleTableHeader from '../../typography/headings/SimpleTableHeader'
 import Label from '../../elements/Label/Label'
-import { InputType, SortDirection } from '../../../../model/Card'
+import { InputType, SortDirection } from '../../../common/types'
 
 type SortHeaderProps = {
   sortType: InputType

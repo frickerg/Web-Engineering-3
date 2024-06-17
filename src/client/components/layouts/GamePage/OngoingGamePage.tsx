@@ -31,14 +31,6 @@ export default function OngoingGamePage() {
     setAnswer('')
   }, [index])
 
-  const incrementIndex = () => {
-    const newIndex = index < cards.length - 1 ? index + 1 : index
-    dispatch({
-      type: 'SET_CARD_INDEX',
-      payload: newIndex,
-    })
-  }
-
   const handleDeleteGame = () => {
     dispatch({ type: 'DELETE_GAME' })
   }
@@ -51,22 +43,21 @@ export default function OngoingGamePage() {
 
     const isAnswerCorrect =
       currentCard.back.trim().toLowerCase() === answer.trim().toLowerCase()
-    const updatedCards = [...cards]
-
-    updatedCards[index] = {
-      ...currentCard,
-      back: currentCard.back,
-      isAccepted: isAnswerCorrect,
-      answer: answer,
-    }
 
     dispatch({
-      type: 'INIT_GAME',
-      payload: updatedCards,
+      type: 'SUBMIT_GAME_ANSWER',
+      payload: {
+        ...currentCard,
+        isAccepted: isAnswerCorrect,
+        answer: answer,
+      },
     })
 
-    incrementIndex()
-    setAnswer('')
+    const newIndex = index < cards.length - 1 ? index + 1 : index
+    dispatch({
+      type: 'SET_CARD_INDEX',
+      payload: newIndex,
+    })
 
     if (index >= cards.length - 1) {
       dispatch({

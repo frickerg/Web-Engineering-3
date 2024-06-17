@@ -17,6 +17,7 @@ type State = {
 
 export type Action =
   | { type: 'INIT_GAME'; payload: GameResultItem[] }
+  | { type: 'SUBMIT_GAME_ANSWER'; payload: GameResultItem }
   | { type: 'SET_CARD_INDEX'; payload: number }
   | { type: 'FINISH_GAME' }
   | { type: 'DELETE_GAME' }
@@ -54,6 +55,14 @@ const reducer = (state: State, action: Action): State => {
         gameState: GameState.ONGOING,
         currentCardIndex: 0,
         buttonLabel: retrieveLabel(GameState.ONGOING),
+      }
+    }
+    case 'SUBMIT_GAME_ANSWER': {
+      const updatedGameCards = [...state.gameCards]
+      updatedGameCards[state.currentCardIndex] = action.payload
+      return {
+        ...state,
+        gameCards: updatedGameCards,
       }
     }
     case 'SET_CARD_INDEX': {

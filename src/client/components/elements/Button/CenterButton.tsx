@@ -11,18 +11,16 @@ const CenterButtonWrapper = styled.div`
 `
 
 export default function CenterButton() {
-  const { state, dispatch } = useContext(GameContext)
-  const { buttonLabel } = state
+  const { state } = useContext(GameContext)
   const navigate = useNavigate()
 
   const handleOnClick = () => {
-    dispatch({ type: 'SET_CARD_INDEX', payload: state.currentCardIndex })
     navigate('/')
   }
 
   return (
     <CenterButtonWrapper>
-      <Button label={buttonLabel} onClick={handleOnClick} />
+      <Button label={state.buttonLabel} onClick={handleOnClick} />
     </CenterButtonWrapper>
   )
 }

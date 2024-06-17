@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { SimpleProps } from '../types'
+import { ChildrenProps } from '../types'
 
 const StyledProgressHeader = styled.h2`
   width: 100%;
@@ -9,6 +9,6 @@ const StyledProgressHeader = styled.h2`
   margin-bottom: 20px;
 `
 
-export default function ProgressHeader(props: Readonly<SimpleProps>) {
+export default function ProgressHeader(props: Readonly<ChildrenProps>) {
   return <StyledProgressHeader>{props.children}</StyledProgressHeader>
 }

@@ -1,11 +1,11 @@
 import styled from 'styled-components'
-import { SimpleProps } from '../types'
+import { ChildrenProps } from '../types'
 
 const StyledTitleHeader = styled.h1`
   font-weight: 500;
   font-size: 30px;
 `
 
-export default function TitleHeader(props: Readonly<SimpleProps>) {
+export default function TitleHeader(props: Readonly<ChildrenProps>) {
   return <StyledTitleHeader>{props.children}</StyledTitleHeader>
 }

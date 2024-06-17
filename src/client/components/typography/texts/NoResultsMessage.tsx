@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { SimpleProps } from '../types'
+import { ChildrenProps } from '../types'
 
 const StyledNoResultsMessage = styled.p`
   color: #99b4c5;
@@ -7,6 +7,6 @@ const StyledNoResultsMessage = styled.p`
   grid-column: 1 / span 3;
 `
 
-export default function NoResultsMessage(props: Readonly<SimpleProps>) {
+export default function NoResultsMessage(props: Readonly<ChildrenProps>) {
   return <StyledNoResultsMessage>{props.children}</StyledNoResultsMessage>
 }

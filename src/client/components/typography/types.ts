@@ -1,7 +1,7 @@
-export type SimpleProps = {
+export type ChildrenProps = {
   children: React.ReactNode
 }
 
-export type LinkProps = SimpleProps & {
+export type LinkProps = ChildrenProps & {
   to: string
 }

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { SimpleProps } from '../types'
+import { ChildrenProps } from '../types'
 
 const StyledFilledTableHeader = styled.h3`
   font-weight: bold;
@@ -8,6 +8,6 @@ const StyledFilledTableHeader = styled.h3`
   text-align: center;
 `
 
-export default function FilledTableHeader(props: Readonly<SimpleProps>) {
+export default function FilledTableHeader(props: Readonly<ChildrenProps>) {
   return <StyledFilledTableHeader>{props.children}</StyledFilledTableHeader>
 }

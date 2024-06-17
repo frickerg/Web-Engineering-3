@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, ReactNode } from 'react'
+import React, { createContext, useReducer, ReactNode, useMemo } from 'react'
 import { CardProps, InputType, SortDirection } from '../../model/Card'
 import { GameResultItem, GameState } from '../../model/Game'
 import { retrieveLabel } from './helper'
@@ -106,10 +106,8 @@ export const GameContext = createContext<ContextProps>({
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
-
+  const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch])
   return (
-    <GameContext.Provider value={{ state, dispatch }}>
-      {children}
-    </GameContext.Provider>
+    <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>
   )
 }

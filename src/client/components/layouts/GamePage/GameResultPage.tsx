@@ -2,14 +2,14 @@ import CenterHeader from '../../typography/headings/CenterHeader'
 import FilledTableHeader from '../../typography/headings/FilledTableHeader'
 import Item from '../../typography/texts/Item'
 import ScoreLabel from '../../elements/Label/ScoreLabel'
-import QuizContainer from '../../elements/Container/QuizContainer'
-import QuizResultsContainer from '../../elements/Container/QuizResultsContainer'
+import GameContainer from '../../elements/Container/GameContainer'
+import GameResultsContainer from '../../elements/Container/GameResultsContainer'
 import StartButton from '../../elements/Button/StartButton'
 import { Fragment, useContext } from 'react'
 import { GameContext } from '../../../session/Context'
 import { startNewGame } from '../../../session/helper'
 
-export default function EndPage() {
+export default function GameResultPage() {
   const { state, dispatch } = useContext(GameContext)
   const { gameCards, storeCards } = state
 
@@ -19,14 +19,14 @@ export default function EndPage() {
   }
 
   return (
-    <QuizContainer>
+    <GameContainer>
       <StartButton
         label="Start New Game"
         onClick={() => startNewGame(storeCards, dispatch)}
       />
       <CenterHeader>Game Results</CenterHeader>
       <ScoreLabel label={scoreLabel()}></ScoreLabel>
-      <QuizResultsContainer>
+      <GameResultsContainer>
         <FilledTableHeader>Front</FilledTableHeader>
         <FilledTableHeader>Back</FilledTableHeader>
         <FilledTableHeader>Your Answer</FilledTableHeader>
@@ -39,7 +39,7 @@ export default function EndPage() {
             <Item>{card.isAccepted ? '✓' : '✗'}</Item>
           </Fragment>
         ))}
-      </QuizResultsContainer>
-    </QuizContainer>
+      </GameResultsContainer>
+    </GameContainer>
   )
 }

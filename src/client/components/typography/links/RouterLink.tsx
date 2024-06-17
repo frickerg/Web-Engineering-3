@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom'
+import { LinkProps } from '../types'
 import styled from 'styled-components'
-
-type RouterLinkProps = {
-  children: React.ReactNode
-  to: string
-}
 
 const StyledRouterLink = styled(Link)`
   color: lightblue;
@@ -14,6 +10,6 @@ const StyledRouterLink = styled(Link)`
   }
 `
 
-export default function RouterLink(props: Readonly<RouterLinkProps>) {
+export default function RouterLink(props: Readonly<LinkProps>) {
   return <StyledRouterLink to={props.to}>{props.children}</StyledRouterLink>
 }

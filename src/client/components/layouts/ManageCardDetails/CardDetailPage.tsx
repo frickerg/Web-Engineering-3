@@ -10,7 +10,7 @@ import { fetchCards, updateCard } from '../../../api'
 import { GameContext } from '../../../session/Context'
 import { CardProps, InputType } from '../../../../model/Card'
 
-export default function DetailPage() {
+export default function CardDetailPage() {
   const [card, setCard] = useState<CardProps>({ id: '', front: '', back: '' })
   const { cardId } = useParams<{ cardId: string }>()
   const navigate = useNavigate()

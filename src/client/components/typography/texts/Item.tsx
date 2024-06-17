@@ -1,8 +1,5 @@
 import styled from 'styled-components'
-
-type ItemProps = {
-  children: React.ReactNode
-}
+import { SimpleProps } from '../types'
 
 const StyledItem = styled.p`
   padding: 8px;
@@ -10,6 +7,6 @@ const StyledItem = styled.p`
   text-align: center;
 `
 
-export default function Item(props: Readonly<ItemProps>) {
+export default function Item(props: Readonly<SimpleProps>) {
   return <StyledItem>{props.children}</StyledItem>
 }

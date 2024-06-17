@@ -5,5 +5,4 @@ export type CardProps = {
 }
 
 export type InputType = 'front' | 'back'
-
 export type SortDirection = 'asc' | 'desc'

@@ -1,9 +1,7 @@
-import QuizButton from './QuizButton'
+import GameButton from './GameButton'
 import styled from 'styled-components'
 
-const StartButton = styled(QuizButton)`
-  width: auto;
-  padding: 10px 20px;
+const StartButton = styled(GameButton)`
   margin: 20px;
 `
 

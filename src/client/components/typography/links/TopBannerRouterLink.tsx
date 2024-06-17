@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom'
+import { LinkProps } from '../types'
 import styled from 'styled-components'
-
-type TopBannerRouterLinkProps = {
-  children: React.ReactNode
-  to: string
-}
 
 const StyledTopBannerRouterLink = styled(Link)`
   color: lightblue;
@@ -15,9 +11,7 @@ const StyledTopBannerRouterLink = styled(Link)`
   }
 `
 
-export default function TopBannerRouterLink(
-  props: Readonly<TopBannerRouterLinkProps>
-) {
+export default function TopBannerRouterLink(props: Readonly<LinkProps>) {
   return (
     <StyledTopBannerRouterLink to={props.to}>
       {props.children}

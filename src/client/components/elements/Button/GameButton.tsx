@@ -1,9 +1,9 @@
 import Button from './Button'
 import styled from 'styled-components'
 
-const QuizButton = styled(Button)`
+const GameButton = styled(Button)`
   width: auto;
   padding: 10px 20px;
 `
 
-export default QuizButton
+export default GameButton

@@ -4,7 +4,7 @@ import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
 import { addCard, deleteCard } from '../../../api'
 import { GameContext } from '../../../session/Context'
-import { InputType } from '../../../../model/Card'
+import { InputType } from '../../../common/types'
 
 export default function ManageCardsPage() {
   const { state, dispatch } = useContext(GameContext)

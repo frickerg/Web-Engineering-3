@@ -2,8 +2,7 @@ import Paragraph from '../../typography/texts/Paragraph'
 import GameContainer from '../../elements/Container/GameContainer'
 import StartButton from '../../elements/Button/StartButton'
 import { GameContext } from '../../../session/Context'
-import { GameState } from '../../../../model/Game'
-import { startNewGame } from '../../../session/helper'
+import { GameState, startNewGame } from '../../../session/helper'
 import { useContext } from 'react'
 
 export default function StartNewGamePage() {

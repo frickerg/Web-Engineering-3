@@ -3,7 +3,7 @@ import InputFilterBack from './InputFilterBack'
 import InputFilterButton from '../../elements/Button/InputFilterButton'
 import InputFilterCheckbox from '../../elements/Checkbox/InputFilterCheckbox'
 import InputFilterContainer from '../../elements/Container/InputFilterContainer'
-import { InputType } from '../../../../model/Card'
+import { InputType } from '../../../common/types'
 
 type InputFilterProps = {
   front: string

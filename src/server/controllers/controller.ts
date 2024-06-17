@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto'
 import { Request, Response } from 'express'
-import { CardProps } from '../../model/Card'
+import { CardProps } from '../../shared/types'
 import cardStore from './entities/CardStore'
 
 export const getCards = (_req: Request, res: Response) => {

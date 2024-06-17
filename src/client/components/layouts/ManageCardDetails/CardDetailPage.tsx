@@ -8,7 +8,8 @@ import { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchCards, updateCard } from '../../../api'
 import { GameContext } from '../../../session/Context'
-import { CardProps, InputType } from '../../../../model/Card'
+import { CardProps } from '../../../../shared/types'
+import { InputType } from '../../../common/types'
 
 export default function CardDetailPage() {
   const [card, setCard] = useState<CardProps>({ id: '', front: '', back: '' })

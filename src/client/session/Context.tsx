@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, ReactNode, useMemo } from 'react'
-import { CardProps, InputType, SortDirection } from '../../model/Card'
-import { GameResultItem, GameState } from '../../model/Game'
-import { retrieveLabel } from './helper'
+import { CardProps } from '../../shared/types'
+import { GameState, retrieveLabel } from './helper'
+import { GameResultItem, InputType, SortDirection } from '../common/types'
 
 type State = {
   gameCards: GameResultItem[]

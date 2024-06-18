@@ -1,4 +1,4 @@
-import { CardProps } from '../../../model/Card'
+import { CardProps } from '../../../shared/types'
 import InitialCards from '../data'
 
 class CardStore {

@@ -1,5 +1,4 @@
-import { CardProps } from '../../model/Card'
-import { GameSize } from '../../model/Game'
+import { CardProps } from '../../shared/types'
 
 const request = async <T>(url: string, options?: RequestInit): Promise<T> => {
   const response = await fetch(url, options)
@@ -53,6 +52,7 @@ export const deleteCard = async (id: string): Promise<void> => {
   })
 }
 
+type GameSize = { gameSize: number }
 export const fetchGameSize = async (): Promise<number> => {
   return (await request<GameSize>(`/api/cards/getGameSize`)).gameSize
 }

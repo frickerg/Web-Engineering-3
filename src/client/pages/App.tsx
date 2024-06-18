@@ -9,7 +9,7 @@ import GameResultPage from '../components/layouts/GamePage/GameResultPage'
 import CardDetailPage from '../components/layouts/ManageCardDetails/CardDetailPage'
 import { useContext, useEffect } from 'react'
 import { GameContext } from '../session/Context'
-import { GameState } from '../../model/Game'
+import { GameState } from '../session/helper'
 import { fetchCards } from '../api'
 
 export default function App() {

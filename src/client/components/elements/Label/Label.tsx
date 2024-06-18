@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { SortDirection } from '../../../../model/Card'
+import { SortDirection } from '../../../common/types'
 
 type LabelProps = {
   label: string

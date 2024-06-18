@@ -7,9 +7,8 @@ import GameContainer from '../../elements/Container/GameContainer'
 import InputAnswer from '../../elements/Input/InputAnswer'
 import Flashcard from '../../elements/Flashcard/Flashcard'
 import { GameContext } from '../../../session/Context'
-import { GameState } from '../../../../model/Game'
-import { startNewGame } from '../../../session/helper'
-import { CardProps } from '../../../../model/Card'
+import { GameState, startNewGame } from '../../../session/helper'
+import { CardProps } from '../../../../shared/types'
 
 export default function OngoingGamePage() {
   const { state, dispatch } = useContext(GameContext)

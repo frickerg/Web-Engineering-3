@@ -9,6 +9,7 @@ import Flashcard from '../../elements/Flashcard/Flashcard'
 import { GameContext } from '../../../session/Context'
 import { GameState } from '../../../../model/Game'
 import { startNewGame } from '../../../session/helper'
+import { CardProps } from '../../../../model/Card'
 
 export default function OngoingGamePage() {
   const { state, dispatch } = useContext(GameContext)
@@ -25,45 +26,42 @@ export default function OngoingGamePage() {
     if (state.gameState === GameState.NOT_STARTED && cards.length === 0) {
       startNewGame(cards, dispatch)
     }
-  }, [dispatch, state.gameState, cards.length, cards])
+  }, [state.gameState, cards, dispatch])
 
   useEffect(() => {
     setAnswer('')
   }, [index])
 
-  const handleDeleteGame = () => {
-    dispatch({ type: 'DELETE_GAME' })
-  }
+  const handleDeleteGame = () => dispatch({ type: 'DELETE_GAME' })
 
-  const validateCard = async () => {
+  const validateCard = () => {
     const currentCard = cards[index]
     if (!answer || !currentCard) {
       return
     }
 
-    const isAnswerCorrect =
-      currentCard.back.trim().toLowerCase() === answer.trim().toLowerCase()
-
     dispatch({
       type: 'SUBMIT_GAME_ANSWER',
       payload: {
         ...currentCard,
-        isAccepted: isAnswerCorrect,
-        answer: answer,
+        isAccepted: isAnswerCorrect(currentCard, answer),
+        answer,
       },
     })
 
-    const newIndex = index < cards.length - 1 ? index + 1 : index
-    dispatch({
-      type: 'SET_CARD_INDEX',
-      payload: newIndex,
-    })
+    dispatch({ type: 'SET_CARD_INDEX', payload: getNewIndex() })
 
     if (index >= cards.length - 1) {
-      dispatch({
-        type: 'FINISH_GAME',
-      })
+      dispatch({ type: 'FINISH_GAME' })
     }
+  }
+
+  const isAnswerCorrect = (card: CardProps, answer: string) => {
+    return card.back.trim().toLowerCase() === answer.trim().toLowerCase()
+  }
+
+  const getNewIndex = () => {
+    return index < cards.length - 1 ? index + 1 : index
   }
 
   return (
@@ -77,7 +75,7 @@ export default function OngoingGamePage() {
         <InputAnswer
           value={answer}
           placeholder="Answer"
-          handleInputChange={value => setAnswer(value)}
+          handleInputChange={setAnswer}
         />
         <GameButton label="Submit" onClick={validateCard} />
       </GameAnswerContainer>

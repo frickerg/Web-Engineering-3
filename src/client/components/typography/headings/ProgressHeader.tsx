@@ -6,7 +6,6 @@ const StyledProgressHeader = styled.h2`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 `
 
 export default function ProgressHeader(props: Readonly<ChildrenProps>) {

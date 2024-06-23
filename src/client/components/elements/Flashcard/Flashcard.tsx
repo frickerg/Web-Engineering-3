@@ -7,7 +7,7 @@ type FlashcardProps = {
 const StyledFlashcard = styled.div`
   width: 500px;
   height: 350px;
-  margin: 20px;
+  margin: 40px;
   border: 1px solid #ccc;
   display: flex;
   justify-content: center;

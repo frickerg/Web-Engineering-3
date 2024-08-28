@@ -9,10 +9,10 @@ import {
 
 const router = express.Router()
 
-router.get('/getCards', getCards)
-router.get('/getGameSize', getGameSize)
-router.post('/addCard', addCard)
-router.put('/updateCard/:id', updateCard)
-router.delete('/deleteCard/:id', deleteCard)
+router.get('/cards', getCards)
+router.get('/gameSize', getGameSize)
+router.post('/card', addCard)
+router.put('/card/:id', updateCard)
+router.delete('/card/:id', deleteCard)
 
 export default router

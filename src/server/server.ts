@@ -4,7 +4,7 @@ import cardsRoutes from './routes/index'
 const app = express()
 app.use(express.json())
 
-app.use('/api/cards', cardsRoutes)
+app.use('/api/', cardsRoutes)
 
 const port = 3003
 app.listen(port, () => {

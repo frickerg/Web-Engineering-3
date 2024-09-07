@@ -21,11 +21,11 @@ const checkResponse = async (response: Response) => {
 }
 
 export const fetchCards = async (): Promise<CardProps[]> => {
-  return request<CardProps[]>('/api/cards/getCards')
+  return request<CardProps[]>('/api/cards')
 }
 
 export const updateCard = async (card: CardProps): Promise<void> => {
-  await request<void>(`/api/cards/updateCard/${card.id}`, {
+  await request<void>(`/api/card/${card.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export const updateCard = async (card: CardProps): Promise<void> => {
 export const addCard = async (
   card: Omit<CardProps, 'id'>
 ): Promise<CardProps> => {
-  return request<CardProps>('/api/cards/addCard', {
+  return request<CardProps>('/api/card', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -47,12 +47,12 @@ export const addCard = async (
 }
 
 export const deleteCard = async (id: string): Promise<void> => {
-  await request<void>(`/api/cards/deleteCard/${id}`, {
+  await request<void>(`/api/card/${id}`, {
     method: 'DELETE',
   })
 }
 
 type GameSize = { gameSize: number }
 export const fetchGameSize = async (): Promise<number> => {
-  return (await request<GameSize>(`/api/cards/getGameSize`)).gameSize
+  return (await request<GameSize>(`/api/gameSize`)).gameSize
 }

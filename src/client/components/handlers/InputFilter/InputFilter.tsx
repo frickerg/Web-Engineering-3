@@ -1,5 +1,5 @@
-import InputFilterFront from './InputFilterFront'
-import InputFilterBack from './InputFilterBack'
+import InputFilterFront from '../../elements/Input/components/InputFilterFront'
+import InputFilterBack from '../../elements/Input/components/InputFilterBack'
 import InputFilterButton from '../../elements/Button/components/InputFilterButton'
 import InputFilterCheckbox from '../../elements/Checkbox/components/InputFilterCheckbox'
 import InputFilterContainer from '../../elements/Container/components/InputFilterContainer'

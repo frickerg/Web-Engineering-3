@@ -1,4 +1,4 @@
-import Checkbox from './Checkbox'
+import Checkbox from '../Checkbox'
 import styled from 'styled-components'
 
 const InputFilterCheckbox = styled(Checkbox)`

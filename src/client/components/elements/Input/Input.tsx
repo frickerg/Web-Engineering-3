@@ -8,6 +8,22 @@ type InputProps = {
   className?: string
 }
 
+export default function Input(props: Readonly<InputProps>) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    props.handleInputChange(e.target.value)
+  }
+
+  return (
+    <StyledInput
+      className={props.className}
+      type="text"
+      value={props.value}
+      placeholder={props.placeholder}
+      onChange={handleChange}
+    />
+  )
+}
+
 const StyledInput = styled.input`
   width: 100%;
   color: #6a94b8;
@@ -25,19 +41,3 @@ const StyledInput = styled.input`
     border-bottom: 2px solid #457b9d;
   }
 `
-
-export default function Input(props: Readonly<InputProps>) {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    props.handleInputChange(e.target.value)
-  }
-
-  return (
-    <StyledInput
-      className={props.className}
-      type="text"
-      value={props.value}
-      placeholder={props.placeholder}
-      onChange={handleChange}
-    />
-  )
-}

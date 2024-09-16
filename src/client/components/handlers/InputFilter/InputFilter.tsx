@@ -1,8 +1,8 @@
-import InputFilterFront from './InputFilterFront'
-import InputFilterBack from './InputFilterBack'
-import InputFilterButton from '../../elements/Button/InputFilterButton'
-import InputFilterCheckbox from '../../elements/Checkbox/InputFilterCheckbox'
-import InputFilterContainer from '../../elements/Container/InputFilterContainer'
+import InputFilterFront from '../../elements/Input/components/InputFilterFront'
+import InputFilterBack from '../../elements/Input/components/InputFilterBack'
+import InputFilterButton from '../../elements/Button/components/InputFilterButton'
+import InputFilterCheckbox from '../../elements/Checkbox/components/InputFilterCheckbox'
+import InputFilterContainer from '../../elements/Container/components/InputFilterContainer'
 import { InputType } from '../../../common/types'
 
 type InputFilterProps = {

@@ -5,8 +5,6 @@ type ContainerProps = {
   children: React.ReactNode
 }
 
-const StyledContainer = styled.div``
-
 export default function Container(props: Readonly<ContainerProps>) {
   return (
     <StyledContainer className={props.className}>
@@ -14,3 +12,5 @@ export default function Container(props: Readonly<ContainerProps>) {
     </StyledContainer>
   )
 }
+
+const StyledContainer = styled.div``

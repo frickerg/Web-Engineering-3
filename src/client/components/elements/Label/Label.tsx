@@ -9,12 +9,6 @@ type LabelProps = {
   className?: string
 }
 
-const StyledLabel = styled.label`
-  font-weight: bold;
-  padding-top: 0;
-  padding-bottom: 0;
-`
-
 export default function Label(props: Readonly<LabelProps>) {
   const getSortIndicator = (): string => {
     if (props.isSorted) {
@@ -30,3 +24,9 @@ export default function Label(props: Readonly<LabelProps>) {
     </StyledLabel>
   )
 }
+
+const StyledLabel = styled.label`
+  font-weight: bold;
+  padding-top: 0;
+  padding-bottom: 0;
+`

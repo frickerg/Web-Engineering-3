@@ -4,12 +4,6 @@ import styled from 'styled-components'
 import { GameContext } from '../../../../session/Context'
 import { useNavigate } from 'react-router-dom'
 
-const CenterButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
 export default function CenterButton() {
   const { state } = useContext(GameContext)
   const navigate = useNavigate()
@@ -24,3 +18,9 @@ export default function CenterButton() {
     </CenterButtonWrapper>
   )
 }
+
+const CenterButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`

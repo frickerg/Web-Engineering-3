@@ -1,5 +1,5 @@
 import { CardProps } from '../../../shared/types'
-import InitialCards from '../data'
+import { cards as InitialCards } from '../data'
 
 class CardStore {
   private cards: CardProps[] = [...InitialCards]
@@ -27,5 +27,4 @@ class CardStore {
   }
 }
 
-const cardStore = new CardStore()
-export default cardStore
+export const cardStore = new CardStore()

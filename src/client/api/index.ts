@@ -1,4 +1,4 @@
-import { CardProps } from '../../shared/types'
+import { CardProps } from '../../shared/CardProps'
 
 const request = async <T>(url: string, options?: RequestInit): Promise<T> => {
   const headers = {
@@ -10,7 +10,6 @@ const request = async <T>(url: string, options?: RequestInit): Promise<T> => {
     headers,
   })
 
-  // const response = await fetch(url, options)
   await checkResponse(response)
   if (
     response.headers.get('Content-Length') === '0' ||
@@ -23,6 +22,7 @@ const request = async <T>(url: string, options?: RequestInit): Promise<T> => {
 
 const checkResponse = async (response: Response) => {
   if (!response.ok) {
+    // TODO(fjv): Bei unautorisierten Anfragen, sollte was passieren? zB. Login-Seite anzeigen?
     const errorText = await response.text()
     throw new Error(`HTTP status: ${response.status} - ${errorText}`)
   }
@@ -31,14 +31,6 @@ const checkResponse = async (response: Response) => {
 
 export const fetchCards = async (): Promise<CardProps[]> => {
   return request<CardProps[]>('/api/cards')
-  // TODO(fjv): hier Token verwenden oder in der generic-request-function ?
-  // return request<CardProps[]>('/api/cards', {
-  //   method: 'GET',
-  //   headers: {
-  //     Authorization: `Bearer ${getToken()}`,
-  //     'Content-Type': 'application/json',
-  //   },
-  // })
 }
 
 export const updateCard = async (card: CardProps): Promise<void> => {
@@ -102,9 +94,8 @@ export const login = async (
   const data = await response.json()
 
   // TODO(fjv): local storage löschen ? oder nur token ? eigene controller-klasse ?
-  // localStorage.clear()
+  localStorage.clear()
   localStorage.setItem('token', data.token)
-  // Token auch im Memory speichern
   setToken(data.token)
   return data.token
 }

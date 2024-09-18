@@ -1,4 +1,4 @@
-import { UserProps } from '../../../shared/types'
+import { UserProps } from '../../../shared/UserProps'
 import { users as StaticUsers } from '../data'
 
 class UserStore {
@@ -12,13 +12,9 @@ class UserStore {
     return this.users.some(user => user.username === username)
   }
 
-  // addUser(user: UserProps): void {
-  //   this.users.push(user)
-  // }
-
-  // deleteUser(username: string): void {
-  //   this.users = this.users.filter(user => user.username !== username)
-  // }
+  findUserByUsername(username: string): UserProps | undefined {
+    return this.users.find(user => user.username === username)
+  }
 }
 
 export const userStore = new UserStore()

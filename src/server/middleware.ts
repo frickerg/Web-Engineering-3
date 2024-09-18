@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express'
 import * as jose from 'jose'
+import { JwtPayloadProps } from '../shared/JwtPayloadProps'
+import { JWT_SECRET } from '../config'
 
-const secret = new TextEncoder().encode('MyVerySecureSecret')
+const secret = new TextEncoder().encode(JWT_SECRET)
 
-interface AuthenticatedRequest extends Request {
-  user?: any
+type AuthenticatedRequest = Request & {
+  user?: JwtPayloadProps
 }
 
 export const authenticateJwt = async (
@@ -15,13 +17,12 @@ export const authenticateJwt = async (
   try {
     const authHeader = req.headers['authorization']
     const token = authHeader?.split(' ')[1]
-    // TODO(fjv): was benutzen wir <if() return> oder <if() { return }>
     if (!token) {
       return res.sendStatus(401)
     }
 
     const jwt = await jose.jwtVerify(token, secret)
-    req.user = jwt.payload
+    req.user = jwt.payload as JwtPayloadProps
 
     console.log(jwt.payload.username)
     console.log(jwt.payload.role)

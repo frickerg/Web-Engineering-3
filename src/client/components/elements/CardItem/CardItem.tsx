@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import type { CardProps } from '../../../../shared/types'
+import type { CardProps } from '../../../../shared/CardProps'
 
 export default function CardItem(props: Readonly<CardProps>) {
   return (

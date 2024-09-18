@@ -1,11 +1,55 @@
-# React + TypeScript + Vite
+# Web Engineering MAS2023 - Flashcards
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is part of the Web Engineering course MAS2023 and aims to develop a flashcard application. The application allows users to create, manage, and review flashcards.
 
-Currently, two official plugins are available:
+The application was developed using React, Vite, TypeScript and HMR (Hot Module Replacement), along with some ESLint rules.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
+
+- [Web Engineering MAS2023 - Flashcards](#web-engineering-mas2023---flashcards)
+  - [Table of Contents](#table-of-contents)
+  - [Participants](#participants)
+  - [Installation](#installation)
+  - [Skripts](#skripts)
+  - [Login](#login)
+  - [Expanding the ESLint configuration](#expanding-the-eslint-configuration)
+
+## Participants
+
+- Guillaume Fricker
+- Benjamin Thormann
+- Jvan Fadda
+
+## Installation
+
+1. Clone repository:
+
+    ```sh
+    git clone <repository-url>
+    cd <repository-name>
+    ```
+
+2. Install dependencies:
+
+   ```sh
+   pnpm i
+   ```
+
+## Skripts
+
+- `pnpm run dev`: Starts both the client and the server in development mode.
+- `pnpm run dev:client`: Starts the client in development mode.
+- `pnpm run dev:server`: Starts the server in development mode.
+- `pnpm run build`: Build project..
+- `pnpm run preview`: Preview the built version of the project.
+- `pnpm run lint`: Executes ESLint to check the code.
+
+## Login
+
+| Username | Password       |
+|----------|----------------|
+| admin    | admin-password |
+| user     | user-password  |
 
 ## Expanding the ESLint configuration
 

@@ -1,4 +1,4 @@
-import { CardProps } from '../../shared/types'
+import { CardProps } from '../../shared/CardProps'
 import { fetchGameSize } from '../api'
 import { Action } from './Context'
 

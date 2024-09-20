@@ -1,8 +1,8 @@
 import NoResultsMessage from '../../typography/texts/NoResultsMessage'
 import Button from '../../elements/Button/Button'
 import RouterLink from '../../typography/links/RouterLink'
-import TableContentContainer from '../../elements/Container/TableContentContainer'
-import { CardProps } from '../../../../shared/CardProps'
+import TableContentContainer from '../../elements/Container/components/TableContentContainer'
+import { CardProps } from '../../../../shared/types'
 import CardItem from '../../elements/CardItem/CardItem'
 
 type CardRowsProps = {

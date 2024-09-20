@@ -4,6 +4,10 @@ type FlashcardProps = {
   text: string
 }
 
+export default function Flashcard(props: Readonly<FlashcardProps>) {
+  return <StyledFlashcard>{props.text ?? 'No cards found'}</StyledFlashcard>
+}
+
 const StyledFlashcard = styled.div`
   width: 500px;
   height: 350px;
@@ -18,7 +22,3 @@ const StyledFlashcard = styled.div`
   background-color: #f9f9f9;
   box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.1);
 `
-
-export default function Flashcard(props: Readonly<FlashcardProps>) {
-  return <StyledFlashcard>{props.text ?? 'No cards found'}</StyledFlashcard>
-}

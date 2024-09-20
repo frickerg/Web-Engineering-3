@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import Container from './Container'
+import Container from '../Container'
 
-const InputFilterContainer = styled(Container)`
+const CardDetailContainer = styled(Container)`
   display: grid;
   grid-template-columns: 1fr 1fr 18%;
   grid-template-rows: auto auto;
@@ -11,8 +11,8 @@ const InputFilterContainer = styled(Container)`
   padding: 15px 25px;
   align-items: center;
   grid-template-areas:
-    'input-front input-back input-button'
-    'spacer spacer input-checkbox';
+    'detail-label-front detail-label-back spacer'
+    'detail-card-front detail-card-back detail-button';
 `
 
-export default InputFilterContainer
+export default CardDetailContainer

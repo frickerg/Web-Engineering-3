@@ -1,4 +1,4 @@
-import Button from './Button'
+import Button from '../Button'
 import styled from 'styled-components'
 
 const GameButton = styled(Button)`

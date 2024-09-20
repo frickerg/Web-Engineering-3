@@ -1,4 +1,4 @@
-import Input from '../../elements/Input/Input'
+import Input from '../Input'
 import styled from 'styled-components'
 
 const InputFilterBack = styled(Input)`

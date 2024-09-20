@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react'
 import GameButton from '../../elements/Button/components/GameButton'
-import ProgressHeader from '../../typography/headings/ProgressHeader'
+import { ProgressHeader } from '../../typography/headings/ProgressHeader'
 import ProgressLabel from '../../elements/Label/components/ProgressLabel'
 import GameAnswerContainer from '../../elements/Container/components/GameAnswerContainer'
 import GameContainer from '../../elements/Container/components/GameContainer'

@@ -7,11 +7,3 @@ export type GameResultItem = CardProps & {
   answer?: string
   isAccepted?: boolean
 }
-
-export type ChildrenProps = {
-  children: React.ReactNode
-}
-
-export type LinkProps = ChildrenProps & {
-  to: string
-}

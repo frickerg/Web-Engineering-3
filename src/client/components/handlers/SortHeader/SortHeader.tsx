@@ -1,5 +1,5 @@
 import TableHeaderContainer from '../../elements/Container/components/TableHeaderContainer'
-import SimpleTableHeader from '../../typography/headings/SimpleTableHeader'
+import { SimpleTableHeader } from '../../typography/headings/SimpleTableHeader'
 import Label from '../../elements/Label/Label'
 import { InputType, SortDirection } from '../../../common/types'
 

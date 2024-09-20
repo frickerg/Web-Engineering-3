@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import Container from '../Container'
+import { StyledContainer } from '../Container'
 
-const GameResultsContainer = styled(Container)`
+const GameResultsContainer = styled(StyledContainer)`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;

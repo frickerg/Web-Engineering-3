@@ -1,7 +1,7 @@
-import Button from '../Button'
+import StyledButton from '../Button'
 import styled from 'styled-components'
 
-const SelfAlignedButton = styled(Button)`
+const SelfAlignedButton = styled(StyledButton)`
   grid-area: detail-button;
   align-self: last baseline;
 `

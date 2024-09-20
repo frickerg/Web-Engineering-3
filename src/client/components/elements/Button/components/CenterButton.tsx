@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import Button from '../Button'
+import StyledButton from '../Button'
 import styled from 'styled-components'
 import { GameContext } from '../../../../session/Context'
 import { useNavigate } from 'react-router-dom'
@@ -13,13 +13,13 @@ export default function CenterButton() {
   }
 
   return (
-    <CenterButtonWrapper>
-      <Button label={state.buttonLabel} onClick={handleOnClick} />
+    <CenterButtonWrapper onClick={handleOnClick}>
+      {state.buttonLabel}
     </CenterButtonWrapper>
   )
 }
 
-const CenterButtonWrapper = styled.div`
+const CenterButtonWrapper = styled(StyledButton)`
   display: flex;
   justify-content: center;
   align-items: center;

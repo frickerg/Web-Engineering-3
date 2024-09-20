@@ -30,9 +30,11 @@ export default function InputFilter(props: Readonly<InputFilterProps>) {
         handleInputChange={value => props.handleInputChange('back', value)}
       />
       <InputFilterButton
-        label="Add"
         onClick={() => props.handleAddNewCard(props.front, props.back)}
-      />
+      >
+        Add
+      </InputFilterButton>
+
       <InputFilterCheckbox
         id="filter"
         label="Filter Table"

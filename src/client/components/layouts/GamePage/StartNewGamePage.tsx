@@ -12,10 +12,9 @@ export default function StartNewGamePage() {
 
   return (
     <GameContainer>
-      <StartButton
-        label="Start New Game"
-        onClick={() => startNewGame(cards, dispatch)}
-      />
+      <StartButton onClick={() => startNewGame(cards, dispatch)}>
+        Start New Game
+      </StartButton>
       <Paragraph>
         {isGameRunning ? 'Continue Running Game' : 'No game running'}
       </Paragraph>

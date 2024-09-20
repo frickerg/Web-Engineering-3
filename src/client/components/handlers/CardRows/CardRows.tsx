@@ -1,5 +1,5 @@
 import NoResultsMessage from '../../typography/texts/NoResultsMessage'
-import Button from '../../elements/Button/Button'
+import StyledButton from '../../elements/Button/Button'
 import RouterLink from '../../typography/links/RouterLink'
 import TableContentContainer from '../../elements/Container/components/TableContentContainer'
 import { CardProps } from '../../../../shared/types'
@@ -16,12 +16,11 @@ export default function CardRows(props: CardRowsProps) {
       <TableContentContainer key={card.id}>
         <CardItem id={card.id} front={card.front} back={card.back} />
         <RouterLink to={`details/${card.id}`}>
-          <Button label="Edit"></Button>
+          <StyledButton>Edit</StyledButton>
         </RouterLink>
-        <Button
-          label="Delete"
-          onClick={() => props.handleDeleteById(card.id)}
-        />
+        <StyledButton onClick={() => props.handleDeleteById(card.id)}>
+          Delete
+        </StyledButton>
       </TableContentContainer>
     ))
   ) : (

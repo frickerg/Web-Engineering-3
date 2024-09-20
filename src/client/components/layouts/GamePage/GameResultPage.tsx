@@ -20,10 +20,9 @@ export default function GameResultPage() {
 
   return (
     <GameContainer>
-      <StartButton
-        label="Start New Game"
-        onClick={() => startNewGame(storeCards, dispatch)}
-      />
+      <StartButton onClick={() => startNewGame(storeCards, dispatch)}>
+        Start New Game
+      </StartButton>
       <CenterHeader>Game Results</CenterHeader>
       <ScoreLabel label={scoreLabel()}></ScoreLabel>
       <GameResultsContainer>

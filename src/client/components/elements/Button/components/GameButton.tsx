@@ -1,7 +1,7 @@
-import Button from '../Button'
+import StyledButton from '../Button'
 import styled from 'styled-components'
 
-const GameButton = styled(Button)`
+const GameButton = styled(StyledButton)`
   width: auto;
   padding: 10px 20px;
 `

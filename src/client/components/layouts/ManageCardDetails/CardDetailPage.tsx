@@ -63,7 +63,7 @@ export default function CardDetailPage() {
         placeholder="Back"
         handleInputChange={value => handleInputChange('back', value)}
       />
-      <SelfAlignedButton label="Update" onClick={() => handleUpdate()} />
+      <SelfAlignedButton onClick={handleUpdate}>Update</SelfAlignedButton>
     </CardDetailContainer>
   )
 }

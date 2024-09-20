@@ -67,7 +67,7 @@ export default function OngoingGamePage() {
     <GameContainer>
       <ProgressHeader>
         <ProgressLabel label={progressLabel()} />
-        <GameButton label="Delete Game" onClick={handleDeleteGame} />
+        <GameButton onClick={handleDeleteGame}>Delete Game</GameButton>
       </ProgressHeader>
       <Flashcard text={cards[index]?.front} />
       <GameAnswerContainer>
@@ -76,7 +76,7 @@ export default function OngoingGamePage() {
           placeholder="Answer"
           handleInputChange={setAnswer}
         />
-        <GameButton label="Submit" onClick={validateCard} />
+        <GameButton onClick={validateCard}>Submit</GameButton>
       </GameAnswerContainer>
     </GameContainer>
   )

@@ -55,13 +55,13 @@ export default function CardDetailPage() {
         key="front"
         value={card.front}
         placeholder="Front"
-        handleInputChange={value => handleInputChange('front', value)}
+        onChange={e => handleInputChange('front', e.target.value)}
       />
       <InputCardBack
         key="back"
         value={card.back}
         placeholder="Back"
-        handleInputChange={value => handleInputChange('back', value)}
+        onChange={e => handleInputChange('back', e.target.value)}
       />
       <SelfAlignedButton onClick={handleUpdate}>Update</SelfAlignedButton>
     </CardDetailContainer>

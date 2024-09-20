@@ -1,7 +1,7 @@
-import Input from '../Input'
+import { StyledInput } from '../Input'
 import styled from 'styled-components'
 
-const InputCardBack = styled(Input)`
+const InputCardBack = styled(StyledInput)`
   grid-area: detail-card-back;
 `
 

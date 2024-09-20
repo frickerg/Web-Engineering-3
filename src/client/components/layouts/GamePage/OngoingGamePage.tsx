@@ -74,7 +74,7 @@ export default function OngoingGamePage() {
         <InputAnswer
           value={answer}
           placeholder="Answer"
-          handleInputChange={setAnswer}
+          onChange={e => setAnswer(e.target.value)}
         />
         <GameButton onClick={validateCard}>Submit</GameButton>
       </GameAnswerContainer>

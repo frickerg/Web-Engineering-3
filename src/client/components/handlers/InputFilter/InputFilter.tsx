@@ -21,13 +21,13 @@ export default function InputFilter(props: Readonly<InputFilterProps>) {
         key="front"
         value={props.front}
         placeholder="Front"
-        handleInputChange={value => props.handleInputChange('front', value)}
+        onChange={e => props.handleInputChange('front', e.target.value)}
       />
       <InputFilterBack
         key="back"
         value={props.back}
         placeholder="Back"
-        handleInputChange={value => props.handleInputChange('back', value)}
+        onChange={e => props.handleInputChange('back', e.target.value)}
       />
       <InputFilterButton
         onClick={() => props.handleAddNewCard(props.front, props.back)}

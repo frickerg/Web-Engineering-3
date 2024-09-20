@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { StyledContainer } from '../Container'
+import { Container } from '../Container'
 
-const TableHeaderContainer = styled(StyledContainer)`
+const TableHeaderContainer = styled(Container)`
   display: grid;
   grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
   overflow: auto;

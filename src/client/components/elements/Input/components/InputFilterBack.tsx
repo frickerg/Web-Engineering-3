@@ -1,7 +1,7 @@
-import { StyledInput } from '../Input'
+import { Input } from '../Input'
 import styled from 'styled-components'
 
-const InputFilterBack = styled(StyledInput)`
+const InputFilterBack = styled(Input)`
   grid-area: input-back;
 `
 

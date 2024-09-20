@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { StyledContainer } from '../Container'
+import { Container } from '../Container'
 
-const LayoutContainer = styled(StyledContainer)`
+const LayoutContainer = styled(Container)`
   min-height: 100vh;
   background-color: #e8e2e2;
 `

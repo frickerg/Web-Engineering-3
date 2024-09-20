@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { StyledContainer } from '../Container'
+import { Container } from '../Container'
 
-const GameAnswerContainer = styled(StyledContainer)`
+const GameAnswerContainer = styled(Container)`
   display: flex;
   flex-direction: row;
   align-items: baseline;

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { StyledContainer } from '../Container'
+import { Container } from '../Container'
 
-const InputFilterContainer = styled(StyledContainer)`
+const InputFilterContainer = styled(Container)`
   display: grid;
   grid-template-columns: 1fr 1fr 18%;
   grid-template-rows: auto auto;

@@ -1,13 +1,17 @@
 import { Request, Response, NextFunction } from 'express'
 import * as jose from 'jose'
-import { JwtPayloadProps } from '../shared/JwtPayloadProps'
 import { JWT_SECRET } from '../config'
 
-const secret = new TextEncoder().encode(JWT_SECRET)
+type JwtPayloadProps = {
+  username: string
+  role: string
+}
 
 type AuthenticatedRequest = Request & {
   user?: JwtPayloadProps
 }
+
+const secret = new TextEncoder().encode(JWT_SECRET)
 
 export const authenticateJwt = async (
   req: AuthenticatedRequest,

@@ -1,12 +1,12 @@
-import crypto from 'crypto'
 import { Request, Response } from 'express'
+import { randomBytes, scrypt } from 'crypto'
 import * as jose from 'jose'
 import { userStore } from './entities/UserStore'
 import { JWT_SECRET } from '../../config'
 
 export const generatePassword = async (req: Request, res: Response) => {
   const password = req.params.password
-  const salt = crypto.randomBytes(16).toString('hex')
+  const salt = randomBytes(16).toString('hex')
   const passwordHash = await createPasswordHash(password, salt)
   res.status(200).send({ passwordHash, salt })
   console.log(`Password hash: ${passwordHash}, salt: ${salt}`)
@@ -34,7 +34,7 @@ export const login = async (req: Request, res: Response) => {
 
 const createPasswordHash = async (password: string, salt: string) => {
   const hash = await new Promise((resolve, reject) => {
-    crypto.scrypt(password, salt, 64, (error, derivedKey) => {
+    scrypt(password, salt, 64, (error, derivedKey) => {
       if (error) {
         return reject(error)
       }

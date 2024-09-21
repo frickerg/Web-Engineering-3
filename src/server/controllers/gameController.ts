@@ -1,4 +1,4 @@
-import crypto from 'crypto'
+import { randomUUID } from 'crypto'
 import { Request, Response } from 'express'
 import { CardProps } from '../../shared/CardProps'
 import { cardStore } from './entities/CardStore'
@@ -14,7 +14,7 @@ export const addCard = (req: Request, res: Response) => {
     return res.status(400).send('Front and Back are required')
   }
 
-  const newCard: CardProps = { id: crypto.randomUUID(), front, back }
+  const newCard: CardProps = { id: randomUUID(), front, back }
   cardStore.addCard(newCard)
   res.status(201).send(newCard)
 }

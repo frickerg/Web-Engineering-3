@@ -1,6 +1,6 @@
 export type UserProps = {
   username: string
-  role: string
+  role: 'admin' | 'player'
   passwordHash: string
   salt: string
 }

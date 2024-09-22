@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { jwtVerify } from 'jose'
 import { JWT_SECRET } from '../config'
+import { UserProps } from '../shared/UserProps'
 
 type JwtPayloadProps = {
   username: string
@@ -19,21 +20,35 @@ export const authenticateJwt = async (
   next: NextFunction
 ) => {
   try {
-    const authHeader = req.headers['authorization']
+    const authHeader = req.headers.authorization
     const token = authHeader?.split(' ')[1]
     if (!token) {
-      return res.sendStatus(401)
+      return res.sendStatus(401).send('Access denied')
     }
 
-    const jwt = await jwtVerify(token, secret)
-    req.user = jwt.payload as JwtPayloadProps
-
-    console.log(jwt.payload.username)
-    console.log(jwt.payload.role)
-
-    next()
+    await jwtVerify(token, secret)
+      .then(jwt => {
+        req.user = jwt.payload as JwtPayloadProps
+        console.log(jwt.payload.username)
+        console.log(jwt.payload.role)
+        next()
+      })
+      .catch(e => {
+        console.error(e)
+        res.status(400).send('Invalid token.')
+      })
   } catch (e) {
     console.error(e)
     res.sendStatus(403)
+  }
+}
+
+export const authorizeRole = (roles: Array<UserProps['role']>) => {
+  return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    const user = req.user as UserProps
+    if (!user || !roles.includes(user.role)) {
+      return res.status(403).send('Access denied')
+    }
+    next()
   }
 }

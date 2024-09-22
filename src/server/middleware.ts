@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import * as jose from 'jose'
+import { jwtVerify } from 'jose'
 import { JWT_SECRET } from '../config'
 
 type JwtPayloadProps = {
@@ -25,7 +25,7 @@ export const authenticateJwt = async (
       return res.sendStatus(401)
     }
 
-    const jwt = await jose.jwtVerify(token, secret)
+    const jwt = await jwtVerify(token, secret)
     req.user = jwt.payload as JwtPayloadProps
 
     console.log(jwt.payload.username)

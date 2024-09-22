@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { randomBytes, scrypt } from 'crypto'
-import * as jose from 'jose'
+import { SignJWT } from 'jose'
 import { userStore } from './entities/UserStore'
 import { JWT_SECRET } from '../../config'
 
@@ -47,7 +47,7 @@ const createPasswordHash = async (password: string, salt: string) => {
 const secret = new TextEncoder().encode(JWT_SECRET)
 
 const generateJwt = (username: string, role: string) => {
-  return new jose.SignJWT({ username, role })
+  return new SignJWT({ username, role })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('24h')

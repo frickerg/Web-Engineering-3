@@ -1,8 +1,8 @@
 import { CardProps } from '../../../shared/CardProps'
-import { cards as InitialCards } from '../data'
+import { cards } from '../data'
 
 class CardStore {
-  private cards: CardProps[] = [...InitialCards]
+  private cards: CardProps[] = [...cards]
 
   getCards(): CardProps[] {
     return this.cards

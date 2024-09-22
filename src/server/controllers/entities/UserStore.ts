@@ -1,8 +1,8 @@
 import { UserProps } from '../../../shared/UserProps'
-import { users as StaticUsers } from '../data'
+import { users } from '../data'
 
 class UserStore {
-  private users: UserProps[] = [...StaticUsers]
+  private users: UserProps[] = [...users]
 
   getUsers(): UserProps[] {
     return this.users

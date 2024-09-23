@@ -66,7 +66,7 @@ export default function OngoingGamePage() {
   return (
     <GameContainer>
       <ProgressHeader>
-        <ProgressLabel label={progressLabel()} />
+        <ProgressLabel>{progressLabel()}</ProgressLabel>
         <GameButton onClick={handleDeleteGame}>Delete Game</GameButton>
       </ProgressHeader>
       <Flashcard text={cards[index]?.front} />

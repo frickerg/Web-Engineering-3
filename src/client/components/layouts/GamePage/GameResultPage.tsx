@@ -24,7 +24,7 @@ export default function GameResultPage() {
         Start New Game
       </StartButton>
       <CenterHeader>Game Results</CenterHeader>
-      <ScoreLabel label={scoreLabel()}></ScoreLabel>
+      <ScoreLabel>{scoreLabel()}</ScoreLabel>
       <GameResultsContainer>
         <FilledTableHeader>Front</FilledTableHeader>
         <FilledTableHeader>Back</FilledTableHeader>

@@ -49,8 +49,8 @@ export default function CardDetailPage() {
 
   return (
     <CardDetailContainer>
-      <CardFrontLabel label="Front"></CardFrontLabel>
-      <CardBackLabel label="Back"></CardBackLabel>
+      <CardFrontLabel>Front</CardFrontLabel>
+      <CardBackLabel>Back</CardBackLabel>
       <InputCardFront
         key="front"
         value={card.front}

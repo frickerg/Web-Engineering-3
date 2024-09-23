@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import Container from '../Container'
+import { Container } from '../Container'
 
-const TableHeaderContainer = styled(Container)`
+export const TableHeaderContainer = styled(Container)`
   display: grid;
   grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
   overflow: auto;
@@ -12,5 +12,3 @@ const TableHeaderContainer = styled(Container)`
   padding-bottom: 0;
   align-items: center;
 `
-
-export default TableHeaderContainer

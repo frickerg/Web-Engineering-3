@@ -1,9 +1,9 @@
-import CardBackLabel from '../../elements/Label/components/CardBackLabel'
-import CardFrontLabel from '../../elements/Label/components/CardFrontLabel'
-import CardDetailContainer from '../../elements/Container/components/CardDetailContainer'
-import InputCardFront from '../../elements/Input/components/InputCardFront'
-import InputCardBack from '../../elements/Input/components/InputCardBack'
-import SelfAlignedButton from '../../elements/Button/components/SelfAlignedButton'
+import { CardBackLabel } from '../../elements/Label/components/CardBackLabel'
+import { CardFrontLabel } from '../../elements/Label/components/CardFrontLabel'
+import { CardDetailContainer } from '../../elements/Container/components/CardDetailContainer'
+import { InputCardFront } from '../../elements/Input/components/InputCardFront'
+import { InputCardBack } from '../../elements/Input/components/InputCardBack'
+import { SelfAlignedButton } from '../../elements/Button/components/SelfAlignedButton'
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchCards, updateCard } from '../../../api'
@@ -49,21 +49,21 @@ export default function CardDetailPage() {
 
   return (
     <CardDetailContainer>
-      <CardFrontLabel label="Front"></CardFrontLabel>
-      <CardBackLabel label="Back"></CardBackLabel>
+      <CardFrontLabel>Front</CardFrontLabel>
+      <CardBackLabel>Back</CardBackLabel>
       <InputCardFront
         key="front"
         value={card.front}
         placeholder="Front"
-        handleInputChange={value => handleInputChange('front', value)}
+        onChange={e => handleInputChange('front', e.target.value)}
       />
       <InputCardBack
         key="back"
         value={card.back}
         placeholder="Back"
-        handleInputChange={value => handleInputChange('back', value)}
+        onChange={e => handleInputChange('back', e.target.value)}
       />
-      <SelfAlignedButton label="Update" onClick={() => handleUpdate()} />
+      <SelfAlignedButton onClick={handleUpdate}>Update</SelfAlignedButton>
     </CardDetailContainer>
   )
 }

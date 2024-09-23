@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import Container from '../Container'
+import { Container } from '../Container'
 
-const TableContentContainer = styled(Container)`
+export const TableContentContainer = styled(Container)`
   display: grid;
   grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
   overflow: auto;
@@ -13,5 +13,3 @@ const TableContentContainer = styled(Container)`
     border: none;
   }
 `
-
-export default TableContentContainer

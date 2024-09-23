@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Container } from '../Container'
 
-const InputFilterContainer = styled(Container)`
+export const InputFilterContainer = styled(Container)`
   display: grid;
   grid-template-columns: 1fr 1fr 18%;
   grid-template-rows: auto auto;
@@ -14,5 +14,3 @@ const InputFilterContainer = styled(Container)`
     'input-front input-back input-button'
     'spacer spacer input-checkbox';
 `
-
-export default InputFilterContainer

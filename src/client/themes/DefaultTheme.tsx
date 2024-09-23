@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
-const DefaultTheme = createGlobalStyle`
+export const DefaultTheme = createGlobalStyle`
 * {
   font-size: 20px;
   box-sizing: border-box;
@@ -11,5 +11,3 @@ const DefaultTheme = createGlobalStyle`
   font-family: sans-serif;
 }
 `
-
-export default DefaultTheme

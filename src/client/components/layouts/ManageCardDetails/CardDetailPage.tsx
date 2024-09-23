@@ -8,7 +8,7 @@ import { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchCards, updateCard } from '../../../api'
 import { GameContext } from '../../../session/Context'
-import { CardProps } from '../../../../shared/types'
+import { CardProps } from '../../../../shared/CardProps'
 import { InputType } from '../../../common/types'
 
 export default function CardDetailPage() {

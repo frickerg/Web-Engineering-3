@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, ReactNode, useMemo } from 'react'
-import { CardProps } from '../../shared/types'
+import { CardProps } from '../../shared/CardProps'
 import { GameState, retrieveLabel } from './helper'
 import { GameResultItem, InputType, SortDirection } from '../common/types'
 

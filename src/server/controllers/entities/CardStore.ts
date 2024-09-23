@@ -1,8 +1,8 @@
-import { CardProps } from '../../../shared/types'
-import InitialCards from '../data'
+import { CardProps } from '../../../shared/CardProps'
+import { cards } from '../data'
 
 class CardStore {
-  private cards: CardProps[] = [...InitialCards]
+  private cards: CardProps[] = [...cards]
 
   getCards(): CardProps[] {
     return this.cards
@@ -27,5 +27,4 @@ class CardStore {
   }
 }
 
-const cardStore = new CardStore()
-export default cardStore
+export const cardStore = new CardStore()

@@ -1,4 +1,4 @@
-import { CardProps } from '../../shared/types'
+import { CardProps } from '../../shared/CardProps'
 
 export type InputType = 'front' | 'back'
 export type SortDirection = 'asc' | 'desc'

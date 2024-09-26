@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect } from 'react'
-import GameButton from '../../elements/Button/components/GameButton'
-import ProgressHeader from '../../typography/headings/ProgressHeader'
-import ProgressLabel from '../../elements/Label/components/ProgressLabel'
-import GameAnswerContainer from '../../elements/Container/components/GameAnswerContainer'
-import GameContainer from '../../elements/Container/components/GameContainer'
-import InputAnswer from '../../elements/Input/components/InputAnswer'
+import { GameButton } from '../../elements/Button/components/GameButton'
+import { ProgressHeader } from '../../typography/headings/ProgressHeader'
+import { ProgressLabel } from '../../elements/Label/components/ProgressLabel'
+import { GameAnswerContainer } from '../../elements/Container/components/GameAnswerContainer'
+import { GameContainer } from '../../elements/Container/components/GameContainer'
+import { InputAnswer } from '../../elements/Input/components/InputAnswer'
 import Flashcard from '../../elements/Flashcard/Flashcard'
 import { GameContext } from '../../../session/GameContext'
 import { GameState, startNewGame } from '../../../session/helper'
@@ -66,17 +66,17 @@ export default function OngoingGamePage() {
   return (
     <GameContainer>
       <ProgressHeader>
-        <ProgressLabel label={progressLabel()} />
-        <GameButton label="Delete Game" onClick={handleDeleteGame} />
+        <ProgressLabel>{progressLabel()}</ProgressLabel>
+        <GameButton onClick={handleDeleteGame}>Delete Game</GameButton>
       </ProgressHeader>
       <Flashcard text={cards[index]?.front} />
       <GameAnswerContainer>
         <InputAnswer
           value={answer}
           placeholder="Answer"
-          handleInputChange={setAnswer}
+          onChange={e => setAnswer(e.target.value)}
         />
-        <GameButton label="Submit" onClick={validateCard} />
+        <GameButton onClick={validateCard}>Submit</GameButton>
       </GameAnswerContainer>
     </GameContainer>
   )

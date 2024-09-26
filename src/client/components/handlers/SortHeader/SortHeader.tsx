@@ -1,6 +1,6 @@
-import TableHeaderContainer from '../../elements/Container/components/TableHeaderContainer'
-import SimpleTableHeader from '../../typography/headings/SimpleTableHeader'
-import Label from '../../elements/Label/Label'
+import { TableHeaderContainer } from '../../elements/Container/components/TableHeaderContainer'
+import { SimpleTableHeader } from '../../typography/headings/SimpleTableHeader'
+import { Label } from '../../elements/Label/Label'
 import { InputType, SortDirection } from '../../../common/types'
 
 type SortHeaderProps = {
@@ -13,17 +13,18 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 const sortableTypes: InputType[] = ['front', 'back']
 
 export default function SortHeader(props: Readonly<SortHeaderProps>) {
+  const getSortIndicator = (type: InputType) => {
+    if (props.sortType !== type) return ''
+    return props.sortDirection === 'asc' ? '▲' : '▼'
+  }
+
   return (
     <SimpleTableHeader>
       <TableHeaderContainer>
         {sortableTypes.map(type => (
-          <Label
-            key={type}
-            label={capitalize(type)}
-            onClick={() => props.handleSortSelection(type)}
-            isSorted={props.sortType === type}
-            sortDirection={props.sortDirection}
-          />
+          <Label key={type} onClick={() => props.handleSortSelection(type)}>
+            {capitalize(type)} {getSortIndicator(type)}
+          </Label>
         ))}
       </TableHeaderContainer>
     </SimpleTableHeader>

@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import Layout from './Layout'
 import { ThemeProvider } from 'styled-components'
-import DefaultTheme from '../themes/DefaultTheme'
+import { DefaultTheme } from '../themes/DefaultTheme'
 import ManageCardsPage from '../components/layouts/ManageCardDetails/ManageCardsPage'
 import StartNewGamePage from '../components/layouts/GamePage/StartNewGamePage'
 import OngoingGamePage from '../components/layouts/GamePage/OngoingGamePage'

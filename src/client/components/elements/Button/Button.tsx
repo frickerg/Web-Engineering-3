@@ -1,21 +1,6 @@
-import { MouseEventHandler } from 'react'
 import styled from 'styled-components'
 
-type ButtonProps = {
-  label: string
-  onClick?: MouseEventHandler<HTMLButtonElement>
-  className?: string
-}
-
-export default function Button(props: Readonly<ButtonProps>) {
-  return (
-    <StyledButton className={props.className} onClick={props.onClick}>
-      {props.label}
-    </StyledButton>
-  )
-}
-
-const StyledButton = styled.button`
+export const Button = styled.button`
   width: 100%;
   border-radius: 8px;
   padding: 8px;

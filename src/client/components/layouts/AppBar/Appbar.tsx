@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import CenterButton from '../../elements/Button/CenterButton'
-import TitleHeader from '../../typography/headings/TitleHeader'
-import TopBannerContainer from '../../elements/Container/TopBannerContainer'
-import TopBannerRouterLink from '../../typography/links/TopBannerRouterLink'
 import BurgerMenu from '../../elements/Menu/BurgerMenu'
+import CenterButton from '../../elements/Button/components/CenterButton'
+import { TitleHeader } from '../../typography/headings/TitleHeader'
+import { TopBannerContainer } from '../../elements/Container/components/TopBannerContainer'
+import { TopBannerRouterLink } from '../../typography/links/TopBannerRouterLink'
 
 export default function Appbar() {
   return (

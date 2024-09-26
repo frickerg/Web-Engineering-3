@@ -8,21 +8,6 @@ type CheckboxProps = {
   className?: string
 }
 
-const StyledCheckbox = styled.div`
-  padding-left: 10px;
-  padding-bottom: 0;
-`
-const StyledCheckboxInput = styled.input`
-  width: 20px;
-  height: 20px;
-`
-
-const StyledCheckboxLabel = styled.label`
-  font-size: 23px;
-  padding-left: 5px;
-  color: #457b9d;
-`
-
 export default function Checkbox(props: Readonly<CheckboxProps>) {
   return (
     <StyledCheckbox className={props.className}>
@@ -40,3 +25,18 @@ export default function Checkbox(props: Readonly<CheckboxProps>) {
     </StyledCheckbox>
   )
 }
+
+const StyledCheckbox = styled.div`
+  padding-left: 10px;
+  padding-bottom: 0;
+`
+const StyledCheckboxInput = styled.input`
+  width: 20px;
+  height: 20px;
+`
+
+const StyledCheckboxLabel = styled.label`
+  font-size: 23px;
+  padding-left: 5px;
+  color: #457b9d;
+`

@@ -1,14 +1,6 @@
-import { ChangeEvent } from 'react'
 import styled from 'styled-components'
 
-type InputProps = {
-  value: string
-  placeholder: string
-  handleInputChange: (input: string) => void
-  className?: string
-}
-
-const StyledInput = styled.input`
+export const Input = styled.input`
   width: 100%;
   color: #6a94b8;
   background-color: transparent;
@@ -25,19 +17,3 @@ const StyledInput = styled.input`
     border-bottom: 2px solid #457b9d;
   }
 `
-
-export default function Input(props: Readonly<InputProps>) {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    props.handleInputChange(e.target.value)
-  }
-
-  return (
-    <StyledInput
-      className={props.className}
-      type="text"
-      value={props.value}
-      placeholder={props.placeholder}
-      onChange={handleChange}
-    />
-  )
-}

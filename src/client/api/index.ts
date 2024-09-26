@@ -1,7 +1,15 @@
-import { CardProps } from '../../shared/types'
+import { CardProps } from '../../shared/CardProps'
 
 const request = async <T>(url: string, options?: RequestInit): Promise<T> => {
-  const response = await fetch(url, options)
+  const headers = {
+    ...options?.headers,
+    Authorization: `Bearer ${getToken()}`,
+  }
+  const response = await fetch(url, {
+    ...options,
+    headers,
+  })
+
   await checkResponse(response)
   if (
     response.headers.get('Content-Length') === '0' ||
@@ -14,6 +22,7 @@ const request = async <T>(url: string, options?: RequestInit): Promise<T> => {
 
 const checkResponse = async (response: Response) => {
   if (!response.ok) {
+    // TODO(fjv): Bei unautorisierten Anfragen, sollte was passieren? zB. Login-Seite anzeigen?
     const errorText = await response.text()
     throw new Error(`HTTP status: ${response.status} - ${errorText}`)
   }
@@ -55,4 +64,38 @@ export const deleteCard = async (id: string): Promise<void> => {
 type GameSize = { gameSize: number }
 export const fetchGameSize = async (): Promise<number> => {
   return (await request<GameSize>(`/api/gameSize`)).gameSize
+}
+
+let token: string | null = null
+
+const setToken = (newToken: string) => {
+  token = newToken
+}
+
+const getToken = () => {
+  if (!token) {
+    token = localStorage.getItem('token')
+  }
+  return token
+}
+
+export const login = async (
+  username: string,
+  password: string
+): Promise<string> => {
+  const response = await fetch('/api/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username, password }),
+  })
+  await checkResponse(response)
+  const data = await response.json()
+
+  // TODO(fjv): local storage löschen ? oder nur token ? eigene controller-klasse ?
+  localStorage.clear()
+  localStorage.setItem('token', data.token)
+  setToken(data.token)
+  return data.token
 }

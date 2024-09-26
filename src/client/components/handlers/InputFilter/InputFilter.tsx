@@ -1,8 +1,8 @@
-import InputFilterFront from './InputFilterFront'
-import InputFilterBack from './InputFilterBack'
-import InputFilterButton from '../../elements/Button/InputFilterButton'
-import InputFilterCheckbox from '../../elements/Checkbox/InputFilterCheckbox'
-import InputFilterContainer from '../../elements/Container/InputFilterContainer'
+import { InputFilterFront } from '../../elements/Input/components/InputFilterFront'
+import { InputFilterBack } from '../../elements/Input/components/InputFilterBack'
+import { InputFilterButton } from '../../elements/Button/components/InputFilterButton'
+import { InputFilterCheckbox } from '../../elements/Checkbox/components/InputFilterCheckbox'
+import { InputFilterContainer } from '../../elements/Container/components/InputFilterContainer'
 import { InputType } from '../../../common/types'
 
 type InputFilterProps = {
@@ -21,18 +21,20 @@ export default function InputFilter(props: Readonly<InputFilterProps>) {
         key="front"
         value={props.front}
         placeholder="Front"
-        handleInputChange={value => props.handleInputChange('front', value)}
+        onChange={e => props.handleInputChange('front', e.target.value)}
       />
       <InputFilterBack
         key="back"
         value={props.back}
         placeholder="Back"
-        handleInputChange={value => props.handleInputChange('back', value)}
+        onChange={e => props.handleInputChange('back', e.target.value)}
       />
       <InputFilterButton
-        label="Add"
         onClick={() => props.handleAddNewCard(props.front, props.back)}
-      />
+      >
+        Add
+      </InputFilterButton>
+
       <InputFilterCheckbox
         id="filter"
         label="Filter Table"

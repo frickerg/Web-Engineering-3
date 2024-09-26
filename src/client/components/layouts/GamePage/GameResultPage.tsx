@@ -1,10 +1,10 @@
-import CenterHeader from '../../typography/headings/CenterHeader'
-import FilledTableHeader from '../../typography/headings/FilledTableHeader'
-import Item from '../../typography/texts/Item'
-import ScoreLabel from '../../elements/Label/ScoreLabel'
-import GameContainer from '../../elements/Container/GameContainer'
-import GameResultsContainer from '../../elements/Container/GameResultsContainer'
-import StartButton from '../../elements/Button/StartButton'
+import { CenterHeader } from '../../typography/headings/CenterHeader'
+import { FilledTableHeader } from '../../typography/headings/FilledTableHeader'
+import { Item } from '../../typography/texts/Item'
+import { ScoreLabel } from '../../elements/Label/components/ScoreLabel'
+import { GameContainer } from '../../elements/Container/components/GameContainer'
+import { GameResultsContainer } from '../../elements/Container/components/GameResultsContainer'
+import { StartButton } from '../../elements/Button/components/StartButton'
 import { Fragment, useContext } from 'react'
 import { GameContext } from '../../../session/Context'
 import { startNewGame } from '../../../session/helper'
@@ -20,12 +20,11 @@ export default function GameResultPage() {
 
   return (
     <GameContainer>
-      <StartButton
-        label="Start New Game"
-        onClick={() => startNewGame(storeCards, dispatch)}
-      />
+      <StartButton onClick={() => startNewGame(storeCards, dispatch)}>
+        Start New Game
+      </StartButton>
       <CenterHeader>Game Results</CenterHeader>
-      <ScoreLabel label={scoreLabel()}></ScoreLabel>
+      <ScoreLabel>{scoreLabel()}</ScoreLabel>
       <GameResultsContainer>
         <FilledTableHeader>Front</FilledTableHeader>
         <FilledTableHeader>Back</FilledTableHeader>

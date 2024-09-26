@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import Container from './Container'
+import { Container } from '../Container'
 
-const CardDetailContainer = styled(Container)`
+export const CardDetailContainer = styled(Container)`
   display: grid;
   grid-template-columns: 1fr 1fr 18%;
   grid-template-rows: auto auto;
@@ -14,5 +14,3 @@ const CardDetailContainer = styled(Container)`
     'detail-label-front detail-label-back spacer'
     'detail-card-front detail-card-back detail-button';
 `
-
-export default CardDetailContainer

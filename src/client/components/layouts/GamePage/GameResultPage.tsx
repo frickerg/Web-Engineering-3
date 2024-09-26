@@ -6,7 +6,7 @@ import GameContainer from '../../elements/Container/components/GameContainer'
 import GameResultsContainer from '../../elements/Container/components/GameResultsContainer'
 import StartButton from '../../elements/Button/components/StartButton'
 import { Fragment, useContext } from 'react'
-import { GameContext } from '../../../session/Context'
+import { GameContext } from '../../../session/GameContext'
 import { startNewGame } from '../../../session/helper'
 
 export default function GameResultPage() {

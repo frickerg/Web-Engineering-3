@@ -7,7 +7,7 @@ import SelfAlignedButton from '../../elements/Button/components/SelfAlignedButto
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchCards, updateCard } from '../../../api'
-import { GameContext } from '../../../session/Context'
+import { GameContext } from '../../../session/GameContext'
 import { CardProps } from '../../../../shared/CardProps'
 import { InputType } from '../../../common/types'
 

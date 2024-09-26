@@ -1,6 +1,8 @@
+import { UserRole } from './UserRole'
+
 export type UserProps = {
   username: string
-  role: 'admin' | 'player'
+  role: UserRole
   passwordHash: string
   salt: string
 }

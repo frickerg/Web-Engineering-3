@@ -7,7 +7,7 @@ import {
   updateCard,
 } from '../controllers/gameController'
 import { generatePassword, login } from '../controllers/authController'
-import { authenticateJwt, authorizeRole } from '../middleware'
+import { authenticateJwt, authorizeRole } from '../middleware/authMiddleware'
 
 const router = express.Router()
 

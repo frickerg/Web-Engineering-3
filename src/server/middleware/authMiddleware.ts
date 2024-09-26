@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from 'express'
 import { jwtVerify } from 'jose'
-import { JWT_SECRET } from '../config'
-import { UserProps } from '../shared/UserProps'
+import { JWT_SECRET } from '../../config'
+import { UserProps } from '../../shared/UserProps'
+import { UserRole } from '../../shared/UserRole'
 
 type JwtPayloadProps = {
   username: string
-  role: string
+  role: UserRole
 }
 
 type AuthenticatedRequest = Request & {

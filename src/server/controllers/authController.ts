@@ -3,6 +3,7 @@ import { randomBytes, scrypt } from 'crypto'
 import { SignJWT } from 'jose'
 import { userStore } from './entities/UserStore'
 import { JWT_SECRET } from '../../config'
+import { UserRole } from '../../shared/UserRole'
 
 export const generatePassword = async (req: Request, res: Response) => {
   const password = req.params.password
@@ -27,7 +28,8 @@ export const login = async (req: Request, res: Response) => {
   }
 
   const token = await generateJwt(username, user.role)
-  res.status(200).send({ token })
+  // FIXME: Ist das okay die rolle so zu senden?
+  res.status(200).send({ token, role: user.role })
 
   console.log(`User ${username} logged in`)
 }
@@ -46,7 +48,7 @@ const createPasswordHash = async (password: string, salt: string) => {
 
 const secret = new TextEncoder().encode(JWT_SECRET)
 
-const generateJwt = (username: string, role: string) => {
+const generateJwt = (username: string, role: UserRole) => {
   return new SignJWT({ username, role })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()

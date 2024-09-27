@@ -1,10 +1,10 @@
 import express from 'express'
-import cardsRoutes from './routes/routes'
+import routes from './routes/routes'
 
 const app = express()
 app.use(express.json())
 
-app.use('/api/', cardsRoutes)
+app.use('/api/', routes)
 
 const port = 3003
 app.listen(port, () => {

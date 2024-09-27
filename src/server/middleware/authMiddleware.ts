@@ -24,22 +24,23 @@ export const authenticateJwt = async (
     const authHeader = req.headers.authorization
     const token = authHeader?.split(' ')[1]
     if (!token) {
+      console.log('No token provided')
       return res.sendStatus(401).send('Access denied')
     }
+    console.log('Token provided')
 
     await jwtVerify(token, secret)
       .then(jwt => {
         req.user = jwt.payload as JwtPayloadProps
-        console.log(jwt.payload.username)
-        console.log(jwt.payload.role)
+        console.log(`User: ${jwt.payload.username} Role: ${jwt.payload.role}`)
         next()
       })
       .catch(e => {
-        console.error(e)
+        console.error('Token verification failed:', e)
         res.status(400).send('Invalid token.')
       })
   } catch (e) {
-    console.error(e)
+    console.error('Authentication error:', e)
     res.sendStatus(403)
   }
 }
@@ -48,6 +49,7 @@ export const authorizeRole = (roles: Array<UserProps['role']>) => {
   return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const user = req.user as UserProps
     if (!user || !roles.includes(user.role)) {
+      console.log('Access denied for user:', user ? user.username : 'unknown')
       return res.status(403).send('Access denied')
     }
     next()

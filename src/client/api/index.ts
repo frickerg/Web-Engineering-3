@@ -1,4 +1,5 @@
 import { CardProps } from '../../shared/CardProps'
+import { LoginResponse } from './LoginResponse'
 
 const request = async <T>(url: string, options?: RequestInit): Promise<T> => {
   const headers = {
@@ -66,11 +67,8 @@ export const fetchGameSize = async (): Promise<number> => {
   return (await request<GameSize>(`/api/gameSize`)).gameSize
 }
 
+// TODO: Issue70: Token-Management
 let token: string | null = null
-
-const setToken = (newToken: string) => {
-  token = newToken
-}
 
 const getToken = () => {
   if (!token) {
@@ -82,7 +80,7 @@ const getToken = () => {
 export const login = async (
   username: string,
   password: string
-): Promise<string> => {
+): Promise<LoginResponse> => {
   const response = await fetch('/api/login', {
     method: 'POST',
     headers: {
@@ -93,9 +91,10 @@ export const login = async (
   await checkResponse(response)
   const data = await response.json()
 
-  // TODO(fjv): local storage löschen ? oder nur token ? eigene controller-klasse ?
-  localStorage.clear()
-  localStorage.setItem('token', data.token)
-  setToken(data.token)
-  return data.token
+  console.log('login', data)
+  return {
+    username: username,
+    role: data.role,
+    token: data.token,
+  } as LoginResponse
 }

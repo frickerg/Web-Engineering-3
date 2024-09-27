@@ -6,7 +6,7 @@ import { GameAnswerContainer } from '../../elements/Container/components/GameAns
 import { GameContainer } from '../../elements/Container/components/GameContainer'
 import { InputAnswer } from '../../elements/Input/components/InputAnswer'
 import Flashcard from '../../elements/Flashcard/Flashcard'
-import { GameContext } from '../../../session/Context'
+import { GameContext } from '../../../session/GameContext'
 import { GameState, startNewGame } from '../../../session/helper'
 import { CardProps } from '../../../../shared/CardProps'
 

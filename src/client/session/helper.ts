@@ -1,6 +1,6 @@
 import { CardProps } from '../../shared/CardProps'
 import { fetchGameSize } from '../api'
-import { Action } from './Context'
+import { Action } from './GameContext'
 
 export enum GameState {
   NOT_STARTED = 'NOT_STARTED',

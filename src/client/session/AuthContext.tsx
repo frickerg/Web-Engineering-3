@@ -9,8 +9,13 @@ import { UserRole } from '../../shared/UserRole'
 import { loginUserService, logoutUserService } from '../api/authService'
 import { LoginResponse } from '../api/LoginResponse'
 
+type User = {
+  username: string
+  role: UserRole
+}
+
 type State = {
-  user: { username: string; role: UserRole }
+  user: User | null
   error?: string
 }
 
@@ -27,7 +32,7 @@ type ContextProps = {
 }
 
 const initialState: State = {
-  user: { username: '', role: undefined },
+  user: null,
   error: undefined,
 }
 
@@ -40,7 +45,7 @@ const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         user: { username, role },
-        error: '',
+        error: undefined,
       }
     }
     case 'LOGIN_FAILURE': {
@@ -53,7 +58,7 @@ const reducer = (state: State, action: Action): State => {
       localStorage.removeItem('token')
       return {
         ...state,
-        user: { username: '', role: undefined },
+        user: null,
       }
     }
     default:

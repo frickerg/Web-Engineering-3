@@ -20,9 +20,13 @@ const LoginPage: React.FC = () => {
     e.preventDefault()
     setError('')
     setSuccess('')
-    await loginUser(username, password).then(() => {
-      setSuccess('Login successful!')
-    })
+    await loginUser(username, password)
+      .then(() => {
+        setSuccess('Login successful!')
+      })
+      .catch(() => {
+        setError('Login failed. Please try again.')
+      })
   }
 
   const handleLogout = () => {

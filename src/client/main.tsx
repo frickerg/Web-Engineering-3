@@ -1,12 +1,16 @@
 import ReactDOM from 'react-dom/client'
-import App from './pages/App.tsx'
 import { BrowserRouter } from 'react-router-dom'
-import { GameProvider } from './session/Context.tsx'
+import { GameProvider } from './session/GameContext.tsx'
+import { AuthProvider } from './session/AuthContext.tsx'
+import LoginPage from '../onlyForTestPurpose/LoginPage.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
-    <GameProvider>
-      <App />
-    </GameProvider>
+    <AuthProvider>
+      <GameProvider>
+        <LoginPage />
+        {/* FIXME anstelle LoginPage sollte wieder App gestartet werden ->  <App /> */}
+      </GameProvider>
+    </AuthProvider>
   </BrowserRouter>
 )

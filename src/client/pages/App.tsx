@@ -8,7 +8,7 @@ import OngoingGamePage from '../components/layouts/GamePage/OngoingGamePage'
 import GameResultPage from '../components/layouts/GamePage/GameResultPage'
 import CardDetailPage from '../components/layouts/ManageCardDetails/CardDetailPage'
 import { useContext, useEffect } from 'react'
-import { GameContext } from '../session/Context'
+import { GameContext } from '../session/GameContext'
 import { GameState } from '../session/helper'
 import { fetchCards } from '../api'
 

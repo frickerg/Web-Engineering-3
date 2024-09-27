@@ -46,10 +46,10 @@ The application was developed using React, Vite, TypeScript and HMR (Hot Module 
 
 ## Login
 
-| Username | Password       |
-|----------|----------------|
-| admin    | admin-password |
-| user     | user-password  |
+| Username | Password | Role   |
+|----------|----------|--------|
+| admin    | admin-pw | Admin  |
+| player   | user-pw  | Player |
 
 ## Expanding the ESLint configuration
 

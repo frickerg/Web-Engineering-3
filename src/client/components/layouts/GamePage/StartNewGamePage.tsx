@@ -1,7 +1,7 @@
 import { Paragraph } from '../../typography/texts/Paragraph'
 import { GameContainer } from '../../elements/Container/components/GameContainer'
 import { StartButton } from '../../elements/Button/components/StartButton'
-import { GameContext } from '../../../session/Context'
+import { GameContext } from '../../../session/GameContext'
 import { GameState, startNewGame } from '../../../session/helper'
 import { useContext } from 'react'
 

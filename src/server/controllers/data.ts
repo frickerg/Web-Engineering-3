@@ -37,17 +37,17 @@ export const cards: CardProps[] = [
 
 export const users: UserProps[] = [
   {
-    username: 'admin', // XXX password: admin-password
+    username: 'admin', // XXX password: admin-pw
     role: 'admin',
     passwordHash:
-      '1bdc781712cd63a93aaf5b911e942f0427eacf8dd7e254e4f96c84ce297267828ac7003502397497f100ae4e6a21354297bf5590866bab0022149a05f7318a28',
-    salt: '567298c3cb5feb7dab7326c1e2487e38',
+      '52ccb9076e35aaf8c0d778a8a4ce95c558ef47c3a0d23441c72c3ea2af2e8db156a36bd2cd039dfacde610037adef53e6deea12e09ecf4e304f8907ec9eddccb',
+    salt: '65d8fd26dc63fd85d274dd028f39a49f',
   },
   {
-    username: 'user', // XXX password: user-password
-    role: 'user',
+    username: 'player', // XXX password: player-pw
+    role: 'player',
     passwordHash:
-      'e0f5f881d4123261ba7bf42d62ca26a211c348e8f204a7e981a12bc45b059f8a5f0bd5f0f3dba011917d4b02a51fe1636b67def2bf0aa1626214d986dd2b9804',
-    salt: '17e9ea8be7a5081d0a0d65c1eda9fa97',
+      '5bc7845ebc00320fe2ab7c1dd2f65a08e3a4f8546a625aa99d304aebdb126ed7ead123682d116d1e28df25dff731de36e8b0425b4556c243b7efe2c5ed7743ce',
+    salt: 'b98935b5571cb5aac91d8fcf725a382c',
   },
 ]

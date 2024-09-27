@@ -7,16 +7,30 @@ import {
   updateCard,
 } from '../controllers/gameController'
 import { generatePassword, login } from '../controllers/authController'
-import { authenticateJwt } from '../middleware'
+import { authenticateJwt, authorizeRole } from '../middleware/authMiddleware'
 
 const router = express.Router()
 
-// TODO(fjv): definieren welche endpoints geschützte Ressourcen sind...
-router.get('/cards', authenticateJwt, getCards)
-router.get('/gameSize', getGameSize)
-router.post('/card', authenticateJwt, addCard)
-router.put('/card/:id', authenticateJwt, updateCard)
-router.delete('/card/:id', authenticateJwt, deleteCard)
+router.get(
+  '/cards',
+  authenticateJwt,
+  authorizeRole(['admin', 'player']),
+  getCards
+)
+router.get(
+  '/gameSize',
+  authenticateJwt,
+  authorizeRole(['admin', 'player']),
+  getGameSize
+)
+router.post('/card', authenticateJwt, authorizeRole(['admin']), addCard)
+router.put('/card/:id', authenticateJwt, authorizeRole(['admin']), updateCard)
+router.delete(
+  '/card/:id',
+  authenticateJwt,
+  authorizeRole(['admin']),
+  deleteCard
+)
 
 router.get('/passwordGenerator/:password', generatePassword)
 router.post('/login', login)

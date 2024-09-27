@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { Button } from '../Button'
 import styled from 'styled-components'
-import { GameContext } from '../../../../session/Context'
+import { GameContext } from '../../../../session/GameContext'
 import { useNavigate } from 'react-router-dom'
 
 export default function CenterButton() {

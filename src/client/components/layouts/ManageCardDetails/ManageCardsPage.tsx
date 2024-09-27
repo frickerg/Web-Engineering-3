@@ -3,7 +3,7 @@ import InputFilter from '../../handlers/InputFilter/InputFilter'
 import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
 import { addCard, deleteCard } from '../../../api'
-import { GameContext } from '../../../session/Context'
+import { GameContext } from '../../../session/GameContext'
 import { InputType } from '../../../common/types'
 
 export default function ManageCardsPage() {

@@ -1,6 +1,6 @@
 // XXX: Login page component for testing purposes
 import React, { useState, useContext, useEffect } from 'react'
-import { AuthContext } from '../../session/AuthContext'
+import { AuthContext } from '../client/session/AuthContext'
 
 const LoginPage: React.FC = () => {
   const { state, loginUser, logoutUser } = useContext(AuthContext)

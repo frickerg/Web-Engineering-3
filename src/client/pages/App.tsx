@@ -11,8 +11,11 @@ import { useContext, useEffect } from 'react'
 import { GameContext } from '../session/GameContext'
 import { GameState } from '../session/helper'
 import { fetchCards } from '../api'
+import { AuthContext } from '../session/AuthContext'
+import LoginPage from '../../onlyForTestPurpose/LoginPage'
 
 export default function App() {
+  const { state: authState } = useContext(AuthContext)
   const { state, dispatch } = useContext(GameContext)
 
   useEffect(() => {
@@ -36,6 +39,10 @@ export default function App() {
       default:
         return <StartNewGamePage />
     }
+  }
+
+  if (!authState.user) {
+    return <LoginPage />
   }
 
   return (

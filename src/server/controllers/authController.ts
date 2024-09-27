@@ -28,7 +28,6 @@ export const login = async (req: Request, res: Response) => {
   }
 
   const token = await generateJwt(username, user.role)
-  // FIXME: Ist das okay die rolle so zu senden?
   res.status(200).send({ token, role: user.role })
 
   console.log(`User ${username} logged in`)

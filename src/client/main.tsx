@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client'
-// import App from './pages/App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { GameProvider } from './session/GameContext.tsx'
 import { AuthProvider } from './session/AuthContext.tsx'
@@ -10,7 +9,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <AuthProvider>
       <GameProvider>
         <LoginPage />
-        {/* FIXME  <App /> */}
+        {/* FIXME anstelle LoginPage sollte wieder App gestartet werden ->  <App /> */}
       </GameProvider>
     </AuthProvider>
   </BrowserRouter>

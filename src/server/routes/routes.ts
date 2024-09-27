@@ -11,7 +11,6 @@ import { authenticateJwt, authorizeRole } from '../middleware/authMiddleware'
 
 const router = express.Router()
 
-// TODO(fjv): definieren welche endpoints geschützte Ressourcen sind...
 router.get(
   '/cards',
   authenticateJwt,

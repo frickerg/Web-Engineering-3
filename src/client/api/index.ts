@@ -67,12 +67,8 @@ export const fetchGameSize = async (): Promise<number> => {
   return (await request<GameSize>(`/api/gameSize`)).gameSize
 }
 
+// TODO: Issue70: Token-Management
 let token: string | null = null
-
-// TODO: Issue: Token-Managment
-// const setToken = (newToken: string) => {
-//   token = newToken
-// }
 
 const getToken = () => {
   if (!token) {

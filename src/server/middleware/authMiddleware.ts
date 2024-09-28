@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { jwtVerify } from 'jose'
 import { JWT_SECRET } from '../../config'
-import { UserProps } from '../../shared/UserProps'
+import { UserStoreProps } from '../controllers/entities/UserStore'
 import { UserRole } from '../../shared/UserRole'
 
 type JwtPayloadProps = {
@@ -45,9 +45,9 @@ export const authenticateJwt = async (
   }
 }
 
-export const authorizeRole = (roles: Array<UserProps['role']>) => {
+export const authorizeRole = (roles: Array<UserStoreProps['role']>) => {
   return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-    const user = req.user as UserProps
+    const user = req.user as UserStoreProps
     if (!user || !roles.includes(user.role)) {
       console.log('Access denied for user:', user ? user.username : 'unknown')
       return res.status(403).send('Access denied')

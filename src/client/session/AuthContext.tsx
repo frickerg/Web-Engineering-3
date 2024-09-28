@@ -5,8 +5,7 @@ import React, {
   useCallback,
   useMemo,
 } from 'react'
-import { UserRole } from '../../shared/UserRole'
-import { LoginResponse } from '../api/LoginResponse'
+import { AuthenticatedUser } from '../api/AuthenticatedUser'
 import {
   loadAuthFromLocalStorage,
   removeAuthFromLocalStorage,
@@ -14,26 +13,20 @@ import {
 } from './authStorage'
 import { login } from '../api'
 
-type User = {
-  username: string | null
-  role: UserRole | null
-  token: string | null
-}
-
 type State = {
-  user: User | null
+  user: AuthenticatedUser | null
   error?: string
 }
 
 export type Action =
-  | { type: 'LOGIN_SUCCESS'; payload: LoginResponse }
+  | { type: 'LOGIN_SUCCESS'; payload: AuthenticatedUser }
   | { type: 'LOGIN_FAILURE'; payload: string }
   | { type: 'LOGOUT' }
 
 type ContextProps = {
   state: State
   dispatch: React.Dispatch<Action>
-  loginUser: (username: string, password: string) => Promise<LoginResponse>
+  loginUser: (username: string, password: string) => Promise<AuthenticatedUser>
   logoutUser: () => void
 }
 
@@ -80,7 +73,7 @@ const reducer = (state: State, action: Action): State => {
 export const AuthContext = createContext<ContextProps>({
   state: initialState(),
   dispatch: () => null,
-  loginUser: async () => ({} as LoginResponse),
+  loginUser: async () => ({} as AuthenticatedUser),
   logoutUser: () => {},
 })
 
@@ -88,7 +81,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState())
 
   const loginUser = useCallback(
-    async (username: string, password: string): Promise<LoginResponse> => {
+    async (username: string, password: string): Promise<AuthenticatedUser> => {
       return await login(username, password)
         .then(data => {
           dispatch({
@@ -104,7 +97,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             type: 'LOGIN_FAILURE',
             payload: `Login failed. Please try again. ${error}`,
           })
-          return {} as LoginResponse
+          return {} as AuthenticatedUser
         })
     },
     [dispatch]

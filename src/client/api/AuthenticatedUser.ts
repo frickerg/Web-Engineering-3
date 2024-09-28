@@ -1,6 +1,6 @@
 import { UserRole } from '../../shared/UserRole'
 
-export type LoginResponse = {
+export type AuthenticatedUser = {
   username: string
   role: UserRole
   token: string

@@ -3,7 +3,7 @@ import {
   getTokenFromLocalStorage,
   saveTokenToLocalStorage,
 } from '../session/authStorage'
-import { LoginResponse } from './LoginResponse'
+import { AuthenticatedUser } from './AuthenticatedUser'
 
 // TODO: Issue#70: Ist das in Ordnung?
 let token: string | null = null
@@ -84,7 +84,7 @@ export const fetchGameSize = async (): Promise<number> => {
 export const login = async (
   username: string,
   password: string
-): Promise<LoginResponse> => {
+): Promise<AuthenticatedUser> => {
   const response = await fetch('/api/login', {
     method: 'POST',
     headers: {
@@ -103,5 +103,5 @@ export const login = async (
     username: username,
     role: data.role,
     token: data.token,
-  } as LoginResponse
+  } as AuthenticatedUser
 }

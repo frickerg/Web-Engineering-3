@@ -1,8 +1,10 @@
-// XXX: Login page component for testing purposes
+// XXX: Login-Page component for testing purposes
 import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../client/session/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const LoginPage: React.FC = () => {
+  const navigate = useNavigate()
   const { state, loginUser, logoutUser } = useContext(AuthContext)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -14,15 +16,23 @@ const LoginPage: React.FC = () => {
       setError(state.error)
       setSuccess('')
     }
-  }, [state])
+
+    if (state.user) {
+      navigate('/')
+    }
+  }, [state, navigate])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setSuccess('')
-    await loginUser(username, password).then(() => {
-      setSuccess('Login successful!')
-    })
+    await loginUser(username, password)
+      .then(() => {
+        setSuccess('Login successful!')
+      })
+      .catch(() => {
+        setError('Login failed. Please try again.')
+      })
   }
 
   const handleLogout = () => {

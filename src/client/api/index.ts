@@ -1,5 +1,19 @@
 import { CardProps } from '../../shared/CardProps'
-import { LoginResponse } from './LoginResponse'
+import {
+  getTokenFromLocalStorage,
+  saveTokenToLocalStorage,
+} from '../session/authStorage'
+import { AuthenticatedUser } from './AuthenticatedUser'
+
+// TODO: Issue#70: Ist das in Ordnung?
+let token: string | null = null
+
+const getToken = () => {
+  if (!token) {
+    token = getTokenFromLocalStorage()
+  }
+  return token
+}
 
 const request = async <T>(url: string, options?: RequestInit): Promise<T> => {
   const headers = {
@@ -67,20 +81,10 @@ export const fetchGameSize = async (): Promise<number> => {
   return (await request<GameSize>(`/api/gameSize`)).gameSize
 }
 
-// TODO: Issue70: Token-Management
-let token: string | null = null
-
-const getToken = () => {
-  if (!token) {
-    token = localStorage.getItem('token')
-  }
-  return token
-}
-
 export const login = async (
   username: string,
   password: string
-): Promise<LoginResponse> => {
+): Promise<AuthenticatedUser> => {
   const response = await fetch('/api/login', {
     method: 'POST',
     headers: {
@@ -91,10 +95,13 @@ export const login = async (
   await checkResponse(response)
   const data = await response.json()
 
+  // FIXME Ist das sinvoll vlt für das testen? oder nur im AuthContext?
+  saveTokenToLocalStorage(data.token)
+
   console.log('login', data)
   return {
     username: username,
     role: data.role,
     token: data.token,
-  } as LoginResponse
+  } as AuthenticatedUser
 }

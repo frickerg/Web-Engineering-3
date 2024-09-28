@@ -1,10 +1,17 @@
-import { UserProps } from '../../../shared/UserProps'
 import { users } from '../data'
+import { UserRole } from '../../../shared/UserRole'
+
+export type UserStoreProps = {
+  username: string
+  role: UserRole
+  passwordHash: string
+  salt: string
+}
 
 class UserStore {
-  private users: UserProps[] = [...users]
+  private users: UserStoreProps[] = [...users]
 
-  getUsers(): UserProps[] {
+  getUsers(): UserStoreProps[] {
     return this.users
   }
 
@@ -12,7 +19,7 @@ class UserStore {
     return this.users.some(user => user.username === username)
   }
 
-  findUserByUsername(username: string): UserProps | undefined {
+  findUserByUsername(username: string): UserStoreProps | undefined {
     return this.users.find(user => user.username === username)
   }
 }

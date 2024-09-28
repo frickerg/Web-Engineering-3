@@ -7,6 +7,7 @@ import { TopBannerRouterLink } from '../../typography/links/TopBannerRouterLink'
 import { AuthContext } from '../../../session/AuthContext'
 import { useContext } from 'react'
 import LogoutButton from '../../../../onlyForTestPurpose/LogoutButton'
+import { viewportDevice } from '../../../themes/Breakpoints'
 
 export default function Appbar() {
   const { state } = useContext(AuthContext)
@@ -33,13 +34,11 @@ export default function Appbar() {
   )
 }
 
-// TODO Issue-#82 https://github.com/frickerg/Web-Engineering-3/issues/82
-const BREAKPOINT = '600px'
 
 const AppbarContainer = styled(TopBannerContainer)`
   grid-template-areas: 'title center right';
 
-  @media (max-width: ${BREAKPOINT}) {
+  @media (${viewportDevice.mobile}) {
     grid-template-columns: 1fr auto;
     grid-template-areas: 'title right';
   }
@@ -58,7 +57,7 @@ const CenterContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media (max-width: ${BREAKPOINT}) {
+  @media (${viewportDevice.mobile}) {
     display: none;
   }
 `
@@ -70,7 +69,7 @@ const RightContainer = styled.div`
   align-items: center;
   gap: 10px;
 
-  @media (max-width: ${BREAKPOINT}) {
+  @media (${viewportDevice.mobile}) {
     display: none;
   }
 `
@@ -78,7 +77,7 @@ const RightContainer = styled.div`
 const MobileMenu = styled.div`
   display: none;
 
-  @media (max-width: ${BREAKPOINT}) {
+  @media (${viewportDevice.mobile}) {
     display: flex;
     justify-content: flex-end;
   }

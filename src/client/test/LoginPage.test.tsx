@@ -1,3 +1,5 @@
+import '@testing-library/jest-dom/vitest'
+import userEvent from '@testing-library/user-event'
 import { render, screen, waitFor, cleanup } from '@testing-library/react'
 import {
   describe,
@@ -8,14 +10,12 @@ import {
   afterAll,
   beforeAll,
 } from 'vitest'
-import '@testing-library/jest-dom/vitest'
 import LoginPage from '../../onlyForTestPurpose/LoginPage'
 import { AuthContext, State } from '../session/AuthContext'
 import { MemoryRouter } from 'react-router-dom'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { AuthenticatedUser } from '../api/AuthenticatedUser'
-import { userEvent } from '@testing-library/user-event'
 
 const login = vitest.fn()
 const testUsername = 'naruto'

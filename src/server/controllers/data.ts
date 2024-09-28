@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto'
 import type { CardProps } from '../../shared/CardProps'
-import type { UserProps } from '../../shared/UserProps'
+import { UserStoreProps } from './entities/UserStore'
 
 export const cards: CardProps[] = [
   {
@@ -35,7 +35,7 @@ export const cards: CardProps[] = [
   },
 ]
 
-export const users: UserProps[] = [
+export const users: UserStoreProps[] = [
   {
     username: 'admin', // XXX password: admin-pw
     role: 'admin',

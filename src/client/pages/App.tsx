@@ -11,26 +11,31 @@ import { useContext, useEffect } from 'react'
 import { GameContext } from '../session/GameContext'
 import { GameState } from '../session/helper'
 import { fetchCards } from '../api'
-import { AuthContext } from '../session/AuthContext'
 import LoginPage from '../../onlyForTestPurpose/LoginPage'
+import PrivateRoute from '../components/routes/PrivateRoute'
+import AccessDeniedPage from '../../onlyForTestPurpose/AccessDeniedPage'
+import { AuthContext } from '../session/AuthContext'
 
 export default function App() {
+  const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
   const { state: authState } = useContext(AuthContext)
-  const { state, dispatch } = useContext(GameContext)
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        dispatch({ type: 'SET_CARDS', payload: await fetchCards() })
-      } catch (error) {
-        console.error(error)
+    // TODO Reicht es, wenn wir nur authState.user überprüfen? oder muss hier server-seitig geprüft werden?
+    if (authState.user) {
+      const fetchData = async () => {
+        try {
+          gameDispatch({ type: 'SET_CARDS', payload: await fetchCards() })
+        } catch (error) {
+          console.error(error)
+        }
       }
+      fetchData()
     }
-    fetchData()
-  }, [dispatch])
+  }, [authState.user, gameDispatch])
 
   const renderContent = () => {
-    switch (state.gameState) {
+    switch (gameState.gameState) {
       case GameState.ONGOING:
         return <OngoingGamePage />
       case GameState.FINISHED:
@@ -41,18 +46,20 @@ export default function App() {
     }
   }
 
-  if (!authState.user) {
-    return <LoginPage />
-  }
-
   return (
     <ThemeProvider theme={DefaultTheme}>
       <DefaultTheme />
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={renderContent()} />
-          <Route path="cards" element={<ManageCardsPage />} />
-          <Route path="cards/details/:cardId" element={<CardDetailPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/accessDenied" element={<AccessDeniedPage />} />
+        <Route path="/" element={<PrivateRoute />}>
+          <Route path="/" element={<Layout />}>
+            <Route index element={renderContent()} />
+            <Route path="cards" element={<PrivateRoute role="admin" />}>
+              <Route index element={<ManageCardsPage />} />
+              <Route path="details/:cardId" element={<CardDetailPage />} />
+            </Route>
+          </Route>
         </Route>
       </Routes>
     </ThemeProvider>

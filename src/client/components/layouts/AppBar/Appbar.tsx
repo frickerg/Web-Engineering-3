@@ -34,7 +34,6 @@ export default function Appbar() {
   )
 }
 
-
 const AppbarContainer = styled(TopBannerContainer)`
   grid-template-areas: 'title center right';
 
@@ -82,6 +81,6 @@ const MobileMenu = styled.div`
     justify-content: flex-end;
   }
 `
-export const UserInfo = styled.p`
+const UserInfo = styled.p`
   color: #99b4c5;
 `

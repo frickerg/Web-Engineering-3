@@ -4,18 +4,27 @@ import CenterButton from '../../elements/Button/components/CenterButton'
 import { TitleHeader } from '../../typography/headings/TitleHeader'
 import { TopBannerContainer } from '../../elements/Container/components/TopBannerContainer'
 import { TopBannerRouterLink } from '../../typography/links/TopBannerRouterLink'
+import { AuthContext } from '../../../session/AuthContext'
+import { useContext } from 'react'
+import LogoutButton from '../../../../onlyForTestPurpose/LogoutButton'
 
 export default function Appbar() {
+  const { state } = useContext(AuthContext)
+
   return (
     <AppbarContainer>
       <TitleContainer>
         <TitleHeader>Mimir</TitleHeader>
+        <UserInfo>{state.user?.username}</UserInfo>
       </TitleContainer>
       <CenterContainer>
         <CenterButton />
       </CenterContainer>
       <RightContainer>
-        <TopBannerRouterLink to="/cards">Manage Cards</TopBannerRouterLink>
+        {state.user?.role === 'admin' && (
+          <TopBannerRouterLink to="/cards">Manage Cards</TopBannerRouterLink>
+        )}
+        <LogoutButton />
       </RightContainer>
       <MobileMenu>
         <BurgerMenu />
@@ -39,7 +48,8 @@ const AppbarContainer = styled(TopBannerContainer)`
 const TitleContainer = styled.div`
   grid-area: title;
   display: flex;
-  align-items: center;
+  align-items: baseline;
+  gap: 10px;
 `
 
 const CenterContainer = styled.div`
@@ -58,6 +68,7 @@ const RightContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 10px;
 
   @media (max-width: ${BREAKPOINT}) {
     display: none;
@@ -71,4 +82,7 @@ const MobileMenu = styled.div`
     display: flex;
     justify-content: flex-end;
   }
+`
+export const UserInfo = styled.p`
+  color: #99b4c5;
 `

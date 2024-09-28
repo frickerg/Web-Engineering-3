@@ -6,12 +6,18 @@ import React, {
   useMemo,
 } from 'react'
 import { UserRole } from '../../shared/UserRole'
-import { loginUserService, logoutUserService } from '../api/authService'
 import { LoginResponse } from '../api/LoginResponse'
+import {
+  loadAuthFromLocalStorage,
+  removeAuthFromLocalStorage,
+  saveAuthToLocalStorage,
+} from './authStorage'
+import { login } from '../api'
 
 type User = {
-  username: string
-  role: UserRole
+  username: string | null
+  role: UserRole | null
+  token: string | null
 }
 
 type State = {
@@ -31,20 +37,29 @@ type ContextProps = {
   logoutUser: () => void
 }
 
-const initialState: State = {
-  user: null,
-  error: undefined,
+const initialState = (): State => {
+  const { token, username, role } = loadAuthFromLocalStorage()
+
+  if (token && username && role) {
+    return {
+      user: { username, role, token },
+      error: undefined,
+    }
+  }
+
+  return {
+    user: null,
+    error: undefined,
+  }
 }
 
 const reducer = (state: State, action: Action): State => {
   console.log('reducer', action)
   switch (action.type) {
     case 'LOGIN_SUCCESS': {
-      const { username, role, token } = action.payload
-      localStorage.setItem('token', token)
       return {
         ...state,
-        user: { username, role },
+        user: action.payload,
         error: undefined,
       }
     }
@@ -55,11 +70,7 @@ const reducer = (state: State, action: Action): State => {
       }
     }
     case 'LOGOUT': {
-      localStorage.removeItem('token')
-      return {
-        ...state,
-        user: null,
-      }
+      return initialState()
     }
     default:
       return state
@@ -67,23 +78,25 @@ const reducer = (state: State, action: Action): State => {
 }
 
 export const AuthContext = createContext<ContextProps>({
-  state: initialState,
+  state: initialState(),
   dispatch: () => null,
   loginUser: async () => ({} as LoginResponse),
   logoutUser: () => {},
 })
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState())
 
   const loginUser = useCallback(
     async (username: string, password: string): Promise<LoginResponse> => {
-      return await loginUserService(username, password)
+      return await login(username, password)
         .then(data => {
           dispatch({
             type: 'LOGIN_SUCCESS',
             payload: data,
           })
+
+          saveAuthToLocalStorage(data.token, data.username, data.role)
           return data
         })
         .catch(error => {
@@ -98,7 +111,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   )
 
   const logoutUser = useCallback(() => {
-    logoutUserService()
+    removeAuthFromLocalStorage()
     dispatch({ type: 'LOGOUT' })
   }, [dispatch])
 

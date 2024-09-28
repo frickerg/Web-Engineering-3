@@ -4,6 +4,7 @@ import CenterButton from '../../elements/Button/components/CenterButton'
 import { TitleHeader } from '../../typography/headings/TitleHeader'
 import { TopBannerContainer } from '../../elements/Container/components/TopBannerContainer'
 import { TopBannerRouterLink } from '../../typography/links/TopBannerRouterLink'
+import { viewportDevice } from '../../../themes/Breakpoints'
 
 export default function Appbar() {
   return (
@@ -24,13 +25,11 @@ export default function Appbar() {
   )
 }
 
-// TODO Issue-#82 https://github.com/frickerg/Web-Engineering-3/issues/82
-const BREAKPOINT = '600px'
 
 const AppbarContainer = styled(TopBannerContainer)`
   grid-template-areas: 'title center right';
 
-  @media (max-width: ${BREAKPOINT}) {
+  @media (${viewportDevice.mobile}) {
     grid-template-columns: 1fr auto;
     grid-template-areas: 'title right';
   }
@@ -48,7 +47,7 @@ const CenterContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media (max-width: ${BREAKPOINT}) {
+  @media (${viewportDevice.mobile}) {
     display: none;
   }
 `
@@ -59,7 +58,7 @@ const RightContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
 
-  @media (max-width: ${BREAKPOINT}) {
+  @media (${viewportDevice.mobile}) {
     display: none;
   }
 `
@@ -67,7 +66,7 @@ const RightContainer = styled.div`
 const MobileMenu = styled.div`
   display: none;
 
-  @media (max-width: ${BREAKPOINT}) {
+  @media (${viewportDevice.mobile}) {
     display: flex;
     justify-content: flex-end;
   }

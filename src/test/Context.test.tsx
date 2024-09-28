@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { initialState, reducer } from '../client/session/Context'
+import { initialState, reducer } from '../client/session/GameContext'
 import * as helper from '../client/session/helper'
 import { GameState } from '../client/session/helper'
 import { CardProps } from '../shared/CardProps'

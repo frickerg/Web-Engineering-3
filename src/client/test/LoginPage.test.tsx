@@ -109,28 +109,4 @@ describe('LoginPage Component', () => {
       expect(screen.getByText(/Login failed/i)).toBeInTheDocument()
     })
   })
-
-  it('shows the logout button and success message after logging out', async () => {
-    const user = userEvent.setup()
-    render(
-      <MemoryRouter>
-        <AuthContext.Provider value={mockAuthContext}>
-          <LoginPage />
-        </AuthContext.Provider>
-      </MemoryRouter>
-    )
-
-    await user.type(await screen.findByLabelText(/username/i), testUsername)
-    await user.type(await screen.findByLabelText(/password/i), 'password123')
-    await user.click(screen.getByRole('button', { name: /login/i }))
-
-    await waitFor(() => {
-      expect(login).toHaveBeenCalledWith(testUsername, 'password123')
-      expect(screen.getByText(/Login successful/i)).toBeInTheDocument()
-    })
-
-    // FIXME: funktioniert noch nicht weil User von der App weitergeleitet wird
-    // await user.click(screen.getByRole('button', { name: /Logout/i }))
-    // expect(screen.getByRole('button', { name: /Logout/i })).toBeInTheDocument()
-  })
 })

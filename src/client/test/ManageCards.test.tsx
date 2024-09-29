@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest'
 import userEvent from '@testing-library/user-event'
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, render, screen } from '@testing-library/react'
 import {
   describe,
   it,

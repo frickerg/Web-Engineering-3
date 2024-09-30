@@ -3,7 +3,7 @@ import { CardProps } from '../../shared/CardProps'
 import { GameState, retrieveLabel } from './helper'
 import { GameResultItem, InputType, SortDirection } from '../common/types'
 
-type State = {
+export type State = {
   gameCards: GameResultItem[]
   storeCards: CardProps[]
   sortType: InputType
@@ -34,7 +34,7 @@ type ContextProps = {
   dispatch: React.Dispatch<Action>
 }
 
-const initialState: State = {
+export const initialState: State = {
   gameCards: [],
   storeCards: [],
   gameState: GameState.NOT_STARTED,
@@ -46,7 +46,7 @@ const initialState: State = {
   filterChecked: false,
 }
 
-const reducer = (state: State, action: Action): State => {
+export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'INIT_GAME': {
       return {

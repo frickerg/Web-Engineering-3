@@ -13,7 +13,7 @@ import {
 } from './authStorage'
 import { login } from '../api'
 
-type State = {
+export type State = {
   user: AuthenticatedUser | null
   error?: string
 }

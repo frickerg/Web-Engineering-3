@@ -16,7 +16,6 @@ import ManageCardsPage from '../components/layouts/ManageCardDetails/ManageCards
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { TestApp } from './TestApp'
-import LoginPage from '../../onlyForTestPurpose/LoginPage'
 
 const getCards = vitest.fn()
 const addCard = vitest.fn()
@@ -31,11 +30,19 @@ const handlers = [
       { id: '2', front: 'Front 2', back: 'Back 2' },
     ])
   }),
-  http.post('/api/card', async () => {
-    console.log('add card')
-    // deleteCard.mockReturnValue({ id: '3', front: 'Front 3', back: 'Back 3' })
+  http.post('/api/card', async req => {
+    // const json = await req.request.json()
+    const json = (await req.request.json()) as object
+    console.log('add card: json', json)
+    addCard(json)
+    return HttpResponse.json({
+      ...json,
+      id: crypto.randomUUID(),
+    })
   }),
-  http.delete('/api/card/1', async () => {
+  http.delete('/api/card/:id', async ({ params }) => {
+    const { id } = params
+    deleteCard(id)
     console.log('delete card')
   }),
 ]
@@ -53,18 +60,18 @@ beforeAll(() => server.listen())
 afterAll(() => server.close())
 
 describe('ManageCardsPage Component', () => {
-  // const mockGameContext = {
-  //   state: initialState,
-  //   dispatch: () => null,
-  // }
+  const mockGameContext = {
+    state: initialState,
+    dispatch: () => null,
+  }
 
   test('renders ManageCardsPage component', async () => {
     render(
-      <GameProvider>
-        <TestApp>
-          <ManageCardsPage />
-        </TestApp>
-      </GameProvider>
+      // <GameProvider>
+      <TestApp>
+        <ManageCardsPage />
+      </TestApp>
+      // </GameProvider>
     )
 
     expect(screen.getByText('Front ▲')).toBeInTheDocument()
@@ -84,80 +91,102 @@ describe('ManageCardsPage Component', () => {
   it('handles sorting when SortHeader is clicked', async () => {
     const user = userEvent.setup()
 
-    // render(
-    //   <GameContext.Provider value={mockGameContext}>
-    //     <ManageCardsPage />
-    //   </GameContext.Provider>
-    // )
+    render(
+      <TestApp>
+        <ManageCardsPage />
+      </TestApp>
 
-    // await user.click(screen.getByText(/Front ▲/i))
+      // <GameContext.Provider value={mockGameContext}>
+      //   <ManageCardsPage />
+      // </GameContext.Provider>
+    )
+    const sort = await screen.findByText(/▲/i)
+    await user.click(sort)
 
     // FIXME: klicken der Front löst nichts aus, ich weiss nicht woran es liegt
 
     // expect(mockDispatch).toHaveBeenCalledWith({
-    //  type: 'SET_SORT_DIRECTION',
-    //  payload: 'desc',
+    //   type: 'SET_SORT_DIRECTION',
+    //   payload: 'desc',
     // })
 
-    // await waitFor(() => {
-    //  expect(screen.getByText(/Front ▼/i)).toBeInTheDocument()
-    // })
+    await waitFor(() => {
+      expect(screen.getByText(/▼/i)).toBeInTheDocument()
+    })
 
     // expect(mockDispatch).toHaveBeenCalledWith({
-    //  type: 'SET_SORT_TYPE',
-    //  payload: 'front',
+    //   type: 'SET_SORT_TYPE',
+    //   payload: 'front',
     // })
   })
 
-  // it('handles adding a new card', async () => {
-  // const user = userEvent.setup()
-  // render(
-  //   <GameContext.Provider value={mockGameContext}>
-  //     <ManageCardsPage />
-  //   </GameContext.Provider>
-  // )
-  // await user.type(screen.getByPlaceholderText('Front'), 'Front 3')
-  // await user.type(screen.getByPlaceholderText('Back'), 'Back 3')
-  // await user.click(screen.getByRole('button', { name: /Add/i }))
-  // TODO: der brudi macht hier nix
-  // await waitFor(() => {
-  //  expect(addCard).toHaveBeenCalledWith({
-  //    id: '3',
-  //   front: 'Front 3',
-  //    back: 'Back 3',
-  //  })
-  //  expect(mockDispatch).toHaveBeenCalledWith({
-  //    type: 'ADD_CARD',
-  //    payload: {
-  //      id: '3',
-  //      front: 'Front 3',
-  //      back: 'Back 3',
-  //    },
-  //  })
-  //})
-  // })
+  it('handles adding a new card', async () => {
+    const user = userEvent.setup()
+    render(
+      <TestApp>
+        <ManageCardsPage />
+      </TestApp>
+      // <GameContext.Provider value={mockGameContext}>
+      //   <ManageCardsPage />
+      // </GameContext.Provider>
+    )
+    await user.type(screen.getByPlaceholderText('Front'), 'Front 3')
+    await user.type(screen.getByPlaceholderText('Back'), 'Back 3')
+    await user.click(screen.getByRole('button', { name: /Add/i }))
 
-  // it('handles deleting a card', async () => {
-  //   const user = userEvent.setup()
+    // TODO #3: der brudi macht hier nix
+    await waitFor(() => {
+      expect(addCard).toHaveBeenCalledWith({
+        front: 'Front 3',
+        back: 'Back 3',
+      })
+      // expect(mockDispatch).toHaveBeenCalledWith({
+      //   type: 'ADD_CARD',
+      //   payload: {
+      //     id: '3',
+      //     front: 'Front 3',
+      //     back: 'Back 3',
+      //   },
+      // })
+    })
+  })
 
-  // render(
-  //   <GameContext.Provider value={mockGameContext}>
-  //     <ManageCardsPage />
-  //   </GameContext.Provider>
-  // )
+  it('handles deleting a card', async () => {
+    const user = userEvent.setup()
 
-  // FIXME: cards werden nicht reingezogen
-  // await user.click(screen.getByRole('button', { name: /Delete/i }))
+    render(
+      <TestApp>
+        <ManageCardsPage />
+      </TestApp>
 
-  // await waitFor(() => {
-  //  expect(deleteCard).toHaveBeenCalledWith('1')
-  //})
+      // <GameContext.Provider value={mockGameContext}>
+      //   <ManageCardsPage />
+      // </GameContext.Provider>
+    )
 
-  // await waitFor(() => {
-  //  expect(mockDispatch).toHaveBeenCalledWith({
-  //    type: 'DELETE_CARD',
-  //    payload: '1',
-  //  })
-  // })
-  // })
+    await waitFor(() => {
+      expect(screen.getByText('Front 1')).toBeInTheDocument()
+    })
+
+    const deleteButtons = screen.getAllByRole('button', { name: /Delete/i })
+    await user.click(deleteButtons[0])
+
+    await waitFor(() => {
+      expect(deleteCard).toHaveBeenCalledWith('1')
+    })
+
+    // FIXME 4: cards werden nicht reingezogen
+    // await user.click(screen.getByRole('button', { name: /Delete/i }))
+
+    // await waitFor(() => {
+    //   expect(deleteCard).toHaveBeenCalledWith('1')
+    // })
+
+    // await waitFor(() => {
+    //   expect(mockDispatch).toHaveBeenCalledWith({
+    //     type: 'DELETE_CARD',
+    //     payload: '1',
+    //   })
+    // })
+  })
 })

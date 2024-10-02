@@ -30,16 +30,15 @@ const theme = createTheme({
 })
 
 export const AppProviders = ({ children }: PropsWithChildren) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
-  // const { dispatch: gameDispatch } = useContext(GameContext)
+  const { dispatch } = useContext(GameContext)
 
   useEffect(() => {
+    // TODO Reicht es, wenn wir nur authState.user überprüfen? oder muss hier server-seitig geprüft werden?
     const fetchData = async () => {
       try {
+        console.log('fetchData')
         const cards = await fetchCards()
         dispatch({ type: 'SET_CARDS', payload: cards })
-        // gameDispatch({ type: 'SET_CARDS', payload: cards })
-        // gameDispatch({ type: 'SET_CARDS', payload: await fetchCards() })
       } catch (error) {
         console.error(error)
       }

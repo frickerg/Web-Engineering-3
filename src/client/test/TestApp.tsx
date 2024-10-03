@@ -1,45 +1,33 @@
-import { ReactNode, useContext, useEffect, useReducer } from 'react'
+import { ReactNode, useEffect, useReducer, useMemo } from 'react'
 import { MemoryRouter } from 'react-router-dom'
-import { AppProviders } from './AppProviders'
 import { AuthProvider } from '../session/AuthContext'
-import {
-  GameContext,
-  GameProvider,
-  initialState,
-  reducer,
-} from '../session/GameContext'
-import { fetchCards } from '../api'
+import { GameContext, initialState, reducer } from '../session/GameContext'
+import { CardProps } from '../../shared/CardProps'
 
 type Props = {
-  // inject more initial data here
+  cards?: CardProps[]
   children?: ReactNode
 }
 
-export const TestApp = ({ children }: Props) => {
-  // const [state, dispatch] = useReducer(reducer, initialState)
-  // const { dispatch } = useContext(GameContext)
+export const TestApp = ({ children, cards }: Props) => {
+  const [state, dispatch] = useReducer(reducer, {
+    ...initialState,
+    storeCards: cards || [],
+  })
 
-  // useEffect(() => {
-  //   // TODO Reicht es, wenn wir nur authState.user überprüfen? oder muss hier server-seitig geprüft werden?
-  //   const fetchData = async () => {
-  //     try {
-  //       console.log('fetchData')
-  //       const cards = await fetchCards()
-  //       dispatch({ type: 'SET_CARDS', payload: cards })
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  //   fetchData()
-  // }, [dispatch])
+  useEffect(() => {
+    if (cards) {
+      dispatch({ type: 'SET_CARDS', payload: cards })
+    }
+  }, [cards, dispatch])
+
+  const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch])
 
   return (
     <AuthProvider>
-      <GameProvider>
-        <AppProviders>
-          <MemoryRouter>{children}</MemoryRouter>
-        </AppProviders>
-      </GameProvider>
+      <GameContext.Provider value={contextValue}>
+        <MemoryRouter>{children}</MemoryRouter>
+      </GameContext.Provider>
     </AuthProvider>
   )
 }

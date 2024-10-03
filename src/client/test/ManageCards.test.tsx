@@ -10,6 +10,7 @@ import {
   beforeAll,
   afterAll,
 } from 'vitest'
+import React from 'react'
 import ManageCardsPage from '../components/layouts/ManageCardDetails/ManageCardsPage'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
@@ -97,7 +98,6 @@ describe('ManageCardsPage Component', () => {
       </TestApp>
     )
 
-    // Store a snapshot from actual sorting of cards
     const initialCards = screen
       .getAllByText(/Card-Front-\d/)
       .map(card => card.textContent)
@@ -109,14 +109,12 @@ describe('ManageCardsPage Component', () => {
       expect(screen.getByText(/▼/i)).toBeInTheDocument()
     })
 
-    // Check sorting has been changed
     const sortedCards = screen
       .getAllByText(/Card-Front-\d/)
       .map(card => card.textContent)
 
     expect(sortedCards).not.toEqual(initialCards)
 
-    // TODO Optional: Überprüfen, ob die neue Reihenfolge wirklich descending ist
     const expectedSortedCards = [...initialCards].sort((a, b) => {
       return (b ?? '').localeCompare(a ?? '')
     })

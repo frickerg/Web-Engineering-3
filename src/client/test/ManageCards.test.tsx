@@ -10,7 +10,6 @@ import {
   beforeAll,
   afterAll,
 } from 'vitest'
-import React from 'react'
 import ManageCardsPage from '../components/layouts/ManageCardDetails/ManageCardsPage'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'

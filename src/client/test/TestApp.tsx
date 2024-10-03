@@ -1,8 +1,9 @@
 import { ReactNode, useEffect, useReducer, useMemo } from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import { AuthProvider } from '../session/AuthContext'
-import { GameContext, initialState, reducer } from '../session/GameContext'
+import { GameContext } from '../session/GameContext'
 import { CardProps } from '../../shared/CardProps'
+import { initialState, reducer } from '../session/gameReducer'
 
 type Props = {
   cards?: CardProps[]

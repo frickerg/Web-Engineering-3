@@ -7,67 +7,17 @@ import React, {
 } from 'react'
 import { AuthenticatedUser } from '../api/AuthenticatedUser'
 import {
-  loadAuthFromLocalStorage,
   removeAuthFromLocalStorage,
   saveAuthToLocalStorage,
 } from './authStorage'
 import { login } from '../api'
-
-export type State = {
-  user: AuthenticatedUser | null
-  error?: string
-}
-
-export type Action =
-  | { type: 'LOGIN_SUCCESS'; payload: AuthenticatedUser }
-  | { type: 'LOGIN_FAILURE'; payload: string }
-  | { type: 'LOGOUT' }
+import { Action, initialState, reducer, State } from './authReducer'
 
 type ContextProps = {
   state: State
   dispatch: React.Dispatch<Action>
   loginUser: (username: string, password: string) => Promise<AuthenticatedUser>
   logoutUser: () => void
-}
-
-const initialState = (): State => {
-  const { token, username, role } = loadAuthFromLocalStorage()
-
-  if (token && username && role) {
-    return {
-      user: { username, role, token },
-      error: undefined,
-    }
-  }
-
-  return {
-    user: null,
-    error: undefined,
-  }
-}
-
-const reducer = (state: State, action: Action): State => {
-  console.log('reducer', action)
-  switch (action.type) {
-    case 'LOGIN_SUCCESS': {
-      return {
-        ...state,
-        user: action.payload,
-        error: undefined,
-      }
-    }
-    case 'LOGIN_FAILURE': {
-      return {
-        ...state,
-        error: action.payload,
-      }
-    }
-    case 'LOGOUT': {
-      return initialState()
-    }
-    default:
-      return state
-  }
 }
 
 export const AuthContext = createContext<ContextProps>({

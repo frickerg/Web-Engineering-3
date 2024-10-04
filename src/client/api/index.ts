@@ -81,6 +81,16 @@ export const fetchGameSize = async (): Promise<number> => {
   return (await request<GameSize>(`/api/gameSize`)).gameSize
 }
 
+export const submitAnswer = (cardId: string, answer: string) => {
+  return request<{ isAccepted: boolean }>(`/api/submitAnswer`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ cardId, answer }),
+  })
+}
+
 export const login = async (
   username: string,
   password: string

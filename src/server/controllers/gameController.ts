@@ -48,3 +48,16 @@ export const getGameSize = (_req: Request, res: Response) => {
 
   res.status(200).send({ gameSize: randomGameSize })
 }
+
+export const submitAnswer = (req: Request, res: Response) => {
+  const { cardId, answer } = req.body
+  const card = cardStore.getCardById(cardId)
+
+  if (!card) {
+    return res.status(404).send('Card not found')
+  }
+
+  const isAccepted =
+    card.back.trim().toLowerCase() === answer.trim().toLowerCase()
+  res.status(200).send({ isAccepted })
+}

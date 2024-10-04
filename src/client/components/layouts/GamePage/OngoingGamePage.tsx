@@ -8,7 +8,7 @@ import { InputAnswer } from '../../elements/Input/components/InputAnswer'
 import Flashcard from '../../elements/Flashcard/Flashcard'
 import { GameContext } from '../../../session/GameContext'
 import { GameState, startNewGame } from '../../../session/helper'
-import { CardProps } from '../../../../shared/CardProps'
+import { submitAnswer } from '../../../api'
 
 export default function OngoingGamePage() {
   const { state, dispatch } = useContext(GameContext)
@@ -33,30 +33,32 @@ export default function OngoingGamePage() {
 
   const handleDeleteGame = () => dispatch({ type: 'DELETE_GAME' })
 
-  const validateCard = () => {
+  const validateCard = async () => {
     const currentCard = cards[index]
     if (!answer || !currentCard) {
       return
     }
 
-    dispatch({
-      type: 'SUBMIT_GAME_ANSWER',
-      payload: {
-        ...currentCard,
-        isAccepted: isAnswerCorrect(currentCard, answer),
-        answer,
-      },
-    })
+    await submitAnswer(currentCard.id, answer)
+      .then(response => {
+        dispatch({
+          type: 'SUBMIT_GAME_ANSWER',
+          payload: {
+            ...currentCard,
+            isAccepted: response.isAccepted,
+            answer,
+          },
+        })
 
-    dispatch({ type: 'SET_CARD_INDEX', payload: getNewIndex() })
+        dispatch({ type: 'SET_CARD_INDEX', payload: getNewIndex() })
 
-    if (index >= cards.length - 1) {
-      dispatch({ type: 'FINISH_GAME' })
-    }
-  }
-
-  const isAnswerCorrect = (card: CardProps, answer: string) => {
-    return card.back.trim().toLowerCase() === answer.trim().toLowerCase()
+        if (index >= cards.length - 1) {
+          dispatch({ type: 'FINISH_GAME' })
+        }
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   const getNewIndex = () => {

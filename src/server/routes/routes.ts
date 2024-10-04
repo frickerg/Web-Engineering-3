@@ -4,6 +4,7 @@ import {
   deleteCard,
   getCards,
   getGameSize,
+  submitAnswer,
   updateCard,
 } from '../controllers/gameController'
 import { generatePassword, login } from '../controllers/authController'
@@ -30,6 +31,12 @@ router.delete(
   authenticateJwt,
   authorizeRole(['admin']),
   deleteCard
+)
+router.post(
+  '/submitAnswer',
+  authenticateJwt,
+  authorizeRole(['admin', 'player']),
+  submitAnswer
 )
 
 router.get('/passwordGenerator/:password', generatePassword)

@@ -1,24 +1,22 @@
+import { useContext } from 'react'
 import { CardProps } from '../../shared/CardProps'
-import {
-  getTokenFromLocalStorage,
-  saveTokenToLocalStorage,
-} from '../session/authStorage'
+import { AuthContext } from '../session/AuthContext'
+import { saveTokenToLocalStorage } from '../session/authStorage'
 import { AuthenticatedUser } from './AuthenticatedUser'
 
-// TODO: Issue#70: Ist das in Ordnung?
-let token: string | null = null
-
-const getToken = () => {
-  if (!token) {
-    token = getTokenFromLocalStorage()
-  }
-  return token
+const useAuthToken = () => {
+  const { state } = useContext(AuthContext)
+  return state.user?.token ?? null
 }
 
-const request = async <T>(url: string, options?: RequestInit): Promise<T> => {
+const request = async <T>(
+  url: string,
+  token: string | null,
+  options?: RequestInit
+): Promise<T> => {
   const headers = {
     ...options?.headers,
-    Authorization: `Bearer ${getToken()}`,
+    Authorization: token ? `Bearer ${token}` : undefined,
   }
   const response = await fetch(url, {
     ...options,
@@ -37,7 +35,6 @@ const request = async <T>(url: string, options?: RequestInit): Promise<T> => {
 
 const checkResponse = async (response: Response) => {
   if (!response.ok) {
-    // TODO(fjv): Bei unautorisierten Anfragen, sollte was passieren? zB. Login-Seite anzeigen?
     const errorText = await response.text()
     throw new Error(`HTTP status: ${response.status} - ${errorText}`)
   }
@@ -45,11 +42,13 @@ const checkResponse = async (response: Response) => {
 }
 
 export const fetchCards = async (): Promise<CardProps[]> => {
-  return request<CardProps[]>('/api/cards')
+  const token = useAuthToken() // Hook innerhalb einer Komponente oder eines anderen Hooks aufrufen
+  return request<CardProps[]>('/api/cards', token)
 }
 
 export const updateCard = async (card: CardProps): Promise<void> => {
-  await request<void>(`/api/card/${card.id}`, {
+  const token = useAuthToken()
+  await request<void>(`/api/card/${card.id}`, token, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -61,7 +60,8 @@ export const updateCard = async (card: CardProps): Promise<void> => {
 export const addCard = async (
   card: Omit<CardProps, 'id'>
 ): Promise<CardProps> => {
-  return request<CardProps>('/api/card', {
+  const token = useAuthToken()
+  return request<CardProps>('/api/card', token, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -71,18 +71,21 @@ export const addCard = async (
 }
 
 export const deleteCard = async (id: string): Promise<void> => {
-  await request<void>(`/api/card/${id}`, {
+  const token = useAuthToken()
+  await request<void>(`/api/card/${id}`, token, {
     method: 'DELETE',
   })
 }
 
 type GameSize = { gameSize: number }
 export const fetchGameSize = async (): Promise<number> => {
-  return (await request<GameSize>(`/api/gameSize`)).gameSize
+  const token = useAuthToken()
+  return (await request<GameSize>(`/api/gameSize`, token)).gameSize
 }
 
 export const submitAnswer = (cardId: string, answer: string) => {
-  return request<{ isAccepted: boolean }>(`/api/submitAnswer`, {
+  const token = useAuthToken()
+  return request<{ isAccepted: boolean }>(`/api/submitAnswer`, token, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -105,10 +108,8 @@ export const login = async (
   await checkResponse(response)
   const data = await response.json()
 
-  // FIXME Ist das sinvoll vlt für das testen? oder nur im AuthContext?
   saveTokenToLocalStorage(data.token)
 
-  console.log('login', data)
   return {
     username: username,
     role: data.role,

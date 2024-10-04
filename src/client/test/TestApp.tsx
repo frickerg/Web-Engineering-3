@@ -14,6 +14,7 @@ export const TestApp = ({ children, cards }: Props) => {
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
     storeCards: cards || [],
+    gameCards: cards || [],
   })
 
   useEffect(() => {

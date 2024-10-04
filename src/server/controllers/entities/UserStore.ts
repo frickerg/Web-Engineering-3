@@ -9,7 +9,7 @@ export type UserStoreProps = {
 }
 
 class UserStore {
-  private users: UserStoreProps[] = [...users]
+  private readonly users: UserStoreProps[] = [...users]
 
   getUsers(): UserStoreProps[] {
     return this.users

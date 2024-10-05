@@ -2,12 +2,13 @@ import { useContext } from 'react'
 import InputFilter from '../../handlers/InputFilter/InputFilter'
 import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
-import { addCard, deleteCard } from '../../../api'
+import { addCard, deleteCard, useAuthToken } from '../../../api'
 import { GameContext } from '../../../session/GameContext'
 import { InputType } from '../../../common/types'
 
 export default function ManageCardsPage() {
   const { state, dispatch } = useContext(GameContext)
+  const token = useAuthToken()
   const {
     storeCards: cards,
     sortType,
@@ -31,7 +32,7 @@ export default function ManageCardsPage() {
   const handleAddNewCard = async (front: string, back: string) => {
     if (front && back) {
       try {
-        const newCard = await addCard({ front, back })
+        const newCard = await addCard({ front, back }, token)
         dispatch({ type: 'ADD_CARD', payload: newCard })
         cardInput.front = ''
         cardInput.back = ''
@@ -43,7 +44,7 @@ export default function ManageCardsPage() {
 
   const handleDeleteById = async (id: string) => {
     try {
-      await deleteCard(id)
+      await deleteCard(id, token)
       dispatch({ type: 'DELETE_CARD', payload: id })
     } catch (error) {
       console.error(error)

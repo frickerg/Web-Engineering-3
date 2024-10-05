@@ -10,7 +10,7 @@ import CardDetailPage from '../components/layouts/ManageCardDetails/CardDetailPa
 import { useContext, useEffect } from 'react'
 import { GameContext } from '../session/GameContext'
 import { GameState } from '../session/helper'
-import { fetchCards } from '../api'
+import { fetchCards, useAuthToken } from '../api'
 import LoginPage from '../../onlyForTestPurpose/LoginPage'
 import PrivateRoute from '../components/routes/PrivateRoute'
 import AccessDeniedPage from '../../onlyForTestPurpose/AccessDeniedPage'
@@ -19,20 +19,26 @@ import { AuthContext } from '../session/AuthContext'
 export default function App() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
   const { state: authState } = useContext(AuthContext)
+  const token = useAuthToken() // TODO: vlt doch vom kontext direkt holen?
 
   useEffect(() => {
     // TODO Reicht es, wenn wir nur authState.user überprüfen? oder muss hier server-seitig geprüft werden?
     if (authState.user) {
       const fetchData = async () => {
         try {
-          gameDispatch({ type: 'SET_CARDS', payload: await fetchCards() })
+          gameDispatch({
+            type: 'SET_CARDS',
+            payload: await fetchCards(token),
+            // payload: await fetchCards(authState.user?.token as Token),
+          })
         } catch (error) {
           console.error(error)
         }
       }
       fetchData()
     }
-  }, [authState.user, gameDispatch])
+  }, [authState.user, gameDispatch, token])
+  // }, [authState.user, gameDispatch])
 
   const renderContent = () => {
     switch (gameState.gameState) {

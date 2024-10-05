@@ -6,7 +6,7 @@ import { InputCardBack } from '../../elements/Input/components/InputCardBack'
 import { SelfAlignedButton } from '../../elements/Button/components/SelfAlignedButton'
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { fetchCards, updateCard } from '../../../api'
+import { fetchCards, updateCard, useAuthToken } from '../../../api'
 import { GameContext } from '../../../session/GameContext'
 import { CardProps } from '../../../../shared/CardProps'
 import { InputType } from '../../../common/types'
@@ -17,6 +17,7 @@ export default function CardDetailPage() {
   const navigate = useNavigate()
   const { state, dispatch } = useContext(GameContext)
   const { storeCards: cards } = state
+  const token = useAuthToken()
 
   useEffect(() => {
     if (!cardId) {
@@ -38,8 +39,8 @@ export default function CardDetailPage() {
   const handleUpdate = async () => {
     if (card) {
       try {
-        await updateCard(card)
-        dispatch({ type: 'SET_CARDS', payload: await fetchCards() })
+        await updateCard(card, token)
+        dispatch({ type: 'SET_CARDS', payload: await fetchCards(token) })
         navigate('/cards')
       } catch (error) {
         console.error(error)

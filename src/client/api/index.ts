@@ -4,20 +4,31 @@ import { AuthContext } from '../session/AuthContext'
 import { saveTokenToLocalStorage } from '../session/authStorage'
 import { AuthenticatedUser } from './AuthenticatedUser'
 
-const useAuthToken = () => {
+// TODO auslagern in eine Datei
+export type Token = string | null
+
+// TODO in authcontext oder eigenes file
+export const useAuthToken = () => {
+  // XXX wieso useAuthToken?
+  // Für zukünftige Logik zB Token-Erneuerung
+  // aktuell jedoch keinen mehrwert als direkt vom AuthContext zu holen
   const { state } = useContext(AuthContext)
-  return state.user?.token ?? null
+  return state.user?.token ?? (null as Token)
 }
 
 const request = async <T>(
   url: string,
-  token: string | null,
+  token: Token,
   options?: RequestInit
 ): Promise<T> => {
-  const headers = {
-    ...options?.headers,
-    Authorization: token ? `Bearer ${token}` : undefined,
+  const headers: Record<string, string> = {
+    ...(options?.headers as Record<string, string>),
   }
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`
+  }
+
   const response = await fetch(url, {
     ...options,
     headers,
@@ -41,13 +52,14 @@ const checkResponse = async (response: Response) => {
   return response
 }
 
-export const fetchCards = async (): Promise<CardProps[]> => {
-  const token = useAuthToken() // Hook innerhalb einer Komponente oder eines anderen Hooks aufrufen
+export const fetchCards = async (token: Token): Promise<CardProps[]> => {
   return request<CardProps[]>('/api/cards', token)
 }
 
-export const updateCard = async (card: CardProps): Promise<void> => {
-  const token = useAuthToken()
+export const updateCard = async (
+  card: CardProps,
+  token: Token
+): Promise<void> => {
   await request<void>(`/api/card/${card.id}`, token, {
     method: 'PUT',
     headers: {
@@ -58,9 +70,9 @@ export const updateCard = async (card: CardProps): Promise<void> => {
 }
 
 export const addCard = async (
-  card: Omit<CardProps, 'id'>
+  card: Omit<CardProps, 'id'>,
+  token: Token
 ): Promise<CardProps> => {
-  const token = useAuthToken()
   return request<CardProps>('/api/card', token, {
     method: 'POST',
     headers: {
@@ -70,21 +82,18 @@ export const addCard = async (
   })
 }
 
-export const deleteCard = async (id: string): Promise<void> => {
-  const token = useAuthToken()
+export const deleteCard = async (id: string, token: Token): Promise<void> => {
   await request<void>(`/api/card/${id}`, token, {
     method: 'DELETE',
   })
 }
 
 type GameSize = { gameSize: number }
-export const fetchGameSize = async (): Promise<number> => {
-  const token = useAuthToken()
+export const fetchGameSize = async (token: Token): Promise<number> => {
   return (await request<GameSize>(`/api/gameSize`, token)).gameSize
 }
 
-export const submitAnswer = (cardId: string, answer: string) => {
-  const token = useAuthToken()
+export const submitAnswer = (cardId: string, answer: string, token: Token) => {
   return request<{ isAccepted: boolean }>(`/api/submitAnswer`, token, {
     method: 'POST',
     headers: {
@@ -108,7 +117,10 @@ export const login = async (
   await checkResponse(response)
   const data = await response.json()
 
+  // FIXME Ist das sinvoll vlt für das testen? oder nur im AuthContext?
   saveTokenToLocalStorage(data.token)
+
+  console.log('login', data)
 
   return {
     username: username,

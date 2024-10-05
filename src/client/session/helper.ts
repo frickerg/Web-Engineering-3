@@ -1,5 +1,5 @@
 import { CardProps } from '../../shared/CardProps'
-import { fetchGameSize } from '../api'
+import { fetchGameSize, Token } from '../api'
 import { Action } from './gameReducer'
 
 export enum GameState {
@@ -20,9 +20,10 @@ function getRandomCards(array: CardProps[], numberOfEntries: number) {
 
 export async function startNewGame(
   storeCards: CardProps[],
-  dispatch: React.Dispatch<Action>
+  dispatch: React.Dispatch<Action>,
+  token: Token
 ) {
-  await fetchGameSize()
+  await fetchGameSize(token)
     .then(size => {
       dispatch({
         type: 'INIT_GAME',

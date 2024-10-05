@@ -1,11 +1,12 @@
 import { UserRole } from '../../shared/UserRole'
+import { Token } from '../api'
 
 export const saveAuthToLocalStorage = (
-  token: string,
+  token: Token,
   username: string,
   role: UserRole
 ) => {
-  localStorage.setItem('token', token)
+  localStorage.setItem('token', token as string)
   localStorage.setItem('username', username)
   localStorage.setItem('role', role?.toString() ?? '')
 }
@@ -17,7 +18,7 @@ export const removeAuthFromLocalStorage = () => {
 }
 
 export const loadAuthFromLocalStorage = (): {
-  token: string | null
+  token: Token
   username: string | null
   role: UserRole | null
 } => {
@@ -27,14 +28,14 @@ export const loadAuthFromLocalStorage = (): {
   return { token, username, role }
 }
 
-export const saveTokenToLocalStorage = (token: string) => {
-  localStorage.setItem('token', token)
+export const saveTokenToLocalStorage = (token: Token) => {
+  localStorage.setItem('token', token as string)
 }
 
 export const removeTokenFromLocalStorage = () => {
   localStorage.removeItem('token')
 }
 
-export const getTokenFromLocalStorage = (): string | null => {
+export const getTokenFromLocalStorage = (): Token => {
   return localStorage.getItem('token')
 }

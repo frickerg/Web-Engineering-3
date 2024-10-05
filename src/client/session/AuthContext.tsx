@@ -4,9 +4,11 @@ import React, {
   useReducer,
   useCallback,
   useMemo,
+  useEffect,
 } from 'react'
 import { AuthenticatedUser } from '../api/AuthenticatedUser'
 import {
+  loadAuthFromLocalStorage,
   removeAuthFromLocalStorage,
   saveAuthToLocalStorage,
 } from './authStorage'
@@ -21,14 +23,24 @@ type ContextProps = {
 }
 
 export const AuthContext = createContext<ContextProps>({
-  state: initialState(),
+  state: initialState,
   dispatch: () => null,
   loginUser: async () => ({} as AuthenticatedUser),
   logoutUser: () => {},
 })
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(reducer, initialState())
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  useEffect(() => {
+    const { token, username, role } = loadAuthFromLocalStorage()
+    if (token && username && role) {
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: { token, username, role },
+      })
+    }
+  }, [dispatch])
 
   const loginUser = useCallback(
     async (username: string, password: string): Promise<AuthenticatedUser> => {

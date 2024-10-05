@@ -1,4 +1,3 @@
-// XXX: Access-Denied-Page component for testing purposes
 const AccessDeniedPage = () => {
   return (
     <div>

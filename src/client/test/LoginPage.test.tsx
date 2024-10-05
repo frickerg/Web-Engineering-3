@@ -10,7 +10,7 @@ import {
   afterAll,
   beforeAll,
 } from 'vitest'
-import LoginPage from '../../onlyForTestPurpose/LoginPage'
+import LoginPage from '../pages/LoginPage'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { TestApp } from './TestApp'

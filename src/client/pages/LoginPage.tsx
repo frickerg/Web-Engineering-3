@@ -1,6 +1,7 @@
 // XXX: Login-Page component for testing purposes
+// TODO: Stylen, in Components packen
 import React, { useState, useContext, useEffect } from 'react'
-import { AuthContext } from '../client/session/AuthContext'
+import { AuthContext } from '../session/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
 const LoginPage: React.FC = () => {

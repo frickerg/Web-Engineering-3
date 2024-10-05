@@ -72,7 +72,7 @@ const LoginPage: React.FC = () => {
       {state.user && (
         <div>
           <p>Welcome, {state.user.username}!</p>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleLogout}>Logout-test</button>
         </div>
       )}
     </div>

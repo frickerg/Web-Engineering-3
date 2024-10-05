@@ -16,6 +16,8 @@ import { setupServer } from 'msw/node'
 import { TestApp } from './TestApp'
 import { fetchCards } from '../api'
 
+const token = 'fake-token'
+
 const getCards = vitest.fn()
 const addCard = vitest.fn()
 const deleteCard = vitest.fn()
@@ -71,7 +73,7 @@ describe('ManageCardsPage Component', () => {
 
   it('render page with fetched cards from server', async () => {
     render(
-      <TestApp cards={await fetchCards()}>
+      <TestApp cards={await fetchCards(token)}>
         <ManageCardsPage />
       </TestApp>
     )
@@ -92,7 +94,7 @@ describe('ManageCardsPage Component', () => {
     const user = userEvent.setup()
 
     render(
-      <TestApp cards={await fetchCards()}>
+      <TestApp cards={await fetchCards(token)}>
         <ManageCardsPage />
       </TestApp>
     )
@@ -148,7 +150,7 @@ describe('ManageCardsPage Component', () => {
     const user = userEvent.setup()
 
     render(
-      <TestApp cards={await fetchCards()}>
+      <TestApp cards={await fetchCards(token)}>
         <ManageCardsPage />
       </TestApp>
     )

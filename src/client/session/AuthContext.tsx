@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import { AuthenticatedUser } from '../api/AuthenticatedUser'
 import {
-  loadAuthFromLocalStorage,
+  getAuthFromLocalStorage,
   removeAuthFromLocalStorage,
   saveAuthToLocalStorage,
 } from './authStorage'
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
-    const { token, username, role } = loadAuthFromLocalStorage()
+    const { token, username, role } = getAuthFromLocalStorage()
     if (token && username && role) {
       dispatch({
         type: 'LOGIN_SUCCESS',

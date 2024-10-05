@@ -1,5 +1,5 @@
-import { Token } from '.'
 import { UserRole } from '../../shared/UserRole'
+import { Token } from '../session/useAuthToken'
 
 export type AuthenticatedUser = {
   username: string

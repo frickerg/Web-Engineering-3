@@ -6,10 +6,11 @@ import { InputCardBack } from '../../elements/Input/components/InputCardBack'
 import { SelfAlignedButton } from '../../elements/Button/components/SelfAlignedButton'
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { fetchCards, updateCard, useAuthToken } from '../../../api'
+import { fetchCards, updateCard } from '../../../api'
 import { GameContext } from '../../../session/GameContext'
 import { CardProps } from '../../../../shared/CardProps'
 import { InputType } from '../../../common/types'
+import { useAuthToken } from '../../../session/useAuthToken'
 
 export default function CardDetailPage() {
   const [card, setCard] = useState<CardProps>({ id: '', front: '', back: '' })

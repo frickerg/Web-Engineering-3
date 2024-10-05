@@ -4,7 +4,7 @@ import { StartButton } from '../../elements/Button/components/StartButton'
 import { GameContext } from '../../../session/GameContext'
 import { GameState, startNewGame } from '../../../session/helper'
 import { useContext } from 'react'
-import { useAuthToken } from '../../../api'
+import { useAuthToken } from '../../../session/useAuthToken'
 
 export default function StartNewGamePage() {
   const { state, dispatch } = useContext(GameContext)

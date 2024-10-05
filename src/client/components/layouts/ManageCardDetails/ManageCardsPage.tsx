@@ -2,9 +2,10 @@ import { useContext } from 'react'
 import InputFilter from '../../handlers/InputFilter/InputFilter'
 import SortHeader from '../../handlers/SortHeader/SortHeader'
 import CardRows from '../../handlers/CardRows/CardRows'
-import { addCard, deleteCard, useAuthToken } from '../../../api'
+import { addCard, deleteCard } from '../../../api'
 import { GameContext } from '../../../session/GameContext'
 import { InputType } from '../../../common/types'
+import { useAuthToken } from '../../../session/useAuthToken'
 
 export default function ManageCardsPage() {
   const { state, dispatch } = useContext(GameContext)

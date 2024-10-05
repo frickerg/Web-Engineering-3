@@ -1,5 +1,6 @@
 import { UserRole } from '../../shared/UserRole'
-import { Token } from '../api'
+import { AuthenticatedUser } from '../api/AuthenticatedUser'
+import { Token } from './useAuthToken'
 
 export const saveAuthToLocalStorage = (
   token: Token,
@@ -17,15 +18,15 @@ export const removeAuthFromLocalStorage = () => {
   localStorage.removeItem('role')
 }
 
-export const loadAuthFromLocalStorage = (): {
+export const getAuthFromLocalStorage = (): {
   token: Token
   username: string | null
-  role: UserRole | null
+  role: UserRole
 } => {
   const token = localStorage.getItem('token')
   const username = localStorage.getItem('username')
   const role = localStorage.getItem('role') as UserRole | null
-  return { token, username, role }
+  return { token, username, role } as AuthenticatedUser
 }
 
 export const saveTokenToLocalStorage = (token: Token) => {

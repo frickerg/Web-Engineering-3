@@ -1,5 +1,6 @@
 import { CardProps } from '../../shared/CardProps'
-import { fetchGameSize, Token } from '../api'
+import { fetchGameSize } from '../api'
+import { Token } from './useAuthToken'
 import { Action } from './gameReducer'
 
 export enum GameState {

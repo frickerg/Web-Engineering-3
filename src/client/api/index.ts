@@ -1,20 +1,7 @@
-import { useContext } from 'react'
 import { CardProps } from '../../shared/CardProps'
-import { AuthContext } from '../session/AuthContext'
+import { Token } from '../session/useAuthToken'
 import { saveTokenToLocalStorage } from '../session/authStorage'
 import { AuthenticatedUser } from './AuthenticatedUser'
-
-// TODO auslagern in eine Datei
-export type Token = string | null
-
-// TODO in authcontext oder eigenes file
-export const useAuthToken = () => {
-  // XXX wieso useAuthToken?
-  // Für zukünftige Logik zB Token-Erneuerung
-  // aktuell jedoch keinen mehrwert als direkt vom AuthContext zu holen
-  const { state } = useContext(AuthContext)
-  return state.user?.token ?? (null as Token)
-}
 
 const request = async <T>(
   url: string,

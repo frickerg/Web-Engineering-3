@@ -8,7 +8,8 @@ import { InputAnswer } from '../../elements/Input/components/InputAnswer'
 import Flashcard from '../../elements/Flashcard/Flashcard'
 import { GameContext } from '../../../session/GameContext'
 import { GameState, startNewGame } from '../../../session/helper'
-import { submitAnswer, useAuthToken } from '../../../api'
+import { submitAnswer } from '../../../api'
+import { useAuthToken } from '../../../session/useAuthToken'
 
 export default function OngoingGamePage() {
   const { state, dispatch } = useContext(GameContext)

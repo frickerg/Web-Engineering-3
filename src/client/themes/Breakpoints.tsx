@@ -1,9 +1,9 @@
-const breakpoint = {
-  mobile: `599px`,
-  desktop: `600px`,
+export const breakpoint = {
+  mobile: 599,
+  desktop: 600,
 }
 
 export const viewportDevice = {
-  mobile: `max-width: ${breakpoint.mobile}`,
-  desktop: `min-width: ${breakpoint.desktop}`,
+  mobile: `max-width: ${breakpoint.mobile}px`,
+  desktop: `min-width: ${breakpoint.desktop}px`,
 }

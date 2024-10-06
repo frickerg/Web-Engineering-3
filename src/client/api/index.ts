@@ -173,8 +173,6 @@ export const login = async (
   await checkResponse(response)
   const data = await response.json()
 
-  console.log('login', data)
-
   return {
     username: username,
     role: data.role,

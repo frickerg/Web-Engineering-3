@@ -37,12 +37,12 @@ export default function OngoingGamePage() {
     const currentCard = cards[index]
 
     if (!currentCard || !currentCard.id || !currentCard.front) {
-      console.warn('No valid card found to submit.')
+      console.info('No valid card found to submit.')
       return
     }
 
     if (!answer.trim()) {
-      console.warn('Answer is empty.')
+      console.info('Answer is empty.')
       return
     }
 

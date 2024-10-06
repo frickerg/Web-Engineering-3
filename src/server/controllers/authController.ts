@@ -10,29 +10,22 @@ export const generatePassword = async (req: Request, res: Response) => {
   const salt = randomBytes(16).toString('hex')
   const passwordHash = await createPasswordHash(password, salt)
   res.status(200).send({ passwordHash, salt })
-  console.log(`Password hash: '${passwordHash}', salt: '${salt}'`)
 }
 
 export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body
-  console.log(`Login attempt for user '${username}'`)
   const user = userStore.findUserByUsername(username)
-  console.log(`User '${user?.username}' found`)
   if (!user) {
-    console.log(`User '${username}' not found`)
     return res.status(401).send('User not found')
   }
 
   const passwordHash = await createPasswordHash(password, user.salt)
   if (passwordHash !== user.passwordHash) {
-    console.log(`Invalid password for user '${username}'`)
     return res.status(401).send('Invalid password')
   }
 
   const token = await generateJwt(username, user.role)
   res.status(200).send({ token, role: user.role })
-
-  console.log(`User '${username}' logged in`)
 }
 
 const createPasswordHash = async (password: string, salt: string) => {

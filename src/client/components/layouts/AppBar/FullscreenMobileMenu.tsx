@@ -35,6 +35,7 @@ const FullscreenMobileMenu = () => {
 const FullscreenMobileMenuContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-rows: 80px auto 1fr auto;
   grid-template-areas: 
     'head'
     'navContent'
@@ -61,5 +62,4 @@ const FooterContainer = styled.div`
   justify-content: center;
   align-items: center;
 `
-
 export default FullscreenMobileMenu

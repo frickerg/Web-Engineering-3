@@ -19,6 +19,5 @@ export const TopBannerContainer = styled(Container)`
   @media (${viewportDevice.mobile}) {
     grid-template-areas: 'head navMenu';
     grid-template-columns: 1fr auto;
-
   }
 `

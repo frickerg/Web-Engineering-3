@@ -3,10 +3,10 @@ import { viewportDevice } from '../../../themes/Breakpoints'
 
 export const Button = styled.button`
   width: 100%;
-  padding: 8px;
+  padding: 0.5em;
   cursor: pointer;
   transition: background-color 0.25s;
-  border: 1px solid transparent;
+  border: 0.0625em solid transparent;
   color: white;
   background-color: #457b9d;
   &:hover {
@@ -14,6 +14,6 @@ export const Button = styled.button`
   }
   
   @media (${viewportDevice.desktop}) {
-    border-radius: 8px;
+    border-radius: 0.5em;
   }
 `

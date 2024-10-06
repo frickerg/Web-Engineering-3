@@ -57,6 +57,7 @@ const FullscreenMobileMenuContainer = styled.div`
   width: 100%;
   height: 100%;
 `
+
 const NavContentContainer = styled.div`
   grid-area: navContent;
   grid-row: 2;
@@ -66,22 +67,6 @@ const NavContentContainer = styled.div`
   align-items: center;
 `
 
-// const NavContentContainerA = styled.div`
-//   grid-area: navContent;
-//   grid-row: 2;
-//   background-color: #182d4a;
-//   /* padding-bottom: 6px; */
-//   justify-content: center;
-//   align-items: center;
-// `
-// const NavContentContainerB = styled.div`
-//   grid-area: navContent;
-//   grid-row: 3;
-//   background-color: #182d4a;
-//   padding-top: 6px;
-//   justify-content: center;
-//   align-items: center;
-// `
 const FooterContainer = styled.div`
   grid-area: footer;
   grid-row: 5;

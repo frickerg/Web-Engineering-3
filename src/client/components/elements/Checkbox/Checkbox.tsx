@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { viewportDevice } from '../../../themes/Breakpoints'
 
 type CheckboxProps = {
   id: string
@@ -27,8 +28,13 @@ export default function Checkbox(props: Readonly<CheckboxProps>) {
 }
 
 const StyledCheckbox = styled.div`
-  padding-left: 10px;
-  padding-bottom: 0;
+  @media (${viewportDevice.mobile}) {
+    padding-left: 0px;
+  }
+
+  @media (${viewportDevice.desktop}) {
+    padding-left: 10px;
+  }
 `
 const StyledCheckboxInput = styled.input`
   width: 20px;
@@ -36,7 +42,16 @@ const StyledCheckboxInput = styled.input`
 `
 
 const StyledCheckboxLabel = styled.label`
-  font-size: 23px;
-  padding-left: 5px;
   color: #457b9d;
+  display: flex;
+  flex-wrap: nowrap;
+  padding-top: 5px;
+
+  @media (${viewportDevice.mobile}) {
+    font-size: 16px;
+  }
+
+  @media (${viewportDevice.desktop}) {
+    font-size: 23px;
+  }
 `

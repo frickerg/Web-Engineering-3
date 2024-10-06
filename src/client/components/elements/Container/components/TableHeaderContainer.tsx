@@ -8,7 +8,7 @@ export const TableHeaderContainer = styled(Container)`
   column-gap: 15px;
   row-gap: 15px;
   padding: 15px 25px;
-  padding-top: 10;
+  // padding-top: 10; //TODO Fehler Deklaration ignoriert. Darum rausgenommen
   padding-bottom: 0;
   align-items: center;
 `

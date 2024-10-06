@@ -35,6 +35,7 @@ export default function InputFilter(props: Readonly<InputFilterProps>) {
         Add
       </InputFilterButton>
 
+      {/* //TODO: funnel icon oder react icon oder separate checkbox component  */}
       <InputFilterCheckbox
         id="filter"
         label="Filter Table"

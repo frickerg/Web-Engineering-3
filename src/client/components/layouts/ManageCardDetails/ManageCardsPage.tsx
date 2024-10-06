@@ -6,6 +6,7 @@ import { addCard, deleteCard } from '../../../api'
 import { GameContext } from '../../../session/GameContext'
 import { InputType } from '../../../common/types'
 import { useAuthToken } from '../../../session/useAuthToken'
+import { ManageCardsContainer } from '../../elements/Container/components/ManageCardsContainer'
 
 export default function ManageCardsPage() {
   const { state, dispatch } = useContext(GameContext)
@@ -78,7 +79,7 @@ export default function ManageCardsPage() {
   )
 
   return (
-    <div>
+    <ManageCardsContainer>
       <InputFilter
         front={cardInput.front}
         back={cardInput.back}
@@ -93,6 +94,6 @@ export default function ManageCardsPage() {
         handleSortSelection={handleSortSelection}
       />
       <CardRows cards={sortedCardsToShow} handleDeleteById={handleDeleteById} />
-    </div>
+    </ManageCardsContainer>
   )
 }

@@ -67,7 +67,6 @@ afterEach(() => {
   mockedNavigate.mockReset()
   server.resetHandlers()
   cleanup()
-  localStorage.clear()
 })
 
 describe('LoginPage Component', () => {

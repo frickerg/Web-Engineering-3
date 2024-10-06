@@ -9,7 +9,7 @@ type JwtPayloadProps = {
   role: UserRole
 }
 
-type AuthenticatedRequest = Request & {
+export type AuthenticatedRequest = Request & {
   user?: JwtPayloadProps
 }
 
@@ -24,16 +24,12 @@ export const authenticateJwt = async (
     const authHeader = req.headers.authorization
     const token = authHeader?.split(' ')[1]
     if (!token) {
-      console.log('No token provided')
       return res.status(401).send('Access denied')
     }
-
-    console.log('Token provided')
 
     await jwtVerify(token, secret)
       .then(jwt => {
         req.user = jwt.payload as JwtPayloadProps
-        console.log(`User: ${jwt.payload.username} Role: ${jwt.payload.role}`)
         next()
       })
       .catch(e => {
@@ -50,7 +46,6 @@ export const authorizeRole = (roles: Array<UserStoreProps['role']>) => {
   return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const user = req.user as UserStoreProps
     if (!user || !roles.includes(user.role)) {
-      console.log('Access denied for user:', user ? user.username : 'unknown')
       return res.status(403).send('Access denied')
     }
     next()

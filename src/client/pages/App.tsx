@@ -9,8 +9,8 @@ import GameResultPage from '../components/layouts/GamePage/GameResultPage'
 import CardDetailPage from '../components/layouts/ManageCardDetails/CardDetailPage'
 import { useContext, useEffect } from 'react'
 import { GameContext } from '../session/GameContext'
-import { GameState } from '../session/helper'
-import { fetchCards } from '../api'
+import { GameState } from '../../shared/GameState'
+import { fetchCards, fetchCurrentGame } from '../api'
 import LoginPage from './LoginPage'
 import PrivateRoute from '../components/routes/PrivateRoute'
 import AccessDeniedPage from './AccessDeniedPage'
@@ -23,20 +23,30 @@ export default function App() {
   const token = useAuthToken()
 
   useEffect(() => {
-    // TODO Reicht es, wenn wir nur authState.user überprüfen? oder muss hier server-seitig geprüft werden?
-    if (authState.user) {
-      const fetchData = async () => {
-        try {
-          gameDispatch({
-            type: 'SET_CARDS',
-            payload: await fetchCards(token),
-          })
-        } catch (error) {
-          console.error(error)
+    const fetchData = async () => {
+      try {
+        if (authState.user) {
+          const cards = await fetchCards(token)
+          gameDispatch({ type: 'SET_CARDS', payload: cards })
+
+          const currentGame = await fetchCurrentGame(token)
+          if (currentGame && currentGame.gameState !== GameState.NOT_STARTED) {
+            gameDispatch({
+              type: 'LOAD_GAME_STATE',
+              payload: currentGame,
+            })
+          } else {
+            gameDispatch({ type: 'DELETE_GAME' })
+          }
+        } else {
+          gameDispatch({ type: 'DELETE_GAME' })
         }
+      } catch (error) {
+        console.error('Error fetching data:', error)
       }
-      fetchData()
     }
+
+    fetchData()
   }, [authState.user, gameDispatch, token])
 
   const renderContent = () => {

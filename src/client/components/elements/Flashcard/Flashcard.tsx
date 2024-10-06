@@ -5,7 +5,7 @@ type FlashcardProps = {
 }
 
 export default function Flashcard(props: Readonly<FlashcardProps>) {
-  return <StyledFlashcard>{props.text ?? 'No cards found'}</StyledFlashcard>
+  return <StyledFlashcard>{props.text || 'No cards found'}</StyledFlashcard>
 }
 
 const StyledFlashcard = styled.div`

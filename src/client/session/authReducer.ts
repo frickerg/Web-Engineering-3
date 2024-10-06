@@ -1,4 +1,5 @@
 import { AuthenticatedUser } from '../api/AuthenticatedUser'
+import { getAuthFromLocalStorage } from './authStorage'
 
 export type State = {
   user: AuthenticatedUser | null
@@ -10,13 +11,15 @@ export type Action =
   | { type: 'LOGIN_FAILURE'; payload: string }
   | { type: 'LOGOUT' }
 
+const { token, username, role } = getAuthFromLocalStorage()
+const user = token && username && role ? { token, username, role } : null
+
 export const initialState: State = {
-  user: null,
+  user,
   error: undefined,
 }
 
 export const reducer = (state: State, action: Action): State => {
-  console.log('AuthReducer', action, state)
   switch (action.type) {
     case 'LOGIN_SUCCESS': {
       return {
@@ -32,7 +35,11 @@ export const reducer = (state: State, action: Action): State => {
       }
     }
     case 'LOGOUT': {
-      return initialState
+      return {
+        ...state,
+        user: null,
+        error: undefined,
+      }
     }
     default:
       return state

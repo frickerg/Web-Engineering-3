@@ -1,10 +1,14 @@
 import { CardProps } from '../../shared/CardProps'
+import { GameState } from '../../shared/GameState'
+import { CurrentGameState } from '../api'
 import { GameResultItem, InputType, SortDirection } from '../common/types'
-import { GameState, retrieveLabel } from './helper'
+import { retrieveLabel } from './helper'
 
 export type State = {
   gameCards: GameResultItem[]
   storeCards: CardProps[]
+  results: GameResultItem[]
+  gameSize: number
   sortType: InputType
   sortDirection: SortDirection
   cardInput: { front: string; back: string }
@@ -12,11 +16,17 @@ export type State = {
   gameState: GameState
   buttonLabel: string
   currentCardIndex: number
+  progress: number
 }
 
 export type Action =
-  | { type: 'INIT_GAME'; payload: GameResultItem[] }
+  | {
+      type: 'INIT_GAME'
+      payload: { gameCards: GameResultItem[]; gameSize: number }
+    }
+  | { type: 'LOAD_GAME_STATE'; payload: CurrentGameState }
   | { type: 'SUBMIT_GAME_ANSWER'; payload: GameResultItem }
+  | { type: 'ADD_NEW_CARD'; payload: GameResultItem }
   | { type: 'SET_CARD_INDEX'; payload: number }
   | { type: 'FINISH_GAME' }
   | { type: 'DELETE_GAME' }
@@ -25,12 +35,16 @@ export type Action =
   | { type: 'DELETE_CARD'; payload: string }
   | { type: 'SET_SORT_TYPE'; payload: InputType }
   | { type: 'SET_SORT_DIRECTION'; payload: SortDirection }
+  | { type: 'SET_GAME_RESULTS'; payload: GameResultItem[] }
+  | { type: 'SET_PROGRESS'; payload: number }
   | { type: 'SET_CARD_INPUT'; payload: { front: string; back: string } }
   | { type: 'SET_FILTER_CHECKED'; payload: boolean }
 
 export const initialState: State = {
   gameCards: [],
   storeCards: [],
+  results: [],
+  gameSize: 0,
   gameState: GameState.NOT_STARTED,
   buttonLabel: retrieveLabel(GameState.NOT_STARTED),
   currentCardIndex: 0,
@@ -38,6 +52,7 @@ export const initialState: State = {
   sortDirection: 'asc',
   cardInput: { front: '', back: '' },
   filterChecked: false,
+  progress: 0,
 }
 
 export const reducer = (state: State, action: Action): State => {
@@ -45,10 +60,27 @@ export const reducer = (state: State, action: Action): State => {
     case 'INIT_GAME': {
       return {
         ...state,
-        gameCards: action.payload,
+        gameCards: action.payload.gameCards,
+        gameSize: action.payload.gameSize,
         gameState: GameState.ONGOING,
         currentCardIndex: 0,
         buttonLabel: retrieveLabel(GameState.ONGOING),
+        progress: 0,
+      }
+    }
+    case 'LOAD_GAME_STATE': {
+      const currentCardIndex = action.payload.gameCards.findIndex(
+        card => card.id === action.payload.currentCard?.id
+      )
+
+      return {
+        ...state,
+        gameCards: action.payload.gameCards,
+        gameSize: action.payload.gameSize,
+        currentCardIndex: currentCardIndex,
+        gameState: action.payload.gameState,
+        progress: action.payload.progress,
+        buttonLabel: retrieveLabel(action.payload.gameState, currentCardIndex),
       }
     }
     case 'SUBMIT_GAME_ANSWER': {
@@ -59,6 +91,12 @@ export const reducer = (state: State, action: Action): State => {
         gameCards: updatedGameCards,
       }
     }
+    case 'ADD_NEW_CARD': {
+      return {
+        ...state,
+        gameCards: [...state.gameCards, action.payload],
+      }
+    }
     case 'SET_CARD_INDEX': {
       return {
         ...state,
@@ -66,7 +104,19 @@ export const reducer = (state: State, action: Action): State => {
         buttonLabel: retrieveLabel(state.gameState, action.payload),
       }
     }
-    case 'DELETE_GAME':
+    case 'SET_PROGRESS': {
+      return {
+        ...state,
+        progress: action.payload,
+      }
+    }
+    case 'SET_GAME_RESULTS': {
+      return {
+        ...state,
+        results: action.payload,
+      }
+    }
+    case 'DELETE_GAME': {
       return {
         ...state,
         gameCards: [],
@@ -74,12 +124,14 @@ export const reducer = (state: State, action: Action): State => {
         currentCardIndex: 0,
         buttonLabel: retrieveLabel(GameState.NOT_STARTED),
       }
-    case 'FINISH_GAME':
+    }
+    case 'FINISH_GAME': {
       return {
         ...state,
         gameState: GameState.FINISHED,
         buttonLabel: retrieveLabel(GameState.FINISHED),
       }
+    }
     case 'SET_CARDS':
       return { ...state, storeCards: action.payload }
     case 'ADD_CARD':

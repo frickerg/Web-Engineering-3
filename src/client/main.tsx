@@ -7,12 +7,12 @@ import App from './pages/App.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
+    <GameProvider>
       <AuthProvider>
-        <GameProvider>
-          <ViewportProvider>
-            <App />
-          </ViewportProvider>
-        </GameProvider>
+        <ViewportProvider>
+          <App />
+        </ViewportProvider>
       </AuthProvider>
+    </GameProvider>
   </BrowserRouter>
 )

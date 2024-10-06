@@ -1,9 +1,9 @@
 import { describe, it, expect, vi } from 'vitest'
 import { initialState, reducer } from '../session/gameReducer'
 import * as helper from '../session/helper'
-import { GameState } from '../session/helper'
 import { CardProps } from '../../shared/CardProps'
 import { GameResultItem, InputType, SortDirection } from '../common/types'
+import { GameState } from '../../shared/GameState'
 
 const retrieveLabel = vi.spyOn(helper, 'retrieveLabel')
 
@@ -13,7 +13,7 @@ describe('Game reducer', () => {
 
     const newState = reducer(initialState, {
       type: 'INIT_GAME',
-      payload: gameCards,
+      payload: { gameCards, gameSize: 1 },
     })
 
     expect(newState.gameCards).toEqual(gameCards)
@@ -33,7 +33,7 @@ describe('Game reducer', () => {
       front: 'A',
       back: 'B',
       answer: 'B',
-      isAccepted: true,
+      isCorrect: true,
     }
     const newState = reducer(initial, {
       type: 'SUBMIT_GAME_ANSWER',

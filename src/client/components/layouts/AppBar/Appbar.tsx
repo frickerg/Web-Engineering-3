@@ -46,11 +46,12 @@ export default function Appbar() {
           <CenterButton />
         </CenterContainer>
         <RightContainer>
-        <ManageCardsButton>
-          {state.user?.role === 'admin' && (
-            <TopBannerRouterLink to="/cards">Manage Cards</TopBannerRouterLink>
-          )}
-          </ManageCardsButton>
+        <div>
+          {state.user?.role === 'admin'? 
+          <ManageCardsButton> {state.user?.role === 'admin' && (<TopBannerRouterLink to="/cards" style={{ color: '#fefefe' }}>Manage Cards</TopBannerRouterLink>)}
+          </ManageCardsButton> 
+          : null}
+        </div>
           <LogoutButton></LogoutButton>
         </RightContainer>
       </AppbarContainer>

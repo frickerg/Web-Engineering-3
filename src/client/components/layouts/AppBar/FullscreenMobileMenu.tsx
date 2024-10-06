@@ -16,11 +16,12 @@ const FullscreenMobileMenu = () => {
         <CenterButton />
       </NavContentContainer>
       <NavContentContainer style={{ gridRow: '3' }}>
-        <ManageCardsButton>
-          {state.user?.role === 'admin' && (
-            <TopBannerRouterLink to="/cards" style={{ color: '#fefefe' }}>Manage Cards</TopBannerRouterLink>
-          )}
-        </ManageCardsButton>
+      <div> 
+        {state.user?.role === 'admin'? 
+        <ManageCardsButton> {state.user?.role === 'admin' && (<TopBannerRouterLink to="/cards" style={{ color: '#fefefe' }}>Manage Cards</TopBannerRouterLink>)}
+        </ManageCardsButton> 
+        : null}
+      </div>
       </NavContentContainer>
       <MobileMenuBackgroundContainer />
       <FooterContainer>
@@ -34,16 +35,6 @@ const FullscreenMobileMenu = () => {
 const FullscreenMobileMenuContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-
-  /* //NOTE: FullScreenMobileMenu grid-template-areas 
-  rows                1     2         3           4     5
-  area                head navContent navContent filler footer
-  components          1 HeaderContainer in AppBar für Title, UserInfo
-                      2 NavContentContainer für alle User
-                      3 NavContentContainer für Admin ManageCards
-                      4 MobileMenuBackgroundContainer für restliche Hintergrundfarbe bei geoeffnetem Burger Menu
-                      5 FooterContainer für alle User zwecks Logout Button
-  */
   grid-template-rows: 80px auto auto 1fr auto;
   grid-template-areas: 
     'head'

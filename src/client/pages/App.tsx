@@ -11,9 +11,9 @@ import { useContext, useEffect } from 'react'
 import { GameContext } from '../session/GameContext'
 import { GameState } from '../session/helper'
 import { fetchCards } from '../api'
-import LoginPage from '../../onlyForTestPurpose/LoginPage'
+import LoginPage from './LoginPage'
 import PrivateRoute from '../components/routes/PrivateRoute'
-import AccessDeniedPage from '../../onlyForTestPurpose/AccessDeniedPage'
+import AccessDeniedPage from './AccessDeniedPage'
 import { AuthContext } from '../session/AuthContext'
 
 export default function App() {

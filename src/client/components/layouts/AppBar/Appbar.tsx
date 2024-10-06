@@ -1,86 +1,56 @@
-import styled from 'styled-components'
-import BurgerMenu from '../../elements/Menu/BurgerMenu'
-import CenterButton from '../../elements/Button/components/CenterButton'
-import { TitleHeader } from '../../typography/headings/TitleHeader'
-import { TopBannerContainer } from '../../elements/Container/components/TopBannerContainer'
-import { TopBannerRouterLink } from '../../typography/links/TopBannerRouterLink'
+import { ViewportContext } from '../../../session/ResponsiveContext'
 import { AuthContext } from '../../../session/AuthContext'
-import { useContext } from 'react'
-import LogoutButton from '../../../../onlyForTestPurpose/LogoutButton'
-import { viewportDevice } from '../../../themes/Breakpoints'
+import { useContext, useState } from 'react'
+import { TopBannerContainer as AppbarContainer } from '../../elements/Container/components/TopBannerContainer'
+import { TopBannerLeftContainer as HeaderContainer } from '../../elements/Container/components/TopBannerLeftContainer'
+import { TopBannerCenterContainer as CenterContainer } from '../../elements/Container/components/TopBannerCenterContainer'
+import { TopBannerRightContainer as RightContainer } from '../../elements/Container/components/TopBannerRightContainer'
+import { UserInfo } from '../../typography/texts/UserInfo'
+import { TitleHeader as Title } from '../../typography/headings/TitleHeader'
+import { BurgerButton } from '../../elements/Button/components/BurgerButton'
+import FullscreenNav from './FullscreenMobileMenu'
+import CenterButton from '../../elements/Button/components/CenterButton'
+import LogoutButton from '../../elements/Button/components/LogoutButton'
+import { TopBannerRouterLink } from '../../typography/links/TopBannerRouterLink'
 
 export default function Appbar() {
+  const  isMobile  = useContext(ViewportContext)
   const { state } = useContext(AuthContext)
+  const [isOpen] = useState(false)
 
-  return (
-    <AppbarContainer>
-      <TitleContainer>
-        <TitleHeader>Mimir</TitleHeader>
-        <UserInfo>{state.user?.username}</UserInfo>
-      </TitleContainer>
-      <CenterContainer>
-        <CenterButton />
-      </CenterContainer>
-      <RightContainer>
-        {state.user?.role === 'admin' && (
-          <TopBannerRouterLink to="/cards">Manage Cards</TopBannerRouterLink>
-        )}
-        <LogoutButton />
-      </RightContainer>
-      <MobileMenu>
-        <BurgerMenu />
-      </MobileMenu>
+  if(isMobile) {
+    return (
+      <AppbarContainer>
+        <HeaderContainer>
+          <Title>Mimir</Title>
+          <UserInfo>{state.user?.username}</UserInfo>
+        </HeaderContainer>
+        <CenterContainer>
+        </CenterContainer>
+        <RightContainer>
+          <BurgerButton></BurgerButton>
+          {isOpen? <FullscreenNav /> : null}
+        </RightContainer>
     </AppbarContainer>
-  )
+    )
+  }
+  if(!isMobile) {
+    return (
+      <AppbarContainer>
+        <HeaderContainer>
+          <Title>Mimir</Title>
+          <UserInfo>{state.user?.username}</UserInfo>
+        </HeaderContainer>
+        <CenterContainer>
+          <CenterButton />
+        </CenterContainer>
+        <RightContainer>
+          {state.user?.role === 'admin' && (
+            <TopBannerRouterLink to="/cards">Manage Cards</TopBannerRouterLink>
+          )}
+          <LogoutButton></LogoutButton>
+        </RightContainer>
+      </AppbarContainer>
+    )
+  }
 }
-
-const AppbarContainer = styled(TopBannerContainer)`
-  grid-template-areas: 'title center right';
-
-  @media (${viewportDevice.mobile}) {
-    grid-template-columns: 1fr auto;
-    grid-template-areas: 'title right';
-  }
-`
-
-const TitleContainer = styled.div`
-  grid-area: title;
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-`
-
-const CenterContainer = styled.div`
-  grid-area: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media (${viewportDevice.mobile}) {
-    display: none;
-  }
-`
-
-const RightContainer = styled.div`
-  grid-area: right;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-
-  @media (${viewportDevice.mobile}) {
-    display: none;
-  }
-`
-
-const MobileMenu = styled.div`
-  display: none;
-
-  @media (${viewportDevice.mobile}) {
-    display: flex;
-    justify-content: flex-end;
-  }
-`
-const UserInfo = styled.p`
-  color: #99b4c5;
-`

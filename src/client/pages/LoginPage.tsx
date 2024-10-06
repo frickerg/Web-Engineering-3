@@ -1,8 +1,14 @@
 // XXX: Login-Page component for testing purposes
-// TODO: Stylen, in Components packen
 import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../session/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import { LayoutContainer } from '../components/elements/Container/components/LayoutContainer'
+import { TitleHeader as Title } from '../components/typography/headings/TitleHeader'
+import { TopBannerLeftContainer as HeaderContainer } from '../components/elements/Container/components/TopBannerLeftContainer'
+import { TopBannerContainer as AppbarContainer } from '../components/elements/Container/components/TopBannerContainer'
+import { Container } from '../components/elements/Container/Container'
+import { InputLogin } from '../components/elements/Input/components/InputLogin'
+import { Button } from '../components/elements/Button/Button'
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate()
@@ -42,41 +48,51 @@ const LoginPage: React.FC = () => {
     setError('')
   }
 
+  //TODO Passt so mit <Container style={{ [...] }}> ? Die Entscheidung ist ein Kompromiss pro Lesbarkeit zwischen atomic Components beinahe ohne Inhalt anzulegen oder rohen div's immer dieselben styles zu übergeben
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {success && <p style={{ color: 'green' }}>{success}</p>}
-        <button type="submit">Login</button>
-      </form>
-      {state.user && (
-        <div>
-          <p>Welcome, {state.user.username}!</p>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      )}
-    </div>
+    <LayoutContainer>
+      <AppbarContainer>
+        <HeaderContainer>
+          <Title style={{ paddingLeft: '24px' }}>Mimir</Title>
+        </HeaderContainer>
+      </AppbarContainer>
+      <Container style={{ margin: '24px' }}>  
+        <form onSubmit={handleSubmit}>
+          <Container style={{ padding: '12px' }}>
+            <InputLogin
+              placeholder="Username"
+              type="text"
+              id="username"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              required
+            />
+          </Container>
+          <Container style={{ padding: '12px' }}>
+            <InputLogin
+              placeholder="Passwort"
+              type="password"
+              id="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
+          </Container>
+          <Container style={{ padding: '12px' }}>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {success && <p style={{ color: 'green' }}>{success}</p>}
+            <Button type="submit">Login</Button>
+          </Container>
+        </form>
+
+        {state.user && (
+          <div>
+            <p>Welcome, {state.user.username}!</p>
+            <Button onClick={handleLogout}>Logout</Button>
+          </div>
+        )}
+      </Container>
+    </LayoutContainer>
   )
 }
 

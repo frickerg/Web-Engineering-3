@@ -1,8 +1,8 @@
 import styled from 'styled-components'
+import { viewportDevice } from '../../../themes/Breakpoints'
 
 export const Button = styled.button`
   width: 100%;
-  border-radius: 8px;
   padding: 8px;
   cursor: pointer;
   transition: background-color 0.25s;
@@ -11,5 +11,9 @@ export const Button = styled.button`
   background-color: #457b9d;
   &:hover {
     background-color: lightslategrey;
+  }
+  
+  @media (${viewportDevice.desktop}) {
+    border-radius: 8px;
   }
 `

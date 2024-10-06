@@ -20,7 +20,9 @@ export default function CenterButton() {
 }
 
 const CenterButtonWrapper = styled(Button)`
+
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
 `

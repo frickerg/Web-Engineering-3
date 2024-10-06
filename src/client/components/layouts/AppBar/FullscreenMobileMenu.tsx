@@ -1,4 +1,4 @@
-import styled from'styled-components'
+import styled from 'styled-components'
 import CenterButton from '../../elements/Button/components/CenterButton'
 import LogoutButton from '../../elements/Button/components/LogoutButton'
 import { TopBannerRouterLink } from '../../typography/links/TopBannerRouterLink'
@@ -16,12 +16,18 @@ const FullscreenMobileMenu = () => {
         <CenterButton />
       </NavContentContainer>
       <NavContentContainer style={{ gridRow: '3' }}>
-      <div> 
-        {state.user?.role === 'admin'? 
-        <ManageCardsButton> {state.user?.role === 'admin' && (<TopBannerRouterLink to="/cards" style={{ color: '#fefefe' }}>Manage Cards</TopBannerRouterLink>)}
-        </ManageCardsButton> 
-        : null}
-      </div>
+        <div>
+          {state.user?.role === 'admin' ? (
+            <ManageCardsButton>
+              {' '}
+              {state.user?.role === 'admin' && (
+                <TopBannerRouterLink to="/cards" style={{ color: '#fefefe' }}>
+                  Manage Cards
+                </TopBannerRouterLink>
+              )}
+            </ManageCardsButton>
+          ) : null}
+        </div>
       </NavContentContainer>
       <MobileMenuBackgroundContainer />
       <FooterContainer>
@@ -31,12 +37,11 @@ const FullscreenMobileMenu = () => {
   )
 }
 
-//TODO: koennte man noch als eigene components auslagern.
 const FullscreenMobileMenuContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-template-rows: 80px auto auto 1fr auto;
-  grid-template-areas: 
+  grid-template-areas:
     'head'
     'navContent'
     'navContent'

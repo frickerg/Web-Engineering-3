@@ -47,7 +47,6 @@ const LoginPage: React.FC = () => {
     setError('')
   }
 
-  //TODO Passt so mit <Container style={{ [...] }}> ? Die Entscheidung ist ein Kompromiss pro Lesbarkeit zwischen atomic Components beinahe ohne Inhalt anzulegen oder rohen div's immer dieselben styles zu übergeben
   return (
     <LayoutContainer>
       <AppbarContainer>
@@ -55,7 +54,7 @@ const LoginPage: React.FC = () => {
           <Title style={{ paddingLeft: '24px' }}>Mimir</Title>
         </HeaderContainer>
       </AppbarContainer>
-      <Container style={{ margin: '24px' }}>  
+      <Container style={{ margin: '24px' }}>
         <form onSubmit={handleSubmit}>
           <Container style={{ padding: '0px 24px 6px' }}>
             <label htmlFor="username">Username:</label>

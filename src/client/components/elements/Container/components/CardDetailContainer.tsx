@@ -17,7 +17,6 @@ export const CardDetailContainer = styled(Container)`
     grid-template-columns: 1fr 1fr 18%;
   }
 
-  //TODO: 1 column okay, aber lieber react icons - andere Ansichten weinen sonst
   @media (${viewportDevice.mobile}) {
     grid-template-areas:
       'detail-label-front'

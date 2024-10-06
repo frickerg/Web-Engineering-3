@@ -2,6 +2,7 @@ import { CardProps } from '../../shared/CardProps'
 import { Token } from '../session/useAuthToken'
 import { saveTokenToLocalStorage } from '../session/authStorage'
 import { AuthenticatedUser } from './AuthenticatedUser'
+import { GameResultItem } from '../common/types'
 
 const request = async <T>(
   url: string,
@@ -37,6 +38,14 @@ const checkResponse = async (response: Response) => {
     throw new Error(`HTTP status: ${response.status} - ${errorText}`)
   }
   return response
+}
+
+function mapCardToGameResultItem(card: CardProps): GameResultItem {
+  return {
+    ...card,
+    answer: undefined,
+    isCorrect: undefined,
+  }
 }
 
 export const fetchCards = async (token: Token): Promise<CardProps[]> => {
@@ -75,19 +84,59 @@ export const deleteCard = async (id: string, token: Token): Promise<void> => {
   })
 }
 
-type GameSize = { gameSize: number }
-export const fetchGameSize = async (token: Token): Promise<number> => {
-  return (await request<GameSize>(`/api/gameSize`, token)).gameSize
+export const startNewGame = async (
+  token: Token
+): Promise<{ currentCard: GameResultItem; gameSize: number }> => {
+  const response = await request<{ currentCard: CardProps; gameSize: number }>(
+    '/api/startGame',
+    token,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+
+  const currentCard = mapCardToGameResultItem(response.currentCard)
+
+  return { currentCard, gameSize: response.gameSize }
 }
 
-export const submitAnswer = (cardId: string, answer: string, token: Token) => {
-  return request<{ isAccepted: boolean }>(`/api/submitAnswer`, token, {
+export const submitAnswer = async (
+  cardId: string,
+  answer: string,
+  token: Token
+): Promise<{
+  isCorrect: boolean
+  nextCard: GameResultItem
+  progress: number
+}> => {
+  const response = await request<{
+    isCorrect: boolean
+    nextCard: CardProps
+    progress: number
+  }>('/api/submitAnswer', token, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ cardId, answer }),
   })
+
+  const nextCard = mapCardToGameResultItem(response.nextCard)
+
+  return {
+    isCorrect: response.isCorrect,
+    nextCard,
+    progress: response.progress,
+  }
+}
+
+export const fetchGameResults = async (
+  token: Token
+): Promise<{ results: GameResultItem[] }> => {
+  return request<{ results: GameResultItem[] }>(`/api/gameResults`, token)
 }
 
 export const login = async (

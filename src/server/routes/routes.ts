@@ -3,7 +3,8 @@ import {
   addCard,
   deleteCard,
   getCards,
-  getGameSize,
+  getGameResults,
+  startNewGame,
   submitAnswer,
   updateCard,
 } from '../controllers/gameController'
@@ -18,12 +19,6 @@ router.get(
   authorizeRole(['admin', 'player']),
   getCards
 )
-router.get(
-  '/gameSize',
-  authenticateJwt,
-  authorizeRole(['admin', 'player']),
-  getGameSize
-)
 router.post('/card', authenticateJwt, authorizeRole(['admin']), addCard)
 router.put('/card/:id', authenticateJwt, authorizeRole(['admin']), updateCard)
 router.delete(
@@ -32,11 +27,24 @@ router.delete(
   authorizeRole(['admin']),
   deleteCard
 )
+
+router.post(
+  '/startGame',
+  authenticateJwt,
+  authorizeRole(['admin', 'player']),
+  startNewGame
+)
 router.post(
   '/submitAnswer',
   authenticateJwt,
   authorizeRole(['admin', 'player']),
   submitAnswer
+)
+router.get(
+  '/gameResults',
+  authenticateJwt,
+  authorizeRole(['admin', 'player']),
+  getGameResults
 )
 
 router.get('/passwordGenerator/:password', generatePassword)

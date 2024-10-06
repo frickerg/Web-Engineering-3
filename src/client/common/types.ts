@@ -5,5 +5,5 @@ export type SortDirection = 'asc' | 'desc'
 
 export type GameResultItem = CardProps & {
   answer?: string
-  isAccepted?: boolean
+  isCorrect?: boolean
 }

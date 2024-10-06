@@ -29,6 +29,14 @@ class CardStore {
   deleteCard(id: string): void {
     this.cards = this.cards.filter(card => card.id !== id)
   }
+
+  getRandomCards(): CardProps[] {
+    const max = cards.length > 10 ? 10 : cards.length
+    const min = cards.length >= 3 ? 3 : cards.length
+    const randomAmount = Math.floor(Math.random() * (max - min + 1) + min)
+    const shuffledCards = [...this.cards].sort(() => Math.random() - 0.5)
+    return shuffledCards.slice(0, randomAmount)
+  }
 }
 
 export const cardStore = new CardStore()

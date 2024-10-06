@@ -13,7 +13,7 @@ describe('Game reducer', () => {
 
     const newState = reducer(initialState, {
       type: 'INIT_GAME',
-      payload: gameCards,
+      payload: { gameCards, gameSize: 1 },
     })
 
     expect(newState.gameCards).toEqual(gameCards)
@@ -33,7 +33,7 @@ describe('Game reducer', () => {
       front: 'A',
       back: 'B',
       answer: 'B',
-      isAccepted: true,
+      isCorrect: true,
     }
     const newState = reducer(initial, {
       type: 'SUBMIT_GAME_ANSWER',

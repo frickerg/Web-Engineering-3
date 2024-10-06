@@ -2,6 +2,9 @@ import { randomUUID } from 'crypto'
 import { Request, Response } from 'express'
 import { CardProps } from '../../shared/CardProps'
 import { cardStore } from './entities/CardStore'
+import { Game } from './entities/Game'
+import { userStore } from './entities/UserStore'
+import { AuthenticatedRequest } from '../middleware/authMiddleware'
 
 export const getCards = (_req: Request, res: Response) => {
   res.status(200).send(cardStore.getCards())
@@ -32,32 +35,65 @@ export const deleteCard = (req: Request, res: Response) => {
   res.status(204).send()
 }
 
-function randomNumberBetween(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
-}
+// XXX Map für Benutzer-Game-Zustände
+const gameStateStore: Record<string, Game> = {}
 
-export const getGameSize = (_req: Request, res: Response) => {
-  const cards = cardStore.getCards()
-  const maxIndex = cards.length > 10 ? 10 : cards.length
-  const minIndex = cards.length >= 3 ? 3 : cards.length
-  const randomGameSize = randomNumberBetween(minIndex, maxIndex)
+export const startNewGame = async (req: Request, res: Response) => {
+  const authenticatedReq = req as AuthenticatedRequest
+  const username = authenticatedReq.user?.username
 
-  if (cards.length < randomGameSize) {
-    return res.status(400).send('More elements taken than available')
+  if (username == null || !userStore.hasUser(username)) {
+    return res.sendStatus(403)
   }
 
-  res.status(200).send({ gameSize: randomGameSize })
+  const randomCards = cardStore.getRandomCards()
+  const game = new Game(username, randomCards)
+
+  gameStateStore[username] = game
+
+  res
+    .status(200)
+    .send({ currentCard: game.getCurrentCard(), gameSize: game.getGameSize() })
 }
 
-export const submitAnswer = (req: Request, res: Response) => {
+export const submitAnswer = async (req: Request, res: Response) => {
+  const authenticatedReq = req as AuthenticatedRequest
+  const username = authenticatedReq.user?.username
+  if (username == null || !userStore.hasUser(username)) {
+    return res.sendStatus(403)
+  }
+
   const { cardId, answer } = req.body
-  const card = cardStore.getCardById(cardId)
 
-  if (!card) {
-    return res.status(404).send('Card not found')
+  const game = gameStateStore[username]
+
+  if (!game) {
+    return res.status(404).send('Game not found')
   }
 
-  const isAccepted =
-    card.back.trim().toLowerCase() === answer.trim().toLowerCase()
-  res.status(200).send({ isAccepted })
+  try {
+    const { isCorrect, nextCard } = game.submitAnswer(cardId, answer)
+    res.status(200).send({ isCorrect, nextCard, progress: game.getProgress() })
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(400).send(error.message)
+    }
+    return res.status(400).send('An unknown error occurred')
+  }
+}
+
+export const getGameResults = (req: Request, res: Response) => {
+  const authenticatedReq = req as AuthenticatedRequest
+  const username = authenticatedReq.user?.username
+  if (username == null || !userStore.hasUser(username)) {
+    return res.sendStatus(403)
+  }
+
+  const game = gameStateStore[username]
+
+  if (!game) {
+    return res.status(404).send('Game not found')
+  }
+
+  res.status(200).send({ results: game.getResults() })
 }

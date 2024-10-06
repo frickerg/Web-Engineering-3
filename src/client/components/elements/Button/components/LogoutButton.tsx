@@ -26,7 +26,7 @@ const LogoutButtonWrapper = styled(Button)`
   white-space: nowrap;
 
   @media (${viewportDevice.mobile}) {
-    color: #611519;
+    color: #691c18;
     font-weight: bold;
 
   }

@@ -20,7 +20,7 @@ export default function CenterButton() {
 }
 
 const CenterButtonWrapper = styled(Button)`
-
+  padding: 10px 20px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -31,6 +31,7 @@ const LogoutButtonWrapper = styled(Button)`
 
   }
   @media (${viewportDevice.desktop}) {
+    padding: 10px 20px;
     width: auto;
   }
 `

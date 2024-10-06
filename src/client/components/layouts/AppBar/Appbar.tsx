@@ -12,6 +12,7 @@ import FullscreenNav from './FullscreenMobileMenu'
 import CenterButton from '../../elements/Button/components/CenterButton'
 import LogoutButton from '../../elements/Button/components/LogoutButton'
 import { TopBannerRouterLink } from '../../typography/links/TopBannerRouterLink'
+import { ManageCardsButton } from '../../elements/Button/components/ManageCardsButton'
 
 export default function Appbar() {
   const  isMobile  = useContext(ViewportContext)
@@ -45,9 +46,11 @@ export default function Appbar() {
           <CenterButton />
         </CenterContainer>
         <RightContainer>
+        <ManageCardsButton>
           {state.user?.role === 'admin' && (
             <TopBannerRouterLink to="/cards">Manage Cards</TopBannerRouterLink>
           )}
+          </ManageCardsButton>
           <LogoutButton></LogoutButton>
         </RightContainer>
       </AppbarContainer>

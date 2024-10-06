@@ -4,7 +4,7 @@ import LogoutButton from '../../elements/Button/components/LogoutButton'
 import { TopBannerRouterLink } from '../../typography/links/TopBannerRouterLink'
 import { AuthContext } from '../../../session/AuthContext'
 import { useContext } from 'react'
-import { Button } from '../../elements/Button/Button'
+import { ManageCardsButton } from '../../elements/Button/components/ManageCardsButton'
 // import MobileMenuBackgroundContainer from '../../elements/Container/components/MobileMenuBackgroundContainer'
 
 const FullscreenMobileMenu = () => {
@@ -58,13 +58,6 @@ const FooterContainer = styled.div`
   grid-area: footer;
   grid-row: 4;
   align-self: end;
-  justify-content: center;
-  align-items: center;
-`
-
-const ManageCardsButton = styled(Button)`
-  display: flex;
-  border-top: 1px solid #182d4a;
   justify-content: center;
   align-items: center;
 `

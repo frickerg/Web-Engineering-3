@@ -20,12 +20,12 @@ export default function CardRows(props: CardRowsProps) {
       props.cards.map(card => (
         <TableContentContainer key={card.id}>
           <CardItem id={card.id} front={card.front} back={card.back} />
-          <div style={{ gridArea: 'table-content-button-edit' }}>
+          <div style={{ gridArea: 'table-content-button-edit'}}>
             <RouterLink to={`details/${card.id}`}>
               <Button >Edit</Button>
             </RouterLink>
           </div>
-          <div style={{ gridArea: 'table-content-button-delete', padding: '1em 0' }}>
+          <div style={{ gridArea: 'table-content-button-delete'}}>
             <Button onClick={() => props.handleDeleteById(card.id)}>Delete</Button>
           </div>
         </TableContentContainer>

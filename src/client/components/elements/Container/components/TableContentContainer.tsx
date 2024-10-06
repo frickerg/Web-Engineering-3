@@ -22,7 +22,7 @@ export const TableContentContainer = styled(Container)`
     /* grid-template-areas:
     'table-content-card-front table-content-button-edit'
     'table-content-card-back table-content-button-delete'; */
-    padding: 1em 0;
+    padding: 1em 1em;
   }
 
   @media (${viewportDevice.desktop}) {

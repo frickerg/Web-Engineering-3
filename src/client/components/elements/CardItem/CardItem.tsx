@@ -7,10 +7,10 @@ export default function CardItem(props: Partial<CardProps>) {
 
   if(isMobile) {
     return (
-      <div style={{ gridArea: 'table-content-card' }}>
+      <div style={{ gridArea: 'table-content-card', display: 'grid'}}>
         <Fragment>
           <div>{props.front}</div>
-          <div>{props.back}</div>
+          <div style={{ paddingTop: '2em' }} >{props.back}</div>
         </Fragment>
       </div>
     )
@@ -24,5 +24,5 @@ export default function CardItem(props: Partial<CardProps>) {
     </Fragment>
     )
   }
-  
+
 }

@@ -12,10 +12,7 @@ export default function LogoutButton() {
   }
 
   return (
-    <LogoutButtonWrapper onClick={handleLogout}>
-    Log Out
-  </LogoutButtonWrapper>
-
+    <LogoutButtonWrapper onClick={handleLogout}>Log Out</LogoutButtonWrapper>
   )
 }
 
@@ -28,7 +25,6 @@ const LogoutButtonWrapper = styled(Button)`
   @media (${viewportDevice.mobile}) {
     color: #691c18;
     font-weight: bold;
-
   }
   @media (${viewportDevice.desktop}) {
     padding: 10px 20px;

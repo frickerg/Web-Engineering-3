@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { styled } from 'styled-components';
-import FullscreenNav from '../../../layouts/AppBar/FullscreenMobileMenu';
+import { useState } from 'react'
+import { styled } from 'styled-components'
+import FullscreenNav from '../../../layouts/AppBar/FullscreenMobileMenu'
 
 export const BurgerButton = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -10,13 +10,13 @@ export const BurgerButton = () => {
   }
 
   function setMenuIcon() {
-    return(isOpen === false? '☰' : '✕')
+    return isOpen === false ? '☰' : '✕'
   }
 
   return (
     <BurgerButtonWrapper onClick={handleClick}>
       {setMenuIcon()}
-      {isOpen? <FullscreenNav /> : null}
+      {isOpen ? <FullscreenNav /> : null}
     </BurgerButtonWrapper>
   )
 }

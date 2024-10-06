@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { viewportDevice } from '../../../themes/Breakpoints'
 
 type FlashcardProps = {
   text: string
@@ -21,4 +22,12 @@ const StyledFlashcard = styled.div`
   font-weight: bold;
   background-color: #f9f9f9;
   box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.1);
+
+  @media (${viewportDevice.mobile}) {
+    width: 60%;
+    padding: 2em 0;
+    height: auto;
+    margin: 20px;
+    font-size: 20px;
+  }
 `

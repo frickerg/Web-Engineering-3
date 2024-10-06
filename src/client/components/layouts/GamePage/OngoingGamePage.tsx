@@ -77,12 +77,14 @@ export default function OngoingGamePage() {
 
   return (
     <GameContainer>
-      <ProgressHeader>
+      <ProgressHeader style={{ gridArea: 'header-area' }}>
         <ProgressLabel>{progressLabel()}</ProgressLabel>
         <GameButton onClick={handleDeleteGame}>Delete Game</GameButton>
       </ProgressHeader>
-      <Flashcard text={cards[index]?.front} />
-      <GameAnswerContainer>
+      <div style={{ gridArea: 'flashcard-area' }}>
+        <Flashcard text={cards[index]?.front} />
+      </div>
+      <GameAnswerContainer style={{ gridArea: 'answer-area' }}>
         <InputAnswer
           value={answer}
           placeholder="Answer"

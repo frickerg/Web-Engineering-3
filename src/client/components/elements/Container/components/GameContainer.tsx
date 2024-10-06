@@ -1,9 +1,26 @@
 import styled from 'styled-components'
 import { Container } from '../Container'
+import { viewportDevice } from '../../../../themes/Breakpoints'
 
 export const GameContainer = styled(Container)`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  overflow: auto;
+  padding: 0 1em;
   align-items: center;
-  padding: 20px;
+
+  @media (${viewportDevice.desktop}) {
+    grid-template-areas:
+      'header-area'
+      'flashcard-area'
+      'answer-area';
+    grid-template-columns: 1fr;
+  }
+
+  @media (${viewportDevice.mobile}) {
+    grid-template-areas:
+      'header-area'
+      'flashcard-area'
+      'answer-area';
+    grid-template-columns: 1fr;
+  }
 `

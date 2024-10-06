@@ -1,6 +1,5 @@
 import { CardProps } from '../../shared/CardProps'
 import { Token } from '../session/useAuthToken'
-import { saveTokenToLocalStorage } from '../session/authStorage'
 import { AuthenticatedUser } from './AuthenticatedUser'
 import { GameResultItem } from '../common/types'
 
@@ -152,9 +151,6 @@ export const login = async (
   })
   await checkResponse(response)
   const data = await response.json()
-
-  // FIXME Ist das sinvoll vlt für das testen? oder nur im AuthContext?
-  saveTokenToLocalStorage(data.token)
 
   console.log('login', data)
 

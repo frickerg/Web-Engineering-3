@@ -1,6 +1,8 @@
 import { CardProps } from '../../shared/CardProps'
+import { GameState } from '../../shared/GameState'
+import { CurrentGameState } from '../api'
 import { GameResultItem, InputType, SortDirection } from '../common/types'
-import { GameState, retrieveLabel } from './helper'
+import { retrieveLabel } from './helper'
 
 export type State = {
   gameCards: GameResultItem[]
@@ -22,6 +24,7 @@ export type Action =
       type: 'INIT_GAME'
       payload: { gameCards: GameResultItem[]; gameSize: number }
     }
+  | { type: 'LOAD_GAME_STATE'; payload: CurrentGameState }
   | { type: 'SUBMIT_GAME_ANSWER'; payload: GameResultItem }
   | { type: 'ADD_NEW_CARD'; payload: GameResultItem }
   | { type: 'SET_CARD_INDEX'; payload: number }
@@ -63,6 +66,21 @@ export const reducer = (state: State, action: Action): State => {
         currentCardIndex: 0,
         buttonLabel: retrieveLabel(GameState.ONGOING),
         progress: 0,
+      }
+    }
+    case 'LOAD_GAME_STATE': {
+      const currentCardIndex = action.payload.gameCards.findIndex(
+        card => card.id === action.payload.currentCard?.id
+      )
+
+      return {
+        ...state,
+        gameCards: action.payload.gameCards,
+        gameSize: action.payload.gameSize,
+        currentCardIndex: currentCardIndex,
+        gameState: action.payload.gameState,
+        progress: action.payload.progress,
+        buttonLabel: retrieveLabel(action.payload.gameState, currentCardIndex),
       }
     }
     case 'SUBMIT_GAME_ANSWER': {

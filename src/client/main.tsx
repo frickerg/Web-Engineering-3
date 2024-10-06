@@ -6,10 +6,10 @@ import App from './pages/App.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
-    <AuthProvider>
-      <GameProvider>
+    <GameProvider>
+      <AuthProvider>
         <App />
-      </GameProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </GameProvider>
   </BrowserRouter>
 )

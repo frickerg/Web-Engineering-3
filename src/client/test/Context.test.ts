@@ -1,9 +1,9 @@
 import { describe, it, expect, vi } from 'vitest'
 import { initialState, reducer } from '../session/gameReducer'
 import * as helper from '../session/helper'
-import { GameState } from '../session/helper'
 import { CardProps } from '../../shared/CardProps'
 import { GameResultItem, InputType, SortDirection } from '../common/types'
+import { GameState } from '../../shared/GameState'
 
 const retrieveLabel = vi.spyOn(helper, 'retrieveLabel')
 

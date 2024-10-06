@@ -2,6 +2,7 @@ import { CardProps } from '../../shared/CardProps'
 import { Token } from '../session/useAuthToken'
 import { AuthenticatedUser } from './AuthenticatedUser'
 import { GameResultItem } from '../common/types'
+import { GameState } from '../../shared/GameState'
 
 const request = async <T>(
   url: string,
@@ -136,6 +137,26 @@ export const fetchGameResults = async (
   token: Token
 ): Promise<{ results: GameResultItem[] }> => {
   return request<{ results: GameResultItem[] }>(`/api/gameResults`, token)
+}
+
+export interface CurrentGameState {
+  currentCard: GameResultItem | null
+  gameSize: number
+  progress: number
+  gameState: GameState
+  gameCards: GameResultItem[]
+}
+
+export const fetchCurrentGame = async (
+  token: Token
+): Promise<CurrentGameState | null> => {
+  return await request<CurrentGameState>('/api/currentGame', token)
+}
+
+export const deleteGame = async (token: Token): Promise<void> => {
+  await request<void>('/api/game', token, {
+    method: 'DELETE',
+  })
 }
 
 export const login = async (

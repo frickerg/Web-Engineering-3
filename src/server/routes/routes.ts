@@ -2,7 +2,9 @@ import express from 'express'
 import {
   addCard,
   deleteCard,
+  deleteRunningGame,
   getCards,
+  getCurrentGame,
   getGameResults,
   startNewGame,
   submitAnswer,
@@ -45,6 +47,18 @@ router.get(
   authenticateJwt,
   authorizeRole(['admin', 'player']),
   getGameResults
+)
+router.get(
+  '/currentGame',
+  authenticateJwt,
+  authorizeRole(['admin', 'player']),
+  getCurrentGame
+)
+router.delete(
+  '/game',
+  authenticateJwt,
+  authorizeRole(['admin', 'player']),
+  deleteRunningGame
 )
 
 router.get('/passwordGenerator/:password', generatePassword)

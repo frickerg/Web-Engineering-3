@@ -7,7 +7,7 @@ import { GameContainer } from '../../elements/Container/components/GameContainer
 import { InputAnswer } from '../../elements/Input/components/InputAnswer'
 import Flashcard from '../../elements/Flashcard/Flashcard'
 import { GameContext } from '../../../session/GameContext'
-import { submitAnswer } from '../../../api'
+import { deleteGame, submitAnswer } from '../../../api'
 import { useAuthToken } from '../../../session/useAuthToken'
 
 export default function OngoingGamePage() {
@@ -24,7 +24,14 @@ export default function OngoingGamePage() {
     setAnswer('')
   }, [index])
 
-  const handleDeleteGame = () => dispatch({ type: 'DELETE_GAME' })
+  const handleDeleteGame = async () => {
+    try {
+      await deleteGame(token)
+      dispatch({ type: 'DELETE_GAME' })
+    } catch (error) {
+      console.error('Error deleting game:', error)
+    }
+  }
 
   const handleSubmitAnswer = async () => {
     const currentCard = cards[index]

@@ -4,16 +4,16 @@ import React, {
   useReducer,
   useCallback,
   useMemo,
-  useEffect,
+  useContext,
 } from 'react'
 import { AuthenticatedUser } from '../api/AuthenticatedUser'
 import {
-  getAuthFromLocalStorage,
   removeAuthFromLocalStorage,
   saveAuthToLocalStorage,
 } from './authStorage'
 import { login } from '../api'
 import { Action, initialState, reducer, State } from './authReducer'
+import { GameContext } from './GameContext'
 
 type ContextProps = {
   state: State
@@ -31,6 +31,7 @@ export const AuthContext = createContext<ContextProps>({
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const { dispatch: gameDispatch } = useContext(GameContext)
 
   const loginUser = useCallback(
     async (username: string, password: string): Promise<AuthenticatedUser> => {
@@ -58,7 +59,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logoutUser = useCallback(() => {
     removeAuthFromLocalStorage()
     dispatch({ type: 'LOGOUT' })
-  }, [dispatch])
+    gameDispatch({ type: 'DELETE_GAME' })
+  }, [dispatch, gameDispatch])
 
   const contextValue = useMemo(
     () => ({ state, dispatch, loginUser, logoutUser }),

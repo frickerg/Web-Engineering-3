@@ -6,7 +6,7 @@ export const addGame = (username: string, game: Game) => {
   gameStateStore[username] = game
 }
 
-export const getGame = (username: string): Game | undefined => {
+export const getGame = (username: string): Game => {
   return gameStateStore[username]
 }
 

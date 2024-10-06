@@ -1,12 +1,7 @@
 import { startNewGame } from '../api'
 import { Token } from './useAuthToken'
 import { Action } from './gameReducer'
-
-export enum GameState {
-  NOT_STARTED = 'NOT_STARTED',
-  ONGOING = 'ONGOING',
-  FINISHED = 'FINISHED',
-}
+import { GameState } from '../../shared/GameState'
 
 export async function handleStartNewGame(
   dispatch: React.Dispatch<Action>,

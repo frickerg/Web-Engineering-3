@@ -5,7 +5,8 @@ import { cardStore } from './entities/CardStore'
 import { Game } from './entities/Game'
 import { userStore } from './entities/UserStore'
 import { AuthenticatedRequest } from '../middleware/authMiddleware'
-import { addGame, getGame } from '../storage/gameStateStore'
+import { addGame, getGame, deleteGame } from '../storage/gameStateStore'
+import { GameState } from '../../shared/GameState'
 
 export const getCards = (_req: Request, res: Response) => {
   res.status(200).send(cardStore.getCards())
@@ -94,4 +95,46 @@ export const getGameResults = (req: Request, res: Response) => {
   }
 
   res.status(200).send({ results: game.getResults() })
+}
+
+export const getCurrentGame = (req: Request, res: Response) => {
+  const authenticatedReq = req as AuthenticatedRequest
+  const username = authenticatedReq.user?.username
+
+  if (username == null || !userStore.hasUser(username)) {
+    return res.sendStatus(403)
+  }
+
+  const game = getGame(username)
+
+  if (!game) {
+    return res.status(200).send({ gameState: GameState.NOT_STARTED })
+  }
+
+  res.status(200).send({
+    currentCard: game.getCurrentCard(),
+    gameSize: game.getGameSize(),
+    progress: game.getProgress(),
+    gameState: game.getGameState(),
+    gameCards: game.getGameCards(),
+  })
+}
+
+export const deleteRunningGame = (req: Request, res: Response) => {
+  const authenticatedReq = req as AuthenticatedRequest
+  const username = authenticatedReq.user?.username
+
+  if (username == null || !userStore.hasUser(username)) {
+    return res.sendStatus(403)
+  }
+
+  const game = getGame(username)
+
+  if (!game) {
+    return res.status(404).send('No active game found for this user')
+  }
+
+  deleteGame(username)
+
+  res.status(200).send({ message: 'Game deleted successfully' })
 }

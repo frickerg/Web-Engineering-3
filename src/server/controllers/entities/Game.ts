@@ -1,3 +1,5 @@
+import { GameState } from '../../../shared/GameState'
+
 export class Game {
   private readonly gameCards: {
     id: string
@@ -9,7 +11,7 @@ export class Game {
   private currentCardIndex: number = 0
   private readonly gameSize: number
   private readonly username: string
-  private gameState: 'ONGOING' | 'FINISHED' = 'ONGOING'
+  private gameState: GameState = GameState.ONGOING
 
   constructor(
     username: string,
@@ -40,7 +42,7 @@ export class Game {
 
     this.currentCardIndex += 1
     if (this.currentCardIndex >= this.gameSize) {
-      this.gameState = 'FINISHED'
+      this.gameState = GameState.FINISHED
     }
 
     return { isCorrect, nextCard: this.getCurrentCard() }
@@ -51,7 +53,7 @@ export class Game {
   }
 
   public isFinished() {
-    return this.gameState === 'FINISHED'
+    return this.gameState === GameState.FINISHED
   }
 
   public getResults() {
@@ -73,5 +75,13 @@ export class Game {
 
   public getGameSize() {
     return this.gameSize
+  }
+
+  public getGameState() {
+    return this.gameState
+  }
+
+  public getGameCards() {
+    return this.gameCards
   }
 }

@@ -21,6 +21,7 @@ const token = 'fake-token'
 
 const startGame = vitest.fn()
 const submitAnswer = vitest.fn()
+const deleteGame = vitest.fn()
 
 const handlers = [
   http.post('/api/startGame', async () => {
@@ -46,6 +47,10 @@ const handlers = [
       progress: 33,
     })
   }),
+  http.delete('/api/game', async () => {
+    deleteGame()
+    return new HttpResponse(null, { status: 204 })
+  }),
 ]
 const server = setupServer(...handlers)
 
@@ -53,6 +58,7 @@ afterEach(() => {
   server.resetHandlers()
   startGame.mockReset()
   submitAnswer.mockReset()
+  deleteGame.mockReset()
   cleanup()
 })
 
@@ -87,7 +93,7 @@ describe('Game Component', () => {
     })
 
     await waitFor(() => {
-      expect(screen.getByText('Continue Running Game')).toBeInTheDocument()
+      expect(screen.getByText('Continue Game')).toBeInTheDocument()
     })
   })
 
@@ -189,6 +195,7 @@ describe('Game Component', () => {
     await user.click(screen.getByRole('button', { name: /Delete Game/i }))
 
     await waitFor(() => {
+      expect(deleteGame).toHaveBeenCalled()
       expect(screen.queryByText('No cards found')).toBeInTheDocument()
     })
   })

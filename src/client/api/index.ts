@@ -1,25 +1,21 @@
 import { CardProps } from '../../shared/CardProps'
-import {
-  getTokenFromLocalStorage,
-  saveTokenToLocalStorage,
-} from '../session/authStorage'
+import { Token } from '../session/useAuthToken'
+import { saveTokenToLocalStorage } from '../session/authStorage'
 import { AuthenticatedUser } from './AuthenticatedUser'
 
-// TODO: Issue#70: Ist das in Ordnung?
-let token: string | null = null
-
-const getToken = () => {
-  if (!token) {
-    token = getTokenFromLocalStorage()
+const request = async <T>(
+  url: string,
+  token: Token,
+  options?: RequestInit
+): Promise<T> => {
+  const headers: Record<string, string> = {
+    ...(options?.headers as Record<string, string>),
   }
-  return token
-}
 
-const request = async <T>(url: string, options?: RequestInit): Promise<T> => {
-  const headers = {
-    ...options?.headers,
-    Authorization: `Bearer ${getToken()}`,
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`
   }
+
   const response = await fetch(url, {
     ...options,
     headers,
@@ -37,19 +33,21 @@ const request = async <T>(url: string, options?: RequestInit): Promise<T> => {
 
 const checkResponse = async (response: Response) => {
   if (!response.ok) {
-    // TODO(fjv): Bei unautorisierten Anfragen, sollte was passieren? zB. Login-Seite anzeigen?
     const errorText = await response.text()
     throw new Error(`HTTP status: ${response.status} - ${errorText}`)
   }
   return response
 }
 
-export const fetchCards = async (): Promise<CardProps[]> => {
-  return request<CardProps[]>('/api/cards')
+export const fetchCards = async (token: Token): Promise<CardProps[]> => {
+  return request<CardProps[]>('/api/cards', token)
 }
 
-export const updateCard = async (card: CardProps): Promise<void> => {
-  await request<void>(`/api/card/${card.id}`, {
+export const updateCard = async (
+  card: CardProps,
+  token: Token
+): Promise<void> => {
+  await request<void>(`/api/card/${card.id}`, token, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -59,9 +57,10 @@ export const updateCard = async (card: CardProps): Promise<void> => {
 }
 
 export const addCard = async (
-  card: Omit<CardProps, 'id'>
+  card: Omit<CardProps, 'id'>,
+  token: Token
 ): Promise<CardProps> => {
-  return request<CardProps>('/api/card', {
+  return request<CardProps>('/api/card', token, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -70,19 +69,19 @@ export const addCard = async (
   })
 }
 
-export const deleteCard = async (id: string): Promise<void> => {
-  await request<void>(`/api/card/${id}`, {
+export const deleteCard = async (id: string, token: Token): Promise<void> => {
+  await request<void>(`/api/card/${id}`, token, {
     method: 'DELETE',
   })
 }
 
 type GameSize = { gameSize: number }
-export const fetchGameSize = async (): Promise<number> => {
-  return (await request<GameSize>(`/api/gameSize`)).gameSize
+export const fetchGameSize = async (token: Token): Promise<number> => {
+  return (await request<GameSize>(`/api/gameSize`, token)).gameSize
 }
 
-export const submitAnswer = (cardId: string, answer: string) => {
-  return request<{ isAccepted: boolean }>(`/api/submitAnswer`, {
+export const submitAnswer = (cardId: string, answer: string, token: Token) => {
+  return request<{ isAccepted: boolean }>(`/api/submitAnswer`, token, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -109,6 +108,7 @@ export const login = async (
   saveTokenToLocalStorage(data.token)
 
   console.log('login', data)
+
   return {
     username: username,
     role: data.role,

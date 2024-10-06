@@ -25,8 +25,9 @@ export const authenticateJwt = async (
     const token = authHeader?.split(' ')[1]
     if (!token) {
       console.log('No token provided')
-      return res.sendStatus(401).send('Access denied')
+      return res.status(401).send('Access denied')
     }
+
     console.log('Token provided')
 
     await jwtVerify(token, secret)
@@ -37,11 +38,11 @@ export const authenticateJwt = async (
       })
       .catch(e => {
         console.error('Token verification failed:', e)
-        res.status(400).send('Invalid token.')
+        return res.status(401).send('Invalid token.')
       })
   } catch (e) {
     console.error('Authentication error:', e)
-    res.sendStatus(403)
+    return res.status(403).send('Authentication error')
   }
 }
 

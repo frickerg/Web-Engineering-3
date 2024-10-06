@@ -15,24 +15,29 @@ import LoginPage from './LoginPage'
 import PrivateRoute from '../components/routes/PrivateRoute'
 import AccessDeniedPage from './AccessDeniedPage'
 import { AuthContext } from '../session/AuthContext'
+import { useAuthToken } from '../session/useAuthToken'
 
 export default function App() {
   const { state: gameState, dispatch: gameDispatch } = useContext(GameContext)
   const { state: authState } = useContext(AuthContext)
+  const token = useAuthToken()
 
   useEffect(() => {
     // TODO Reicht es, wenn wir nur authState.user überprüfen? oder muss hier server-seitig geprüft werden?
     if (authState.user) {
       const fetchData = async () => {
         try {
-          gameDispatch({ type: 'SET_CARDS', payload: await fetchCards() })
+          gameDispatch({
+            type: 'SET_CARDS',
+            payload: await fetchCards(token),
+          })
         } catch (error) {
           console.error(error)
         }
       }
       fetchData()
     }
-  }, [authState.user, gameDispatch])
+  }, [authState.user, gameDispatch, token])
 
   const renderContent = () => {
     switch (gameState.gameState) {

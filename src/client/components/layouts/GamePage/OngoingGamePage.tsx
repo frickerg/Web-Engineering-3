@@ -9,11 +9,13 @@ import Flashcard from '../../elements/Flashcard/Flashcard'
 import { GameContext } from '../../../session/GameContext'
 import { GameState, startNewGame } from '../../../session/helper'
 import { submitAnswer } from '../../../api'
+import { useAuthToken } from '../../../session/useAuthToken'
 
 export default function OngoingGamePage() {
   const { state, dispatch } = useContext(GameContext)
   const { gameCards: cards, currentCardIndex: index } = state
   const [answer, setAnswer] = useState('')
+  const token = useAuthToken()
 
   const progressLabel = () => {
     const progress =
@@ -23,9 +25,9 @@ export default function OngoingGamePage() {
 
   useEffect(() => {
     if (state.gameState === GameState.NOT_STARTED && cards.length === 0) {
-      startNewGame(cards, dispatch)
+      startNewGame(cards, dispatch, token)
     }
-  }, [state.gameState, cards, dispatch])
+  }, [state.gameState, cards, dispatch, token])
 
   useEffect(() => {
     setAnswer('')
@@ -39,7 +41,7 @@ export default function OngoingGamePage() {
       return
     }
 
-    await submitAnswer(currentCard.id, answer)
+    await submitAnswer(currentCard.id, answer, token)
       .then(response => {
         dispatch({
           type: 'SUBMIT_GAME_ANSWER',

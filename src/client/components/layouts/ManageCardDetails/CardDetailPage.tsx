@@ -10,6 +10,7 @@ import { fetchCards, updateCard } from '../../../api'
 import { GameContext } from '../../../session/GameContext'
 import { CardProps } from '../../../../shared/CardProps'
 import { InputType } from '../../../common/types'
+import { useAuthToken } from '../../../session/useAuthToken'
 
 export default function CardDetailPage() {
   const [card, setCard] = useState<CardProps>({ id: '', front: '', back: '' })
@@ -17,6 +18,7 @@ export default function CardDetailPage() {
   const navigate = useNavigate()
   const { state, dispatch } = useContext(GameContext)
   const { storeCards: cards } = state
+  const token = useAuthToken()
 
   useEffect(() => {
     if (!cardId) {
@@ -38,8 +40,8 @@ export default function CardDetailPage() {
   const handleUpdate = async () => {
     if (card) {
       try {
-        await updateCard(card)
-        dispatch({ type: 'SET_CARDS', payload: await fetchCards() })
+        await updateCard(card, token)
+        dispatch({ type: 'SET_CARDS', payload: await fetchCards(token) })
         navigate('/cards')
       } catch (error) {
         console.error(error)

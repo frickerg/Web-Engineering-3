@@ -17,6 +17,8 @@ import { fetchCards } from '../api'
 import OngoingGamePage from '../components/layouts/GamePage/OngoingGamePage'
 import StartNewGamePage from '../components/layouts/GamePage/StartNewGamePage'
 
+const token = 'fake-token'
+
 const getCards = vitest.fn()
 const getGameSize = vitest.fn()
 const submitAnswer = vitest.fn()
@@ -105,7 +107,7 @@ describe('Game Component', () => {
     const user = userEvent.setup()
 
     render(
-      <TestApp cards={await fetchCards()}>
+      <TestApp cards={await fetchCards(token)}>
         <OngoingGamePage />
       </TestApp>
     )
@@ -132,7 +134,7 @@ describe('Game Component', () => {
     const user = userEvent.setup()
 
     render(
-      <TestApp cards={await fetchCards()}>
+      <TestApp cards={await fetchCards(token)}>
         <OngoingGamePage />
       </TestApp>
     )
@@ -159,7 +161,7 @@ describe('Game Component', () => {
     const user = userEvent.setup()
 
     render(
-      <TestApp cards={await fetchCards()}>
+      <TestApp cards={await fetchCards(token)}>
         <OngoingGamePage />
       </TestApp>
     )

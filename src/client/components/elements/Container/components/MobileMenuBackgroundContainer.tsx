@@ -4,16 +4,16 @@ import { ViewportContext } from '../../../../session/ResponsiveContext'
 import { NavigationContext } from '../../../../session/NavigationContext'
 
 export default function MobileMenuBackgroundContainer() {
-  const  isMobile  = useContext(ViewportContext)
-  const  isOpen  = useContext(NavigationContext)
+  const isMobile = useContext(ViewportContext)
+  const isOpen = useContext(NavigationContext)
 
-    if(isMobile && isOpen) {
-      return (<MobileMenuIsOpenBackground></MobileMenuIsOpenBackground>
-    )}
+  if (isMobile && isOpen) {
+    return <MobileMenuIsOpenBackground></MobileMenuIsOpenBackground>
+  }
 
-    if(!isOpen || !isMobile) {
-      return (<MobileMenuIsClosedBackground></MobileMenuIsClosedBackground>
-    )}
+  if (!isOpen || !isMobile) {
+    return <MobileMenuIsClosedBackground></MobileMenuIsClosedBackground>
+  }
 }
 
 export const MobileMenuIsOpenBackground = styled.div`
@@ -22,7 +22,6 @@ export const MobileMenuIsOpenBackground = styled.div`
   background-color: #182d4a;
   justify-content: center;
   align-items: center;
-  /* z-index: -1; */
 `
 
 export const MobileMenuIsClosedBackground = styled.div`

@@ -15,27 +15,26 @@ import { TopBannerRouterLink } from '../../typography/links/TopBannerRouterLink'
 import { ManageCardsButton } from '../../elements/Button/components/ManageCardsButton'
 
 export default function Appbar() {
-  const  isMobile  = useContext(ViewportContext)
+  const isMobile = useContext(ViewportContext)
   const { state } = useContext(AuthContext)
   const [isOpen] = useState(false)
 
-  if(isMobile) {
+  if (isMobile) {
     return (
       <AppbarContainer>
         <HeaderContainer>
           <Title>Mimir</Title>
           <UserInfo>{state.user?.username}</UserInfo>
         </HeaderContainer>
-        <CenterContainer>
-        </CenterContainer>
+        <CenterContainer></CenterContainer>
         <RightContainer>
           <BurgerButton></BurgerButton>
-          {isOpen? <FullscreenNav /> : null}
+          {isOpen ? <FullscreenNav /> : null}
         </RightContainer>
-    </AppbarContainer>
+      </AppbarContainer>
     )
   }
-  if(!isMobile) {
+  if (!isMobile) {
     return (
       <AppbarContainer>
         <HeaderContainer>
@@ -46,12 +45,18 @@ export default function Appbar() {
           <CenterButton />
         </CenterContainer>
         <RightContainer>
-        <div>
-          {state.user?.role === 'admin'? 
-          <ManageCardsButton> {state.user?.role === 'admin' && (<TopBannerRouterLink to="/cards" style={{ color: '#fefefe' }}>Manage Cards</TopBannerRouterLink>)}
-          </ManageCardsButton> 
-          : null}
-        </div>
+          <div>
+            {state.user?.role === 'admin' ? (
+              <ManageCardsButton>
+                {' '}
+                {state.user?.role === 'admin' && (
+                  <TopBannerRouterLink to="/cards" style={{ color: '#fefefe' }}>
+                    Manage Cards
+                  </TopBannerRouterLink>
+                )}
+              </ManageCardsButton>
+            ) : null}
+          </div>
           <LogoutButton></LogoutButton>
         </RightContainer>
       </AppbarContainer>

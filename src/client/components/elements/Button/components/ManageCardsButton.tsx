@@ -1,6 +1,6 @@
-import { viewportDevice } from "../../../../themes/Breakpoints"
-import { Button } from "../Button"
-import { styled } from "styled-components"
+import { viewportDevice } from '../../../../themes/Breakpoints'
+import { Button } from '../Button'
+import { styled } from 'styled-components'
 
 export const ManageCardsButton = styled(Button)`
   display: flex;
@@ -13,9 +13,8 @@ export const ManageCardsButton = styled(Button)`
   }
 
   @media (${viewportDevice.desktop}) {
-    /* margin: 0px 20px; */
     padding: 10px 20px;
     width: auto;
     color: '#ffffff';
   }
-` 
+`

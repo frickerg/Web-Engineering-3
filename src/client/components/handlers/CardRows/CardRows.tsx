@@ -13,20 +13,22 @@ type CardRowsProps = {
 }
 
 export default function CardRows(props: CardRowsProps) {
-  const  isMobile  = useContext(ViewportContext)
+  const isMobile = useContext(ViewportContext)
 
-  if(isMobile) {
+  if (isMobile) {
     return props.cards.length ? (
       props.cards.map(card => (
         <TableContentContainer key={card.id}>
           <CardItem id={card.id} front={card.front} back={card.back} />
-          <div style={{ gridArea: 'table-content-button-edit'}}>
+          <div style={{ gridArea: 'table-content-button-edit' }}>
             <RouterLink to={`details/${card.id}`}>
-              <Button >Edit</Button>
+              <Button>Edit</Button>
             </RouterLink>
           </div>
-          <div style={{ gridArea: 'table-content-button-delete'}}>
-            <Button onClick={() => props.handleDeleteById(card.id)}>Delete</Button>
+          <div style={{ gridArea: 'table-content-button-delete' }}>
+            <Button onClick={() => props.handleDeleteById(card.id)}>
+              Delete
+            </Button>
           </div>
         </TableContentContainer>
       ))
@@ -35,7 +37,7 @@ export default function CardRows(props: CardRowsProps) {
     )
   }
 
-  if(!isMobile) {
+  if (!isMobile) {
     return props.cards.length ? (
       props.cards.map(card => (
         <TableContentContainer key={card.id}>
@@ -43,7 +45,9 @@ export default function CardRows(props: CardRowsProps) {
           <RouterLink to={`details/${card.id}`}>
             <Button>Edit</Button>
           </RouterLink>
-          <Button onClick={() => props.handleDeleteById(card.id)}>Delete</Button>
+          <Button onClick={() => props.handleDeleteById(card.id)}>
+            Delete
+          </Button>
         </TableContentContainer>
       ))
     ) : (

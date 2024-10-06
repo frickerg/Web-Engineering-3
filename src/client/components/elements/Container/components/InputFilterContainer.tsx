@@ -14,15 +14,15 @@ export const InputFilterContainer = styled(Container)`
 
   @media (${viewportDevice.mobile}) {
     grid-template-areas:
-    'input-front input-button'
-    'input-back input-checkbox';
+      'input-front input-button'
+      'input-back input-checkbox';
     grid-template-columns: 1fr 25%;
   }
 
   @media (${viewportDevice.desktop}) {
     grid-template-areas:
-    'input-front input-back input-button'
-    'spacer spacer input-checkbox';
+      'input-front input-back input-button'
+      'spacer spacer input-checkbox';
     grid-template-columns: 1fr 1fr 25%;
   }
 `

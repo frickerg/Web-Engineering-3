@@ -8,10 +8,10 @@ export const GameContainer = styled(Container)`
   padding: 0 1em;
   align-items: center;
   grid-template-areas:
-      'header-area .'
-      'flashcard-area .'
-      'answer-area .'
-      'delete-area .';
+    'header-area .'
+    'flashcard-area .'
+    'answer-area .'
+    'delete-area .';
   grid-template-columns: 1fr;
 
   @media (${viewportDevice.desktop}) {
@@ -20,7 +20,7 @@ export const GameContainer = styled(Container)`
       'flashcard-area .'
       'answer-area .'
       'delete-area .';
-  grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
 
   @media (${viewportDevice.mobile}) {
@@ -29,6 +29,6 @@ export const GameContainer = styled(Container)`
       'flashcard-area .'
       'answer-area .'
       'delete-area .';
-  grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
 `

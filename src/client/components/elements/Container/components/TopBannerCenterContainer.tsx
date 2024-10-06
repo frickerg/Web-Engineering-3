@@ -10,7 +10,7 @@ export const TopBannerCenterContainer = styled(Container)`
     align-items: center;
     padding: 0 10px;
   }
-  
+
   @media (${viewportDevice.mobile}) {
     display: none;
   }

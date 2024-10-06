@@ -7,64 +7,72 @@ import { GameContainer } from '../../elements/Container/components/GameContainer
 import { InputAnswer } from '../../elements/Input/components/InputAnswer'
 import Flashcard from '../../elements/Flashcard/Flashcard'
 import { GameContext } from '../../../session/GameContext'
-import { GameState, startNewGame } from '../../../session/helper'
-import { submitAnswer } from '../../../api'
+import { deleteGame, submitAnswer } from '../../../api'
 import { useAuthToken } from '../../../session/useAuthToken'
 
 export default function OngoingGamePage() {
   const { state, dispatch } = useContext(GameContext)
-  const { gameCards: cards, currentCardIndex: index } = state
+  const { gameCards: cards, currentCardIndex: index, progress } = state
   const [answer, setAnswer] = useState('')
   const token = useAuthToken()
 
   const progressLabel = () => {
-    const progress =
-      cards.length > 0 ? Math.round((index / cards.length) * 100) : 0
     return `Progress: ${progress}%`
   }
-
-  useEffect(() => {
-    if (state.gameState === GameState.NOT_STARTED && cards.length === 0) {
-      startNewGame(cards, dispatch, token)
-    }
-  }, [state.gameState, cards, dispatch, token])
 
   useEffect(() => {
     setAnswer('')
   }, [index])
 
-  const handleDeleteGame = () => dispatch({ type: 'DELETE_GAME' })
+  const handleDeleteGame = async () => {
+    try {
+      await deleteGame(token)
+      dispatch({ type: 'DELETE_GAME' })
+    } catch (error) {
+      console.error('Error deleting game:', error)
+    }
+  }
 
-  const validateCard = async () => {
+  const handleSubmitAnswer = async () => {
     const currentCard = cards[index]
-    if (!answer || !currentCard) {
+
+    if (!currentCard || !currentCard.id || !currentCard.front) {
+      console.warn('No valid card found to submit.')
       return
     }
 
-    await submitAnswer(currentCard.id, answer, token)
-      .then(response => {
-        dispatch({
-          type: 'SUBMIT_GAME_ANSWER',
-          payload: {
-            ...currentCard,
-            isAccepted: response.isAccepted,
-            answer,
-          },
-        })
+    if (!answer.trim()) {
+      console.warn('Answer is empty.')
+      return
+    }
 
-        dispatch({ type: 'SET_CARD_INDEX', payload: getNewIndex() })
+    try {
+      const { isCorrect, nextCard, progress } = await submitAnswer(
+        currentCard.id,
+        answer,
+        token
+      )
 
-        if (index >= cards.length - 1) {
-          dispatch({ type: 'FINISH_GAME' })
-        }
+      dispatch({
+        type: 'SUBMIT_GAME_ANSWER',
+        payload: {
+          ...currentCard,
+          isCorrect,
+          answer,
+        },
       })
-      .catch(error => {
-        console.error(error)
-      })
-  }
 
-  const getNewIndex = () => {
-    return index < cards.length - 1 ? index + 1 : index
+      if (nextCard.id) {
+        dispatch({ type: 'SET_CARD_INDEX', payload: index + 1 })
+        dispatch({ type: 'ADD_NEW_CARD', payload: nextCard })
+      } else {
+        dispatch({ type: 'FINISH_GAME' })
+      }
+
+      dispatch({ type: 'SET_PROGRESS', payload: progress })
+    } catch (error) {
+      console.error('Error submitting answer:', error)
+    }
   }
 
   return (
@@ -80,7 +88,7 @@ export default function OngoingGamePage() {
           placeholder="Answer"
           onChange={e => setAnswer(e.target.value)}
         />
-        <GameButton onClick={validateCard}>Submit</GameButton>
+        <GameButton onClick={handleSubmitAnswer}>Submit</GameButton>
       </GameAnswerContainer>
     </GameContainer>
   )

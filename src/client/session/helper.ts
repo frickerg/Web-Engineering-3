@@ -1,37 +1,21 @@
-import { CardProps } from '../../shared/CardProps'
-import { fetchGameSize } from '../api'
+import { startNewGame } from '../api'
 import { Token } from './useAuthToken'
 import { Action } from './gameReducer'
+import { GameState } from '../../shared/GameState'
 
-export enum GameState {
-  NOT_STARTED = 'NOT_STARTED',
-  ONGOING = 'ONGOING',
-  FINISHED = 'FINISHED',
-}
-
-function getRandomCards(array: CardProps[], numberOfEntries: number) {
-  if (numberOfEntries > array.length) return []
-  const result = new Set<CardProps>()
-  while (result.size < numberOfEntries) {
-    const randomIndex = Math.floor(Math.random() * array.length)
-    result.add(array[randomIndex])
-  }
-  return Array.from(result)
-}
-
-export async function startNewGame(
-  storeCards: CardProps[],
+export async function handleStartNewGame(
   dispatch: React.Dispatch<Action>,
   token: Token
 ) {
-  await fetchGameSize(token)
-    .then(size => {
-      dispatch({
-        type: 'INIT_GAME',
-        payload: getRandomCards(storeCards, size),
-      })
+  try {
+    const { currentCard, gameSize } = await startNewGame(token)
+    dispatch({
+      type: 'INIT_GAME',
+      payload: { gameCards: [currentCard], gameSize },
     })
-    .catch(error => console.error(error))
+  } catch (error) {
+    console.error('Failed to start the game:', error)
+  }
 }
 
 export function retrieveLabel(state: GameState, payload: number = 0) {

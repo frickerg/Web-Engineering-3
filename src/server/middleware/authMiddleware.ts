@@ -9,7 +9,7 @@ type JwtPayloadProps = {
   role: UserRole
 }
 
-type AuthenticatedRequest = Request & {
+export type AuthenticatedRequest = Request & {
   user?: JwtPayloadProps
 }
 

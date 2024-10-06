@@ -58,9 +58,10 @@ const LoginPage: React.FC = () => {
       </AppbarContainer>
       <Container style={{ margin: '24px' }}>  
         <form onSubmit={handleSubmit}>
-          <Container style={{ padding: '12px' }}>
+          <Container style={{ padding: '0px 24px 6px' }}>
+            <label htmlFor="username">Username:</label>
             <InputLogin
-              placeholder="Username"
+              placeholder="Bitte Usernamen eingeben"
               type="text"
               id="username"
               value={username}
@@ -68,9 +69,10 @@ const LoginPage: React.FC = () => {
               required
             />
           </Container>
-          <Container style={{ padding: '12px' }}>
+          <Container style={{ padding: '6px 24px' }}>
+            <label htmlFor="password">Password:</label>
             <InputLogin
-              placeholder="Passwort"
+              placeholder="Bitte gib dein Passwort ein"
               type="password"
               id="password"
               value={password}
@@ -78,7 +80,7 @@ const LoginPage: React.FC = () => {
               required
             />
           </Container>
-          <Container style={{ padding: '12px' }}>
+          <Container style={{ padding: '24px' }}>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {success && <p style={{ color: 'green' }}>{success}</p>}
             <Button type="submit">Login</Button>

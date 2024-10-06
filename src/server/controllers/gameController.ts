@@ -5,6 +5,7 @@ import { cardStore } from './entities/CardStore'
 import { Game } from './entities/Game'
 import { userStore } from './entities/UserStore'
 import { AuthenticatedRequest } from '../middleware/authMiddleware'
+import { addGame, getGame } from '../storage/gameStateStore'
 
 export const getCards = (_req: Request, res: Response) => {
   res.status(200).send(cardStore.getCards())
@@ -35,9 +36,6 @@ export const deleteCard = (req: Request, res: Response) => {
   res.status(204).send()
 }
 
-// XXX Map für Benutzer-Game-Zustände
-const gameStateStore: Record<string, Game> = {}
-
 export const startNewGame = async (req: Request, res: Response) => {
   const authenticatedReq = req as AuthenticatedRequest
   const username = authenticatedReq.user?.username
@@ -49,7 +47,7 @@ export const startNewGame = async (req: Request, res: Response) => {
   const randomCards = cardStore.getRandomCards()
   const game = new Game(username, randomCards)
 
-  gameStateStore[username] = game
+  addGame(username, game)
 
   res
     .status(200)
@@ -65,7 +63,7 @@ export const submitAnswer = async (req: Request, res: Response) => {
 
   const { cardId, answer } = req.body
 
-  const game = gameStateStore[username]
+  const game = getGame(username)
 
   if (!game) {
     return res.status(404).send('Game not found')
@@ -89,7 +87,7 @@ export const getGameResults = (req: Request, res: Response) => {
     return res.sendStatus(403)
   }
 
-  const game = gameStateStore[username]
+  const game = getGame(username)
 
   if (!game) {
     return res.status(404).send('Game not found')

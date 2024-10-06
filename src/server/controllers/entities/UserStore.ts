@@ -1,4 +1,4 @@
-import { users } from '../data'
+import { users } from '../users'
 import { UserRole } from '../../../shared/UserRole'
 
 export type UserStoreProps = {

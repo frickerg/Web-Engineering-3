@@ -1,4 +1,3 @@
-// XXX: Login-Page component for testing purposes
 import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../session/AuthContext'
 import { useNavigate } from 'react-router-dom'

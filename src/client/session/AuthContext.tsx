@@ -32,16 +32,6 @@ export const AuthContext = createContext<ContextProps>({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  useEffect(() => {
-    const { token, username, role } = getAuthFromLocalStorage()
-    if (token && username && role) {
-      dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: { token, username, role },
-      })
-    }
-  }, [dispatch])
-
   const loginUser = useCallback(
     async (username: string, password: string): Promise<AuthenticatedUser> => {
       return await login(username, password)

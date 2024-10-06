@@ -1,15 +1,15 @@
 import { CenterHeader } from '../../typography/headings/CenterHeader'
 import { FilledTableHeader } from '../../typography/headings/FilledTableHeader'
-import { Item } from '../../typography/texts/Item'
 import { ScoreLabel } from '../../elements/Label/components/ScoreLabel'
-import { GameContainer } from '../../elements/Container/components/GameContainer'
-import { GameResultsContainer } from '../../elements/Container/components/GameResultsContainer'
 import { StartButton } from '../../elements/Button/components/StartButton'
-import { Fragment, useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { GameContext } from '../../../session/GameContext'
 import { handleStartNewGame } from '../../../session/helper'
 import { fetchGameResults } from '../../../api'
 import { useAuthToken } from '../../../session/useAuthToken'
+import { Container } from '../../elements/Container/Container'
+import { viewportDevice } from '../../../themes/Breakpoints'
+import styled from 'styled-components'
 
 export default function GameResultPage() {
   const { state, dispatch } = useContext(GameContext)
@@ -42,19 +42,115 @@ export default function GameResultPage() {
       <CenterHeader>Game Results</CenterHeader>
       <ScoreLabel>{scoreLabel()}</ScoreLabel>
       <GameResultsContainer>
-        <FilledTableHeader>Front</FilledTableHeader>
-        <FilledTableHeader>Back</FilledTableHeader>
-        <FilledTableHeader>Your Answer</FilledTableHeader>
-        <FilledTableHeader>Accepted</FilledTableHeader>
+        <TableHeaders>
+          <FilledTableHeader>Front</FilledTableHeader>
+          <FilledTableHeader>Back</FilledTableHeader>
+          <FilledTableHeader>Your Answer</FilledTableHeader>
+          <FilledTableHeader>Accepted</FilledTableHeader>
+        </TableHeaders>
         {cards.map(card => (
-          <Fragment key={card.id}>
-            <Item>{card.front}</Item>
-            <Item>{card.back}</Item>
-            <Item>{card.answer}</Item>
-            <Item>{card.isCorrect ? '✓' : '✗'}</Item>
-          </Fragment>
+          <Card key={card.id}>
+            <CardItem>
+              <Label>Front:</Label>
+              <Content>{card.front}</Content>
+            </CardItem>
+            <CardItem>
+              <Label>Back:</Label>
+              <Content>{card.back}</Content>
+            </CardItem>
+            <CardItem>
+              <Label>Your Answer:</Label>
+              <Content>{card.answer}</Content>
+            </CardItem>
+            <CardItem>
+              <Label>Accepted:</Label>
+              <Content>{card.isCorrect ? '✓' : '✗'}</Content>
+            </CardItem>
+          </Card>
         ))}
       </GameResultsContainer>
     </GameContainer>
   )
 }
+
+const GameContainer = styled(Container)`
+  display: grid;
+  overflow: auto;
+  padding: 0 1em;
+  align-items: center;
+
+  @media (${viewportDevice.desktop}) {
+    grid-template-areas:
+      'header-area'
+      'flashcard-area'
+      'answer-area';
+    grid-template-columns: 1fr;
+  }
+
+  @media (${viewportDevice.mobile}) {
+    grid-template-areas:
+      'header-area'
+      'flashcard-area'
+      'answer-area';
+    grid-template-columns: 1fr;
+  }
+`
+
+const GameResultsContainer = styled.div`
+  display: grid;
+  gap: 1em;
+
+  @media (${viewportDevice.desktop}) {
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+  }
+
+  @media (${viewportDevice.mobile}) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const TableHeaders = styled.div`
+  display: none;
+
+  @media (${viewportDevice.desktop}) {
+    display: contents;
+
+    ${FilledTableHeader} {
+      text-align: center;
+    }
+  }
+`
+
+const Card = styled.div`
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1em;
+
+  @media (${viewportDevice.desktop}) {
+    display: contents;
+    border: none;
+    padding: 0;
+  }
+`
+
+const CardItem = styled.div`
+  margin-bottom: 0.5em;
+
+  @media (${viewportDevice.desktop}) {
+    margin-bottom: 0;
+    text-align: center;
+  }
+`
+
+const Label = styled.span`
+  font-weight: bold;
+
+  @media (${viewportDevice.desktop}) {
+    display: none;
+  }
+`
+
+const Content = styled.span`
+  margin-left: 0.5em;
+`

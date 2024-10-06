@@ -12,7 +12,8 @@ export const TableHeaderContainer = styled(Container)`
   padding-bottom: 0;
 
   @media (${viewportDevice.mobile}) {
-    grid-template-columns: 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr; */
+    grid-template-columns: 1fr 25%;
     padding: 1em 0;
   }
 

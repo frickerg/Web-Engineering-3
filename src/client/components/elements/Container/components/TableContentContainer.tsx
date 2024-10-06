@@ -15,7 +15,7 @@ export const TableContentContainer = styled(Container)`
   }
 
   @media (${viewportDevice.mobile}) {
-    grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
+    grid-template-columns: 1fr 25%;
     grid-template-areas:
     'table-content-card table-content-button-edit'
     'table-content-card table-content-button-delete';

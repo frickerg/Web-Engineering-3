@@ -1,6 +1,6 @@
-import { GameState } from '../../../shared/GameState'
+import { GameState } from '../../shared/GameState'
 
-export class Game {
+export class GameStore {
   private readonly gameCards: {
     id: string
     front: string

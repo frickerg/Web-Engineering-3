@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { jwtVerify } from 'jose'
 import { JWT_SECRET } from '../../config'
-import { UserStoreProps } from '../controllers/entities/UserStore'
+import { UserStoreProps } from '../entities/UserStore'
 import { UserRole } from '../../shared/UserRole'
 
 type JwtPayloadProps = {

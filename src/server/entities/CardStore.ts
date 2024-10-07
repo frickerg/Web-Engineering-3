@@ -1,5 +1,5 @@
-import { CardProps } from '../../../shared/CardProps'
-import { cards } from '../cards'
+import { CardProps } from '../../shared/CardProps'
+import { cards } from '../storage/cards'
 
 class CardStore {
   private cards: CardProps[] = [...cards]

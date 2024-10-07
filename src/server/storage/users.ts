@@ -1,4 +1,4 @@
-import { UserStoreProps } from './entities/UserStore'
+import { UserStoreProps } from '../entities/UserStore'
 
 export const users: UserStoreProps[] = [
   {

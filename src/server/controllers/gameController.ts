@@ -1,11 +1,11 @@
 import { randomUUID } from 'crypto'
 import { Request, Response } from 'express'
 import { CardProps } from '../../shared/CardProps'
-import { cardStore } from './entities/CardStore'
-import { Game } from './entities/Game'
-import { userStore } from './entities/UserStore'
+import { cardStore } from '../entities/CardStore'
+import { GameStore } from '../entities/GameStore'
+import { userStore } from '../entities/UserStore'
 import { AuthenticatedRequest } from '../middleware/authMiddleware'
-import { addGame, getGame, deleteGame } from '../storage/gameStateStore'
+import { addGame, getGame, deleteGame } from '../storage/games'
 import { GameState } from '../../shared/GameState'
 
 export const getCards = (_req: Request, res: Response) => {
@@ -46,7 +46,7 @@ export const startNewGame = async (req: Request, res: Response) => {
   }
 
   const randomCards = cardStore.getRandomCards()
-  const game = new Game(username, randomCards)
+  const game = new GameStore(username, randomCards)
 
   addGame(username, game)
 

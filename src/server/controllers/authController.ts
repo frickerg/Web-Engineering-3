@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { randomBytes, scrypt } from 'crypto'
 import { SignJWT } from 'jose'
-import { userStore } from './entities/UserStore'
+import { userStore } from '../entities/UserStore'
 import { JWT_SECRET } from '../../config'
 import { UserRole } from '../../shared/UserRole'
 
